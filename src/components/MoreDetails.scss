@@ -1,0 +1,46 @@
+.moreDetails {
+    padding: 50px 150px;
+    background: #000;
+    color: #fff;
+
+    .morereasonsToJoinSection {
+    
+        .sectionHeading {
+            margin: 15px 0;
+            font-size: 22px;
+                    font-weight: 600;
+        }
+        .cardsContainer {
+            display: flex;
+            justify-content: space-between;
+
+            .card {
+                background: linear-gradient(149deg, #192247 0%, #210e17 96.86%);
+                break-inside: avoid-column;
+                padding: 30px 15px 25px;
+                display: flex;
+                flex-direction: column;
+                width: 24%;
+                border-radius: 12px;
+    
+                h3 {
+                    margin-bottom: 10px;
+                    font-size: 22px;
+                    font-weight: 600;
+                }
+    
+                p {
+                    margin-bottom: 25px;
+                    line-height: 22px;
+                    font-size: 15px;
+                    color : rgba(255, 255, 255, 0.7);
+                }
+    
+                .moreReasonImage {
+                    margin-top: auto;
+                    text-align: end;
+                }
+            }
+        }
+    }
+}
