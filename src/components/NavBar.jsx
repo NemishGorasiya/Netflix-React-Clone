@@ -1,4 +1,6 @@
 import NetflixLogo from "../assets/Netflix_logo.png";
+import SelectLanguage from "./SelectLanguage";
+import "./NavBar.scss";
 
 const NavBar = () => {
   return (
@@ -7,12 +9,7 @@ const NavBar = () => {
         <img className="logoImage" src={NetflixLogo} alt="" />
       </div>
       <div className="NavBtnWrapper">
-        <div className="selectLanguage">
-          <select name="" id="">
-            <option value="English">English</option>
-            <option value="Hindi">Hindi</option>
-          </select>
-        </div>
+        <SelectLanguage />
         <button>Sign In</button>
       </div>
     </div>

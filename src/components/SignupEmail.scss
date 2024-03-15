@@ -1,21 +1,58 @@
 .signupEmailWrapper {
   width: 100%;
   display: flex;
-  height: 50px;
 
   input {
+    height: 50px;
     flex: 1;
     margin-right: 5px;
     padding-left: 15px;
     border-radius: 5px;
-    border: 1px solid #000;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 18px;
   }
   button {
+    height: 50px;
     border-radius: 5px;
     border: none;
     background: rgb(229, 9, 20);
     color: #fff;
     padding: 0 20px;
     font-size: 25px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+
+    span {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .signupEmailWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input {
+      width: 100%;
+      margin-right: 5px;
+      padding-left: 15px;
+      border-radius: 5px;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
+      font-size: 18px;
+      min-height: 50px;
+      margin-bottom: 15px;
+    }
+    button {
+      width: fit-content;
+    }
   }
 }

@@ -1,0 +1,10 @@
+.authenticationFormContainer {
+  max-width: 450px;
+  width: 100%;
+  margin: auto;
+
+  .authenticationForm {
+    display: flex;
+    flex-direction: column;
+  }
+}
