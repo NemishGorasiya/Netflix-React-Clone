@@ -15,7 +15,7 @@ export default function MoreDetails() {
         <MoreReasonSection />
         <FAQsSection />
         <SignUpEmailSection />
-        <Footer footerLinks={footerLinks} />
+        <Footer footerLinks={footerLinks} />  
         <CopyRightSection />
       </div>
     </div>

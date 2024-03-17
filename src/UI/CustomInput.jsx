@@ -12,9 +12,15 @@ const CustomInput = ({
   errorMessage,
 }) => {
   const [isError, setIsError] = useState(false);
+  const [isEmpty , setIsEmpty] = useState(true);
 
-  const afterDebounce = useCallback(
+  const afterDebounce = useCallback(  
     (value) => {
+      if (value === "") {
+        setIsEmpty(true);
+      }else{
+        setIsEmpty(false);
+      }
       if (inputValidationFn(value)) {
         console.log("finally", value);
         updateState(value);
@@ -43,7 +49,7 @@ const CustomInput = ({
         <input
           type={type}
           id={id}
-          className="customInput"
+          className = {!isEmpty ? "customInput notEmpty" : "customInput"}
           required
           onChange={myFun}
         />

@@ -1,6 +1,8 @@
 import NetflixLogo from "../assets/Netflix_logo.png";
 import SelectLanguage from "./SelectLanguage";
 import "./NavBar.scss";
+import { Link } from "react-router-dom";
+
 
 const NavBar = () => {
   return (
@@ -10,7 +12,7 @@ const NavBar = () => {
       </div>
       <div className="NavBtnWrapper">
         <SelectLanguage />
-        <button>Sign In</button>
+        <Link to="auth?mode=login"><button>Sign In</button></Link>
       </div>
     </div>
   );
