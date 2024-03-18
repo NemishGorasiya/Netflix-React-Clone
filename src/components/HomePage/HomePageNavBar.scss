@@ -1,0 +1,32 @@
+.homePageNavBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  padding: 10px 15px;
+  width: 100%;
+
+  .navLeft {
+    display: flex;
+    align-items: center;
+
+    .logoContainer {
+      display: flex;
+      align-items: center;
+      img {
+        height: 63px;
+      }
+    }
+
+    ul.navLinks {
+      display: flex;
+      align-items: center;
+      list-style: none;
+
+      li {
+        margin: 0 10px;
+        font-size: 15px;
+      }
+    }
+  }
+}

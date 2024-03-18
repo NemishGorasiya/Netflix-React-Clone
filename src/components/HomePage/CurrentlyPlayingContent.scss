@@ -1,0 +1,95 @@
+.currentlyPlayingContent {
+  padding: 85px 0 30px 80px;
+  background: url("../../assets/current_bg.png");
+  text-align: left;
+
+  img {
+    margin-bottom: 10px;
+  }
+
+  p.movieDesctiption {
+    max-width: 600px;
+    margin-bottom: 10px;
+  }
+
+  .trendingContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+
+    span.top10 {
+      background: red;
+      font-weight: 600;
+      border-radius: 7px;
+      padding: 10px;
+      text-align: center;
+      margin-right: 10px;
+    }
+    span.trendingRank {
+      font-weight: 700;
+      text-shadow: 0 0 4px #000, 0 0 5px rgba(0, 0, 0, 0.5),
+        0 0 5px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .playBtnsWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    button {
+      height: 45px;
+      border-radius: 5px;
+      font-weight: 600;
+      padding: 20px 30px;
+      border: none;
+      display: flex;
+      align-items: center;
+      i {
+        font-size: 25px;
+        margin-right: 10px;
+      }
+    }
+    .playBtn {
+      color: #000;
+      background: #fff;
+      margin-right: 10px;
+    }
+    .moreInfoBtn {
+      background: rgba(106, 104, 104, 0.75);
+      color: #fff;
+    }
+  }
+
+  .filmCertification {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 45px;
+    .imgWrapper {
+      height: 100%;
+      margin-right: 15px;
+      img {
+        height: 100%;
+      }
+    }
+    .certification {
+      height: 100%;
+      position: relative;
+      padding-left: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      min-width: 130px;
+      background: rgba(0, 0, 0, 0.37);
+    }
+    .certification::before {
+      content: "";
+      height: 100%;
+      width: 15px;
+      left: 0;
+      background: #fff;
+      position: absolute;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.categoryWiseList {
+  margin-top: 30px;
+  padding: 0 15px;
+  .categoryHeader {
+    display: flex;
+    justify-content: space-between;
+
+    .categoryHeading {
+      margin-bottom: 15px;
+    }
+    p.viewAll {
+      font-size: 15px;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
