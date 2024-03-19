@@ -1,26 +1,64 @@
 .moreInfoPage {
   background: #000;
   color: #fff;
-  // padding: 30px 150px;
-  .functionBtns {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-    .leftBtns {
-      display: flex;
-      align-items: center;
+  .moviePoster {
+    background-size: cover !important;
+    background-position: right top !important;
+    min-height: 450px;
+    position: relative;
+
+    .movieTitle {
+      position: absolute;
+      bottom: 25px;
+      left: 25px;
     }
   }
-  .aboutMovie {
-    .movieDetails {
-      .movieVideoQuality {
-        border: 2px solid #fff;
-        padding: 2px;
+  .movieDetailsWrapper {
+    padding: 15px 30px;
+
+    .functionBtns {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      margin-bottom: 20px;
+  
+      .leftBtns {
+        display: flex;
+        align-items: center;
       }
     }
-    .movieDetails > * {
-      margin-right: 10px;
+    .aboutMovie {
+      .movieDetails {
+        margin-bottom: 20px;
+
+        .movieVideoQuality {
+          border: 2px solid #fff;
+          padding: 1px 2px;
+        }
+      }
+      .movieDetails > * {
+        margin-right: 10px;
+      }
+      .movieRating {
+        margin-bottom: 25px;
+      }
+      .movieDescription {
+        margin-bottom: 25px;
+      }
+    }
+  }
+  
+}
+
+
+@media screen and (max-width: 600px) {
+  .moreInfoPage {
+  
+    .moviePoster {
+      background-position: center !important;
+
     }
   }
 }

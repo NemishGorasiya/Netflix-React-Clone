@@ -31,7 +31,7 @@ const CategorywiseList = ({
       <Slider
         changeCurrrentMovieData={changeCurrrentMovieData}
         isViewAll={isViewAll}
-        moviesData={moviesData.results}
+        moviesData={moviesData ? moviesData.results : []}
       />
     </div>
   );

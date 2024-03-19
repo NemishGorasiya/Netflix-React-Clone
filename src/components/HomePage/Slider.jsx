@@ -44,7 +44,7 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
   let startX;
   let endX;
   const handleDragStart = (event) => {
-    console.log(event);
+    // console.log(event);
     startX = event.clientX;
   };
   const handleDragEnd = (event) => {

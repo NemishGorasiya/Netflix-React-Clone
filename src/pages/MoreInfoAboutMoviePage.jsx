@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "../UI/Button";
 import RoundButton from "../UI/RoundButton";
 import "./MoreInfoAboutMoviePage.scss";
@@ -16,19 +16,25 @@ const MoreInfoAboutMoviePage = () => {
   };
   const [searchParamas] = useSearchParams();
   const movieId = searchParamas.get("id");
+  const fetchMovieData = useCallback(async () => {
+    const res = await fetchMoreInfoOdMovie({ movieId: movieId });
+    // console.log(res);
+    setMoreInfoOfMovie(res);
+  },[movieId]);
   useEffect(() => {
-    const fetchMovieData = async () => {
-      const res = await fetchMoreInfoOdMovie({ movieId: movieId });
-      console.log(res);
-      setMoreInfoOfMovie(res);
-    };
     fetchMovieData();
-  }, [movieId]);
+  }, [fetchMovieData]);
+
+  const runtime = moreInfoOfMovie.runtime;
+  const runTimeHours = parseInt(runtime / 60);
+  const runTimeMinutes = runtime - (runTimeHours*60);
+
   return (
     <div className="moreInfoPage">
-      <div className="moviePoster">
-        <h1>Movie Name</h1>
+      <div className="moviePoster" style={{background : `linear-gradient(to right,black 0% ,transparent 100%) , url("https://image.tmdb.org/t/p/original/${moreInfoOfMovie.backdrop_path}")`}}>
+        <h1 className="movieTitle">{moreInfoOfMovie.title}</h1>
       </div>
+      <div className="movieDetailsWrapper">
       <div className="functionBtns">
         <div className="leftBtns">
           <Button
@@ -51,22 +57,21 @@ const MoreInfoAboutMoviePage = () => {
       </div>
       <div className="aboutMovie">
         <p className="movieDetails">
-          <span className="releaseYear">2003</span>
-          <span className="movieLength">2h 55m</span>
+          <span className="releaseYear">{moreInfoOfMovie.release_date ? moreInfoOfMovie.release_date.slice(0,4) : ""}</span>
+          <span className="movieLength">{runTimeHours}h {runTimeMinutes}m</span>
           <span className="movieVideoQuality">HD</span>
         </p>
         <div className="movieRating">
-          <Rating rating={8} ratingCount={655} />
+          <Rating rating={moreInfoOfMovie.vote_average ? (moreInfoOfMovie.vote_average).toFixed(2) : ""} ratingCount={moreInfoOfMovie.vote_count} />
         </div>
         <div className="movieDescription">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed tempore
-          cum explicabo inventore. Cum, iste maiores. Adipisci at quam minus est
-          is quas quidem consequuntur rem.
+          {moreInfoOfMovie.overview}
         </div>
       </div>
       <MovieCasts
         castsInfo={moreInfoOfMovie.credits ? moreInfoOfMovie.credits.cast : []}
       />
+      </div>
     </div>
   );
 };

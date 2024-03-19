@@ -10,7 +10,7 @@ export const fetchMovies = async ({ movieType }) => {
   try {
     const res = await fetch(url, options);
     const resJSON = await res.json();
-    console.log(resJSON);
+    // console.log(resJSON);
     return resJSON;
   } catch (error) {
     console.error(error);
@@ -29,7 +29,7 @@ export const fetchMoreInfoOdMovie = async ({ movieId }) => {
   try {
     const res = await fetch(url, options);
     const resJSON = await res.json();
-    console.log(resJSON);
+    // console.log(resJSON);
     return resJSON;
   } catch (error) {
     console.error(error);

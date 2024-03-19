@@ -7,8 +7,8 @@ const AuthForm = () => {
   const [password, setPassword] = useState("");
 
   const [searchParamas] = useSearchParams();
-  console.log(searchParamas.get("mode"));
-  console.log(typeof searchParamas.get("mode"));
+  // console.log(searchParamas.get("mode"));
+  // console.log(typeof searchParamas.get("mode"));
   const isLoginPage = searchParamas.get("mode") === "login";
 
   const updateEmail = (val) => {
