@@ -1,0 +1,18 @@
+.roundBtn {
+  height: 45px;
+  width: 45px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  background: none;
+  color: #fff;
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+  }
+}

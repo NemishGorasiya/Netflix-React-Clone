@@ -1,0 +1,24 @@
+.btn {
+  color: #000;
+  background: #fff;
+  height: 45px;
+
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 20px 30px;
+  border: none;
+  display: flex;
+  align-items: center;
+  i {
+    font-size: 25px;
+    margin-right: 10px;
+  }
+}
+.playBtn {
+  color: #000;
+  background: #fff;
+}
+.moreInfoBtn {
+  background: rgba(106, 104, 104, 0.75);
+  color: #fff;
+}

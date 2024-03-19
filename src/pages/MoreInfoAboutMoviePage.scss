@@ -1,0 +1,26 @@
+.moreInfoPage {
+  background: #000;
+  color: #fff;
+  // padding: 30px 150px;
+  .functionBtns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .leftBtns {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .aboutMovie {
+    .movieDetails {
+      .movieVideoQuality {
+        border: 2px solid #fff;
+        padding: 2px;
+      }
+    }
+    .movieDetails > * {
+      margin-right: 10px;
+    }
+  }
+}

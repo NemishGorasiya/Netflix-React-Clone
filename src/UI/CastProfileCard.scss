@@ -1,0 +1,39 @@
+.castProfileCard {
+  display: inline-block;
+  text-align: center;
+  margin: 5px;
+  .castImage {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+  }
+  .castName,
+  .castCharacterName {
+    width: 120px;
+    line-height: 25px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    // -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: center;
+    margin: auto;
+    // word-break: break-all;
+  }
+  .castCharacterName {
+    font-size: 15px;
+    line-height: 18px;
+    color: grey;
+  }
+  .department {
+    width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    margin: auto;
+    font-size: 13px;
+    line-height: 20px;
+  }
+}

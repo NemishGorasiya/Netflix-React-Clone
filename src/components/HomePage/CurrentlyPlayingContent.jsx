@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CurrentlyPlayingContent.scss";
 import current_movie_logo from "../../assets/current_movie_logo.png";
 import repeat from "../../assets/Repeat.png";
-const CurrentlyPlayingContent = () => {
+import Button from "../../UI/Button";
+import { Link, useSearchParams } from "react-router-dom";
+const CurrentlyPlayingContent = ({ currentMovieData }) => {
   return (
-    <div className="currentlyPlayingContent">
-      <img src={current_movie_logo} alt="" />
+    <div
+      className="currentlyPlayingContent"
+      style={{
+        background: `linear-gradient(to right,black 0% ,transparent 100%) , url("https://image.tmdb.org/t/p/original/${currentMovieData.backdrop_path}")`,
+      }}
+    >
+      <h1 className="movieTitle">{currentMovieData.original_title}</h1>
 
-      <p className="movieDesctiption">
-        Virupaksha is a 2023 Indian Telugu-language horror thriller film
-        directed by Karthik Varma Dandu who co-wrote the film with Sukumar.
-      </p>
+      <p className="movieDesctiption">{currentMovieData.overview}</p>
       <div className="trendingContainer">
         <span className="top10">
           Top
@@ -22,12 +26,19 @@ const CurrentlyPlayingContent = () => {
         </span>
       </div>
       <div className="playBtnsWrapper">
-        <button className="playBtn">
-          <i className="fa-solid fa-play"></i> Play
-        </button>
-        <button className="moreInfoBtn">
-          <i className="fa-solid fa-circle-info"></i> More info
-        </button>
+        <Button
+          className={"btn playBtn"}
+          iconClassName={"fa-solid fa-play"}
+          text={"Play"}
+          style={{ marginRight: "10px" }}
+        />
+        <Link to={`/movies/moreInfo?id=${currentMovieData.id}`}>
+          <Button
+            className={"btn moreInfoBtn"}
+            iconClassName={"fa-solid fa-circle-info"}
+            text={"More Info"}
+          />
+        </Link>
       </div>
       <div className="filmCertification">
         <div className="imgWrapper">
