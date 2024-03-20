@@ -16,7 +16,9 @@ const HomePage = () => {
   return (
     <div className="homePage">
       <HomePageNavBar />
-      <CurrentlyPlayingContent currentMovieData={currentMovieData} />
+      {currentMovieData && (
+        <CurrentlyPlayingContent currentMovieData={currentMovieData} />
+      )}
       <MoviesCategories changeCurrrentMovieData={changeCurrrentMovieData} />
       <div className="footerWarpper">
         <Footer footerLinks={footerLinks} />

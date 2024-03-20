@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
 import { fetchMovies } from "../../utils/http";
+import { Link } from "react-router-dom";
 const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
-  // fetchMovies();
   const sliderRef = useRef();
   const tempRef = useRef();
   const [isPrevBtnHidden, setIsPrevBtnHidden] = useState(true);
@@ -10,45 +10,39 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
   let clientWidth = 0;
   let scrollLeft = 0;
   let scrollWidth = 0;
-  const handlePrevBtnClick = () => {
-    const calcToScroll = (sliderRef.current.clientWidth - 60) / 9;
+  const handleSliderBtnVisiblity = useCallback((scrollLeft) => {
+    scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
-    scrollLeft = sliderRef.current.scrollLeft;
-    if (isNextBtnHidden) {
-      setIsNextBtnHidden(false);
-    }
-    if (clientWidth >= scrollLeft) {
+    console.log("scrollWidth", scrollWidth);
+    console.log("clientWidth", clientWidth);
+    console.log("scrollLeft", scrollLeft);
+    if (scrollLeft <= 0) {
       setIsPrevBtnHidden(true);
     } else {
       setIsPrevBtnHidden(false);
     }
-    sliderRef.current.scrollLeft -=
-      sliderRef.current.clientWidth - calcToScroll;
-  };
-  const handleNextBtnClick = () => {
-    const calcToScroll = (sliderRef.current.clientWidth - 60) / 9;
-    clientWidth = sliderRef.current.clientWidth;
-    scrollLeft = sliderRef.current.scrollLeft;
-    scrollWidth = sliderRef.current.scrollWidth;
-    if (isPrevBtnHidden) {
-      setIsPrevBtnHidden(false);
-    }
-    if (scrollLeft + 2 * clientWidth >= scrollWidth) {
+    if (scrollLeft + clientWidth >= scrollWidth) {
       setIsNextBtnHidden(true);
     } else {
       setIsNextBtnHidden(false);
     }
-    sliderRef.current.scrollLeft +=
-      sliderRef.current.clientWidth - calcToScroll;
+  }, []);
+  const handlePrevBtnClick = () => {
+    scrollLeft = sliderRef.current.scrollLeft - sliderRef.current.clientWidth;
+    handleSliderBtnVisiblity(scrollLeft);
+    sliderRef.current.scrollLeft -= sliderRef.current.clientWidth;
+  };
+  const handleNextBtnClick = () => {
+    scrollLeft = sliderRef.current.scrollLeft + sliderRef.current.clientWidth;
+    handleSliderBtnVisiblity(scrollLeft);
+    sliderRef.current.scrollLeft += sliderRef.current.clientWidth;
   };
   let startX;
   let endX;
   const handleTouchStart = (event) => {
-    // console.log(event);
     startX = event.changedTouches[0].clientX;
   };
   const handleTouchEnd = (event) => {
-    // console.log(event);
     endX = event.changedTouches[0].clientX;
     if (startX - endX > 50) {
       handleNextBtnClick();
@@ -57,11 +51,9 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
     }
   };
   const handleDragStart = (event) => {
-    // console.log(event);
     startX = event.clientX;
   };
   const handleDragEnd = (event) => {
-    // console.log(event);
     endX = event.clientX;
     if (startX - endX > 50) {
       handleNextBtnClick();
@@ -69,6 +61,12 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
       handlePrevBtnClick();
     }
   };
+  useEffect(() => {
+    if (isViewAll === false) {
+      scrollLeft = sliderRef.current.scrollLeft;
+      handleSliderBtnVisiblity(scrollLeft);
+    }
+  }, [isViewAll]);
 
   return (
     <div className={isViewAll ? "slider viewAll" : "slider"} ref={tempRef}>
@@ -95,7 +93,7 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
         onDragEnd={handleDragEnd}
         ref={sliderRef}
       >
-        {moviesData.map((movieData) => (
+        {moviesData.map((movieData, idx) => (
           <div
             key={movieData.id}
             className="slide"
@@ -103,10 +101,12 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
               changeCurrrentMovieData(movieData);
             }}
           >
-            <img
-              src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
-              alt="image"
-            />
+            <Link to={`/movies/moreInfo?id=${movieData.id}`}>
+              <img
+                src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
+                alt="image"
+              />
+            </Link>
           </div>
         ))}
       </div>

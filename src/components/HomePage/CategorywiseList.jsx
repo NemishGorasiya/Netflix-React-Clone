@@ -28,11 +28,13 @@ const CategorywiseList = ({
           View {isViewAll ? "Less" : "More"}
         </p>
       </div>
-      <Slider
-        changeCurrrentMovieData={changeCurrrentMovieData}
-        isViewAll={isViewAll}
-        moviesData={moviesData ? moviesData.results : []}
-      />
+      {moviesData.results && (
+        <Slider
+          changeCurrrentMovieData={changeCurrrentMovieData}
+          isViewAll={isViewAll}
+          moviesData={moviesData.results}
+        />
+      )}
     </div>
   );
 };
