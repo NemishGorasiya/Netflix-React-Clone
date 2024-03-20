@@ -1,13 +1,14 @@
+import CircularProgress from "./CircularProgress";
 import "./Rating.scss";
 
 const Rating = ({ rating, ratingCount }) => {
   return (
     <div className="ratingWrapper">
-      <h3>Rating</h3>
-      <progress id="file" value={rating} max="10">
-        {rating}
-      </progress>
-      {rating}/10 ({ratingCount})
+      <h3>Rating </h3>
+      <span className="ratingCount">
+        (<i className="fa-solid fa-users"></i> {ratingCount})
+      </span>
+      <CircularProgress rating={rating} />
     </div>
   );
 };

@@ -22,3 +22,9 @@
   background: rgba(106, 104, 104, 0.75);
   color: #fff;
 }
+
+@media only screen and (max-width: 500px) {
+  .btn {
+    padding: 10px 20px;
+  }
+}

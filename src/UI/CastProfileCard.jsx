@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./CastProfileCard.scss";
+import profile_image from "../assets/profile_image.png";
 
 const CastProfileCard = (castInfo) => {
   const { name, character, profile_path, known_for_department } =
@@ -8,7 +9,11 @@ const CastProfileCard = (castInfo) => {
     <div className="castProfileCard">
       <img
         className="castImage"
-        src={`https://image.tmdb.org/t/p/original/${profile_path}`}
+        src={
+          profile_path
+            ? `https://image.tmdb.org/t/p/original/${profile_path}`
+            : profile_image
+        }
         alt=""
       />
       <p className="castName" title={name}>

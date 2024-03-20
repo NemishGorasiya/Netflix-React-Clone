@@ -43,11 +43,25 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
   };
   let startX;
   let endX;
+  const handleTouchStart = (event) => {
+    // console.log(event);
+    startX = event.changedTouches[0].clientX;
+  };
+  const handleTouchEnd = (event) => {
+    // console.log(event);
+    endX = event.changedTouches[0].clientX;
+    if (startX - endX > 50) {
+      handleNextBtnClick();
+    } else if (startX - endX < -50) {
+      handlePrevBtnClick();
+    }
+  };
   const handleDragStart = (event) => {
     // console.log(event);
     startX = event.clientX;
   };
   const handleDragEnd = (event) => {
+    // console.log(event);
     endX = event.clientX;
     if (startX - endX > 50) {
       handleNextBtnClick();
@@ -62,12 +76,12 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
         <>
           {!isPrevBtnHidden && (
             <button className="sliderBtn prevBtn" onClick={handlePrevBtnClick}>
-              &lt;
+              <i className="fa-solid fa-chevron-left"></i>
             </button>
           )}
           {!isNextBtnHidden && (
             <button className="sliderBtn nextBtn" onClick={handleNextBtnClick}>
-              &gt;
+              <i className="fa-solid fa-chevron-right"></i>
             </button>
           )}
         </>
@@ -75,6 +89,8 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
 
       <div
         className="slideContainer"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         ref={sliderRef}

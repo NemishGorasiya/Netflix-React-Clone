@@ -14,7 +14,7 @@
   }
   .castProfileCardWrapper {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     position: relative;
     overflow: hidden;
   }
@@ -51,5 +51,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, 150px);
     row-gap: 30px;
+    justify-content: space-between;
   }
 }

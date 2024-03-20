@@ -14,7 +14,9 @@ const CurrentlyPlayingContent = ({ currentMovieData }) => {
     >
       <h1 className="movieTitle">{currentMovieData.original_title}</h1>
 
-      <p className="movieDesctiption">{currentMovieData.overview}</p>
+      <p className="movieDesctiption" title={currentMovieData.overview}>
+        {currentMovieData.overview}
+      </p>
       <div className="trendingContainer">
         <span className="top10">
           Top

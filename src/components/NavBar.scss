@@ -45,25 +45,11 @@
   }
 }
 @media screen and (max-width: 600px) {
-  .navbar {
-    padding: 15px 30px;
-
-    .logo {
-      .logoImage {
-        height: 40px;
-      }
-    }
-  }
 }
 @media screen and (max-width: 380px) {
   .navbar {
     padding: 15px;
 
-    .logo {
-      .logoImage {
-        height: 40px;
-      }
-    }
     .NavBtnWrapper {
       button {
         padding: 0 5px;

@@ -23,13 +23,18 @@
       align-items: center;
       margin-top: 15px;
       margin-bottom: 20px;
-  
+
       .leftBtns {
         display: flex;
         align-items: center;
       }
     }
     .aboutMovie {
+      .movieGenres {
+        font-size: 25px;
+        margin-bottom: 15px;
+        font-weight: 500;
+      }
       .movieDetails {
         margin-bottom: 20px;
 
@@ -46,19 +51,16 @@
       }
       .movieDescription {
         margin-bottom: 25px;
+        color: grey;
       }
     }
   }
-  
 }
-
 
 @media screen and (max-width: 600px) {
   .moreInfoPage {
-  
     .moviePoster {
       background-position: center !important;
-
     }
   }
 }

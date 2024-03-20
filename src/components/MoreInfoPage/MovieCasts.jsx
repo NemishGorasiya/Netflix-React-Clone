@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import "./MovieCasts.scss";
 import CastProfileCard from "../../UI/CastProfileCard";
 
 const MovieCasts = ({ castsInfo }) => {
   const [isViewAllCasts, setIsViewAllCasts] = useState(false);
+  const [needOfViewAllBtn, setNeedOfViewAllBtn] = useState(true);
+  const castProfileCardWrapperRef = useRef();
+
   const handleViewAllCastsClick = () => {
     setIsViewAllCasts((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    if (
+      castProfileCardWrapperRef.current.scrollWidth <=
+      castProfileCardWrapperRef.current.offsetWidth
+    ) {
+      setNeedOfViewAllBtn(false);
+    } else {
+      setNeedOfViewAllBtn(true);
+    }
+  }, []);
   return (
     <div className="movieCasts">
       <div className="movieCastHeading">
@@ -18,11 +32,12 @@ const MovieCasts = ({ castsInfo }) => {
         )}
       </div>
       <div
+        ref={castProfileCardWrapperRef}
         className={`castProfileCardWrapper ${
           isViewAllCasts ? "viewAllCasts" : ""
         }`}
       >
-        {!isViewAllCasts && (
+        {!isViewAllCasts && needOfViewAllBtn && (
           <div
             className="viewAllCastsBtn"
             onClick={handleViewAllCastsClick}
