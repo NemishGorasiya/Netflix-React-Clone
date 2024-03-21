@@ -1,96 +1,100 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CustomInput from "../UI/CustomInput";
 import "./AuthForm.scss";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import Button from "../UI/Button";
+import { handleTMDBLogin } from "../services/services";
 const AuthForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [searchParamas] = useSearchParams();
-  // console.log(searchParamas.get("mode"));
-  // console.log(typeof searchParamas.get("mode"));
   const isLoginPage = searchParamas.get("mode") === "login";
+  const navigate = useNavigate();
 
-  const updateEmail = (val) => {
-    setEmail(val);
+  const updateUsername = (val) => {
+    setUsername(val);
   };
   const updatePassword = (val) => {
     setPassword(val);
   };
-  const validateEmail = (val) => {
-    if (val.length <= 6) {
-      return false;
-    } else {
-      return true;
-    }
+  const redirectToTMDBPage = () => {
+    window.open("https://www.themoviedb.org/login", "_blank");
+    navigate("/auth?mode=login");
   };
-  const validatePassword = (val) => {
-    if (val.length <= 10) {
-      return false;
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const sessionID = await handleTMDBLogin(username, password);
+    if (!sessionID) {
+      alert("invlid credentials");
     } else {
-      return true;
+      console.log("sessionID", sessionID);
+      navigate("/");
     }
+    setUsername("");
+    setPassword("");
   };
+
+  useEffect(() => {
+    if (isLoginPage) {
+      setUsername("");
+      setPassword("");
+    }
+  }, [isLoginPage]);
 
   return (
     <div className="authenticationFormContainer">
-      <h1 style={{color : 'white'}}>{`${isLoginPage ? "Login" : "Sign Up"}`} page</h1>
-      <form action="" className="authenticationForm">
-        {
-          !isLoginPage && <>
-          <CustomInput
-          updateState={updateEmail}
-          errorMessage="invalid email"
-          floatingLabel="Enter First Name"
-          required={true}
-          id="email"
-          type="email"
-          inputValidationFn={validateEmail}
-        />
-        <CustomInput
-          updateState={updateEmail}
-          errorMessage="invalid email"
-          floatingLabel="Enter Last Name"
-          required={true}
-          id="email"
-          type="email"
-          inputValidationFn={validateEmail}
-        />
+      <h1 style={{ color: "white" }}>
+        {`${isLoginPage ? "Login" : "Sign Up"}`}
+      </h1>
+      <form className="authenticationForm" onSubmit={handleLogin}>
+        {!isLoginPage && (
+          <>
+            <Button
+              onClick={redirectToTMDBPage}
+              style={{
+                background: "#01B4E4",
+              }}
+              className={"tmdbSignUpBtn"}
+              text={`TMDB Sign Up`}
+            />
           </>
-        }
-      
-        <CustomInput
-          updateState={updateEmail}
-          errorMessage="invalid email"
-          floatingLabel="Enter email"
-          required={true}
-          id="email"
-          type="email"
-          inputValidationFn={validateEmail}
-        />
-        <CustomInput
-          updateState={updatePassword}
-          errorMessage="invalid Password"
-          floatingLabel="Enter Password"
-          required={true}
-          id="password"
-          type="password"
-          inputValidationFn={validatePassword}
-        />
-        {
-          !isLoginPage && <CustomInput
-          updateState={updatePassword}
-          errorMessage="invalid Password"
-          floatingLabel="Confirm Password"
-          required={true}
-          id="password"
-          type="password"
-          inputValidationFn={validatePassword}
-        />
-        }
-        <button className="authFormSubmitBtn" type="button">Sign In</button>
+        )}
+        {isLoginPage && (
+          <>
+            <CustomInput
+              updateState={updateUsername}
+              floatingLabel="Enter Username"
+              required={true}
+              id="username"
+              type="text"
+              val={username}
+            />
+            <CustomInput
+              updateState={updatePassword}
+              floatingLabel="Enter Password"
+              required={true}
+              id="password"
+              type="password"
+              val={password}
+            />
+            <button className="authFormSubmitBtn" type="submit">
+              Login In
+            </button>
+          </>
+        )}
       </form>
-      <Link to={`/auth?mode=${isLoginPage ? "signup":"login"}`}>move to {isLoginPage ? "signup":"login"}</Link>
+
+      <p className="conditionToMovePage">
+        {isLoginPage
+          ? "New User ? Register Now."
+          : "Already have a TMDB Account ?"}
+      </p>
+
+      <Link to={`/auth?mode=${isLoginPage ? "signup" : "login"}`}>
+        Move to {isLoginPage ? "Signup" : "Login"} Page&nbsp;{" "}
+        <i className="fa-solid fa-arrow-right"></i>
+      </Link>
     </div>
   );
 };

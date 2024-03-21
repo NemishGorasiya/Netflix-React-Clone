@@ -6,18 +6,46 @@
   cursor: pointer;
   position: relative;
   margin-right: 15px;
-
-  i.cheveronDown {
-    font-size: 15px;
-    margin-left: 5px;
+  .iconsWrapper {
+    i.cheveronDown {
+      font-size: 15px;
+      margin-left: 5px;
+    }
+    transition: all 0.3s ease;
+    &:hover {
+      color: grey;
+    }
   }
+
   .accountSettingOptions {
     position: absolute;
-    height: 200px;
-    width: 200px;
-    background: grey;
-    top: 120%;
+    top: 100%;
     right: 0;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      display: inline-block;
+      text-align: center;
+
+      li {
+        display: block;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0 5px;
+        background: #000;
+        &:hover {
+          background: grey;
+        }
+      }
+    }
   }
 }
 .accountSetting.sideBarOpen {
@@ -44,5 +72,11 @@
   }
   .accountSetting.sideBarOpen {
     display: none;
+  }
+}
+
+@media only screen and (min-width: 1121px) {
+  .accountSetting {
+    display: flex !important;
   }
 }

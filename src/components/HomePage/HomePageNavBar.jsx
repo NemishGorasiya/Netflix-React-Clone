@@ -1,20 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./HomePageNavBar.scss";
 import NetflixLogo from "../../assets/Netflix_logo.png";
 import AccountSetting from "./AccountSetting";
 
 const HomePageNavBar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const sideBarRef = useRef(null);
+  const hamBurgerRef = useRef(null);
   const handleHamBurgerClick = () => {
+    console.log("hamburger");
+    console.log(isSideBarOpen);
+    if (isSideBarOpen) {
+      document.body.style.overflow = "auto";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
     setIsSideBarOpen((prevState) => !prevState);
   };
+
+  const handleClickOutside = (event) => {
+    if (
+      sideBarRef.current &&
+      hamBurgerRef.current &&
+      !sideBarRef.current.contains(event.target) &&
+      !hamBurgerRef.current.contains(event.target)
+    ) {
+      setIsSideBarOpen(false);
+      document.body.style.overflow = "auto";
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div className="homePageNavBar">
+      <div className={isSideBarOpen ? "overLay sideBarOpen" : "overLay"}></div>
       <div className="navLeft">
         <div className="logoContainer">
           <img src={NetflixLogo} alt="" />
         </div>
-        <ul className={isSideBarOpen ? "navLinks sideBarOpen" : "navLinks"}>
+        <ul
+          ref={sideBarRef}
+          className={isSideBarOpen ? "navLinks sideBarOpen" : "navLinks"}
+        >
           <li>Home</li>
           <li>TV Shows</li>
           <li>Movies</li>
@@ -40,7 +72,11 @@ const HomePageNavBar = () => {
           <i className="fa-solid fa-bell notificationIcon"></i>
         </button>
         <AccountSetting isSideBarOpen={isSideBarOpen} />
-        <button className="hamburgerIcon" onClick={handleHamBurgerClick}>
+        <button
+          ref={hamBurgerRef}
+          className="hamburgerIcon"
+          onClick={handleHamBurgerClick}
+        >
           <i
             className={`fa-solid ${isSideBarOpen ? "fa-xmark" : "fa-bars"}`}
           ></i>

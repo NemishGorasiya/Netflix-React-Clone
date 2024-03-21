@@ -8,6 +8,17 @@
   z-index: 99;
   min-height: 85px;
 
+  .overLay {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    z-index: 98;
+    top: 0;
+    left: 0;
+    background: rgba(80, 80, 80, 0.8);
+    display: none;
+  }
+
   .navLeft {
     display: flex;
     align-items: center;
@@ -58,6 +69,7 @@
       position: relative;
       display: inline-block;
       margin-right: 25px;
+
       input {
         height: 30px;
         width: 30px;
@@ -100,33 +112,39 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: all 0.3s ease;
+      &:hover {
+        color: grey;
+      }
     }
     .hamburgerIcon {
       margin-left: 15px;
       display: none;
-    }
-  }
-  .navRight > * {
-    transition: all 0.3s ease;
-    &:hover {
-      color: grey;
+      transition: all 0.3s ease;
+      &:hover {
+        color: grey;
+      }
     }
   }
 }
 @media only screen and (max-width: 1120px) {
   .homePageNavBar {
+    .overLay.sideBarOpen {
+      display: block;
+    }
     .navLeft {
       .logoContainer {
         img {
         }
       }
       ul.navLinks {
-        width: 0;
-        transition: width 0.3s;
         display: none;
+        width: 0;
+        // transition: width 0.3s ease;
       }
 
       ul.navLinks.sideBarOpen {
+        z-index: 99;
         min-height: 100vh;
         width: 30%;
         min-width: 300px;
@@ -134,14 +152,18 @@
         top: 0;
         right: 0;
         display: flex;
+        opacity: 1;
         flex-direction: column;
         padding-top: 85px;
-        background: rgba(0, 0, 0, 0.8);
+        background: #000;
+        // background: #fff;
         text-align: center;
         li {
           color: #fff;
+          // color: #000;
           font-size: 17px;
           margin-bottom: 10px;
+          z-index: 99;
         }
       }
     }
@@ -162,6 +184,7 @@
       }
       .hamburgerIcon {
         display: flex;
+        z-index: 99;
       }
     }
   }
@@ -206,6 +229,7 @@
   .homePageNavBar {
     min-height: 65px;
     padding: 0 15px;
+
     .navLeft {
       .logoContainer {
         img {
@@ -216,6 +240,7 @@
 
       ul.navLinks.sideBarOpen {
         padding-top: 65px;
+
         li {
         }
       }
@@ -267,6 +292,7 @@
       }
 
       ul.navLinks.sideBarOpen {
+        width: 100%;
         li {
         }
       }
@@ -288,6 +314,16 @@
       .notificationBtn.sideBarOpen {
       }
       .hamburgerIcon {
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1121px) {
+  .homePageNavBar {
+    .navRight {
+      .inputWrapper {
+        display: inline-block !important;
       }
     }
   }

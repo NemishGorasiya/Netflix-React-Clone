@@ -4,8 +4,9 @@
 
   .moviePoster {
     background-size: cover !important;
-    background-position: right top !important;
-    min-height: 450px;
+    background-position: right !important;
+    min-height: 650px;
+    height: 80vh;
     position: relative;
 
     .movieTitle {

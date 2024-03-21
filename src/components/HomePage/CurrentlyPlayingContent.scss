@@ -1,108 +1,118 @@
-.currentlyPlayingContent {
-  padding: 85px 0 30px 80px;
-  text-align: left;
-  min-height: 650px;
-  position: relative;
-  background-position: right top !important;
-  background-size: cover !important;
+.displayMoviesContainer {
   display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: center;
-  text-align: start;
-  width: 100%;
-
-  h1.movieTitle {
-    font-size: 40px;
-    margin-bottom: 10px;
-  }
-  p.movieDesctiption {
-    max-width: 600px;
-    margin-bottom: 10px;
-    line-height: 23px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .trendingContainer {
+  overflow: hidden;
+  scroll-behavior: smooth;
+  .currentlyPlayingContent {
+    padding: 85px 0 30px 80px;
+    text-align: left;
+    min-height: 650px;
+    height: 80vh;
+    position: relative;
+    background-position: right !important;
+    background-size: cover !important;
     display: flex;
-    align-items: center;
-    margin-bottom: 25px;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    text-align: start;
+    min-width: 100%;
 
-    span.top10 {
-      background: red;
-      font-weight: 600;
-      border-radius: 7px;
-      padding: 10px;
-      text-align: center;
-      margin-right: 10px;
+    h1.movieTitle {
+      font-size: 40px;
+      margin-bottom: 10px;
     }
-    span.trendingRank {
-      font-weight: 700;
-      text-shadow: 0 0 4px #000, 0 0 5px rgba(0, 0, 0, 0.5),
-        0 0 5px rgba(0, 0, 0, 0.15);
+    p.movieDesctiption {
+      max-width: 600px;
+      margin-bottom: 10px;
+      line-height: 23px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
-  }
 
-  .playBtnsWrapper {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .filmCertification {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    height: 45px;
-    position: absolute;
-    right: 0;
-    bottom: 20px;
-    .imgWrapper {
-      height: 100%;
-      margin-right: 15px;
-      img {
-        height: 100%;
-      }
-    }
-    .certification {
-      height: 100%;
-      position: relative;
-      padding-left: 30px;
+    .trendingContainer {
       display: flex;
       align-items: center;
-      justify-content: start;
-      min-width: 130px;
-      background: rgba(0, 0, 0, 0.37);
+      margin-bottom: 25px;
+
+      span.top10 {
+        background: red;
+        font-weight: 600;
+        border-radius: 7px;
+        padding: 10px;
+        text-align: center;
+        margin-right: 10px;
+      }
+      span.trendingRank {
+        font-weight: 700;
+        text-shadow: 0 0 4px #000, 0 0 5px rgba(0, 0, 0, 0.5),
+          0 0 5px rgba(0, 0, 0, 0.15);
+      }
     }
-    .certification::before {
-      content: "";
-      height: 100%;
-      width: 15px;
-      left: 0;
-      background: #fff;
+
+    .playBtnsWrapper {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .filmCertification {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      height: 45px;
       position: absolute;
+      right: 0;
+      bottom: 20px;
+      .imgWrapper {
+        height: 100%;
+        margin-right: 15px;
+        img {
+          height: 100%;
+        }
+      }
+      .certification {
+        height: 100%;
+        position: relative;
+        padding-left: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        min-width: 130px;
+        background: rgba(0, 0, 0, 0.37);
+      }
+      .certification::before {
+        content: "";
+        height: 100%;
+        width: 15px;
+        left: 0;
+        background: #fff;
+        position: absolute;
+      }
     }
   }
 }
 
 @media only screen and (max-width: 1120px) {
-  .currentlyPlayingContent {
-    padding: 85px 0 30px 40px;
+  .displayMoviesContainer {
+    .currentlyPlayingContent {
+      padding: 85px 0 30px 40px;
 
-    p.movieDesctiption {
-      max-width: 400px;
+      p.movieDesctiption {
+        max-width: 400px;
+      }
     }
   }
 }
 @media only screen and (max-width: 720px) {
-  .currentlyPlayingContent {
-    padding: 85px 0 30px 30px;
+  .displayMoviesContainer {
+    .currentlyPlayingContent {
+      padding: 85px 0 30px 30px;
 
-    p.movieDesctiption {
-      max-width: 400px;
+      p.movieDesctiption {
+        max-width: 400px;
+      }
     }
   }
 }

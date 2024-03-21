@@ -19,10 +19,10 @@ function App() {
     //   path: "/",
     //   element: <OverviewPage />,
     // },
-    // {
-    //   path: "auth",
-    //   element: <AuthenticationPage />,
-    // },
+    {
+      path: "auth",
+      element: <AuthenticationPage />,
+    },
   ]);
   return (
     <>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
-import { fetchMovies } from "../../utils/http";
+import { fetchMovies } from "../../services/services";
 import { Link } from "react-router-dom";
 const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
   const sliderRef = useRef();
@@ -13,9 +13,9 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
   const handleSliderBtnVisiblity = useCallback((scrollLeft) => {
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
-    console.log("scrollWidth", scrollWidth);
-    console.log("clientWidth", clientWidth);
-    console.log("scrollLeft", scrollLeft);
+    // console.log("scrollWidth", scrollWidth);
+    // console.log("clientWidth", clientWidth);
+    // console.log("scrollLeft", scrollLeft);
     if (scrollLeft <= 0) {
       setIsPrevBtnHidden(true);
     } else {

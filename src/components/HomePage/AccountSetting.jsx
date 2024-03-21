@@ -17,7 +17,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
   };
 
   useEffect(() => {
-    console.log("called");
+    // console.log("called");
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -31,9 +31,19 @@ const AccountSetting = ({ isSideBarOpen }) => {
       ref={accountSettingRef}
       onClick={handleAccountSettingClick}
     >
-      <i className="fa-solid fa-user"></i>
-      <i className="fa-solid fa-chevron-down cheveronDown"></i>
-      {isAccountSettingVisible && <div className="accountSettingOptions"></div>}
+      <div className="iconsWrapper">
+        <i className="fa-solid fa-user"></i>
+        <i className="fa-solid fa-chevron-down cheveronDown"></i>
+      </div>
+      {isAccountSettingVisible && (
+        <div className="accountSettingOptions">
+          <ul>
+            <li>Nemish Gorasiya</li>
+            <li>Setting</li>
+            <li>Logout</li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

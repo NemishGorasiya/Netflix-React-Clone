@@ -1,5 +1,9 @@
 .authenticationPage {
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: linear-gradient(
     360deg,
     rgba(0, 0, 0, 0.8) 3%,

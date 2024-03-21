@@ -7,7 +7,7 @@ const CircularProgress = ({ rating }) => {
   useEffect(() => {
     const setDegreeInterval = setInterval(() => {
       if (degree >= rating * 36) {
-        console.log("running");
+        // console.log("running");
         clearInterval(setDegreeInterval);
         return;
       }

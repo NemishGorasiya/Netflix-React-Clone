@@ -1,6 +1,6 @@
 import "./CustomInput.scss";
 import { debounce } from "../utils/utilityFunctions.js";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const CustomInput = ({
   type = "text",
@@ -8,54 +8,45 @@ const CustomInput = ({
   floatingLabel = "Enter here ...",
   required = true,
   updateState,
-  inputValidationFn,
-  errorMessage,
+  val,
 }) => {
-  const [isError, setIsError] = useState(false);
-  const [isEmpty , setIsEmpty] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(true);
 
-  const afterDebounce = useCallback(  
-    (value) => {
-      if (value === "") {
-        setIsEmpty(true);
-      }else{
+  const handleInputChange = (event) => {
+    if (event.target.value === "") {
+      setIsEmpty(true);
+    } else {
+      if (isEmpty) {
         setIsEmpty(false);
       }
-      if (inputValidationFn(value)) {
-        console.log("finally", value);
-        updateState(value);
-        setIsError(false);
-      } else {
-        setIsError(true);
+    }
+    updateState(event.target.value);
+  };
+
+  useEffect(() => {
+    if (val === "") {
+      setIsEmpty(true);
+    } else {
+      if (isEmpty) {
+        setIsEmpty(false);
       }
-    },
-    [inputValidationFn, updateState]
-  );
-  const handleDebounce = useCallback(
-    debounce((value) => {
-      afterDebounce(value);
-    }),
-    [afterDebounce]
-  );
-  const myFun = useCallback(
-    ({ target: { value } }) => {
-      handleDebounce(value);
-    },
-    [handleDebounce]
-  );
+    }
+  }, [isEmpty, val]);
+
   return (
     <>
       <div className="customInputContainer">
         <input
           type={type}
           id={id}
-          className = {!isEmpty ? "customInput notEmpty" : "customInput"}
+          className={!isEmpty ? "customInput notEmpty" : "customInput"}
           required
-          onChange={myFun}
+          value={val}
+          autoComplete="off"
+          onChange={handleInputChange}
         />
         <label className="floatingLabel">{floatingLabel}</label>
       </div>
-      {isError && <div className="errorMessage">{errorMessage}</div>}
     </>
   );
 };

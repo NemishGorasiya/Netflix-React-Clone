@@ -2,10 +2,14 @@
   max-width: 450px;
   width: 100%;
   margin: auto;
+  background: rgba(50, 50, 50, 0.7);
+  padding: 35px;
+  border-radius: 15px;
 
   .authenticationForm {
     display: flex;
     flex-direction: column;
+    margin: 25px 0;
 
     button {
       background: red;
@@ -15,6 +19,17 @@
       font-weight: 600;
       border-radius: 5px;
       height: 45px;
+    }
+  }
+
+  p.conditionToMovePage {
+    color: grey;
+  }
+  a {
+    text-decoration: none;
+    color: #fff;
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

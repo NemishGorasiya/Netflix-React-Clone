@@ -6,7 +6,7 @@ import Rating from "../UI/Rating";
 import CastProfileCard from "../UI/CastProfileCard";
 import MovieCasts from "../components/MoreInfoPage/MovieCasts";
 import { useSearchParams } from "react-router-dom";
-import { fetchMoreInfoOdMovie } from "../utils/http";
+import { fetchMoreInfoOdMovie } from "../services/services";
 
 const MoreInfoAboutMoviePage = () => {
   const [isVolumeMuted, setIsVolumeMuted] = useState(true);
