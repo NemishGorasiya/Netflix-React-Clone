@@ -1,5 +1,6 @@
 import "./App.scss";
 import AuthenticationPage from "./pages/AuthenticationPage";
+import ExplorePage from "./pages/ExplorePage";
 import HomePage from "./pages/HomePage";
 import MoreInfoAboutMoviePage from "./pages/MoreInfoAboutMoviePage";
 import MyAccountPage from "./pages/MyAccountPage";
@@ -21,6 +22,10 @@ function App() {
     {
       path: "/myWatchList",
       element: <MyWatchList />,
+    },
+    {
+      path: "/explore",
+      element: <ExplorePage />,
     },
     {
       path: "/myFavorite",

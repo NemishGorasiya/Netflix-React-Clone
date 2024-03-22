@@ -20,6 +20,8 @@ const HomePageNavBar = () => {
     setIsSideBarOpen((prevState) => !prevState);
   };
 
+  const handleSearch = () => {};
+
   const handleClickOutside = (event) => {
     if (
       sideBarRef.current &&
@@ -65,14 +67,23 @@ const HomePageNavBar = () => {
         </ul>
       </div>
       <div className="navRight">
-        <div
+        {/* <div
           className={
             isSideBarOpen ? "inputWrapper sideBarOpen" : "inputWrapper"
           }
         >
-          <input type="search" name="" id="" />
-          <i className="fa-solid fa-magnifying-glass searchIcon"></i>
-        </div>
+          <input type="search" name="" id="" onChange={handleSearch} />
+          <Link to={"/explore"}>
+            <i className="fa-solid fa-magnifying-glass searchIcon"></i>
+          </Link>
+        </div> */}
+        <button
+          className={isSideBarOpen ? "seachBtn sideBarOpen" : "searchBtn"}
+        >
+          <Link to={"/explore"}>
+            <i className="fa-solid fa-magnifying-glass searchIcon"></i>
+          </Link>
+        </button>
         <button
           className={
             isSideBarOpen ? "notificationBtn sideBarOpen" : "notificationBtn"

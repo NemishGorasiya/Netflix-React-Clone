@@ -117,3 +117,26 @@
     }
   }
 }
+@media only screen and (max-width: 450px) {
+  .displayMoviesContainer {
+    .currentlyPlayingContent {
+      padding: 85px 0 30px 30px;
+      min-height: 400px;
+      height: 50vh;
+      h1.movieTitle {
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+      p.movieDesctiption {
+        max-width: 400px;
+        margin-bottom: 10px;
+        line-height: 17px;
+        font-size: 13px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+}

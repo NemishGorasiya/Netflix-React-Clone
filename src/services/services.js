@@ -230,3 +230,17 @@ export const fetchFavorite = async ({ sessionID, favoriteCategory }) => {
     console.error(error);
   }
 };
+
+const fetchDataBySearchQuery = async (searchQuery, media_type = "movie") => {
+  const url = `https://api.themoviedb.org/3/search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=1`;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
+  };
+  const res = await fetch(url, options);
+  const resJSON = await res.json();
+  return resJSON;
+};
