@@ -10,7 +10,6 @@ export const fetchMovies = async (movieType) => {
   try {
     const res = await fetch(url, options);
     const resJSON = await res.json();
-    // console.log(resJSON);
     return resJSON;
   } catch (error) {
     console.error(error);
@@ -127,4 +126,107 @@ export const handleTMDBLogin = async (username, password) => {
     }
   }
   return false;
+};
+
+export const addToFavorite = async ({
+  sessionID,
+  media_id,
+  media_type,
+  addingOrRemoving = true,
+}) => {
+  const url = `https://api.themoviedb.org/3/account/account_id/favorite?session_id=${sessionID}`;
+  const options = {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
+    body: JSON.stringify({
+      media_type: media_type,
+      media_id: media_id,
+      favorite: addingOrRemoving,
+    }),
+  };
+
+  try {
+    const res = await fetch(url, options);
+    const resJSON = await res.json();
+    if (resJSON.success) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const addToWatchList = async ({
+  sessionID,
+  media_id,
+  media_type,
+  addingOrRemoving = true,
+}) => {
+  const url = `https://api.themoviedb.org/3/account/account_id/watchlist?session_id=${sessionID}`;
+  const options = {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY} `,
+    },
+    body: JSON.stringify({
+      media_type: media_type,
+      media_id: media_id,
+      watchlist: addingOrRemoving,
+    }),
+  };
+
+  try {
+    const res = await fetch(url, options);
+    const resJSON = await res.json();
+    if (resJSON.success) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchWatchList = async ({ sessionID, watchListCategory }) => {
+  let url = `https://api.themoviedb.org/3/account/account_id/watchlist/${watchListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
+  };
+  try {
+    const res = await fetch(url, options);
+    const resJSON = await res.json();
+    return resJSON;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const fetchFavorite = async ({ sessionID, favoriteCategory }) => {
+  let url = `https://api.themoviedb.org/3/account/account_id/favorite/${favoriteCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
+  };
+  try {
+    const res = await fetch(url, options);
+    const resJSON = await res.json();
+    return resJSON;
+  } catch (error) {
+    console.error(error);
+  }
 };

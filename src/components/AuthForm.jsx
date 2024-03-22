@@ -4,9 +4,11 @@ import "./AuthForm.scss";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../UI/Button";
 import { handleTMDBLogin } from "../services/services";
+import useLocalStorage from "../hooks/useLocalStorage";
 const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", {});
 
   const [searchParamas] = useSearchParams();
   const isLoginPage = searchParamas.get("mode") === "login";
@@ -29,6 +31,10 @@ const AuthForm = () => {
       alert("invlid credentials");
     } else {
       console.log("sessionID", sessionID);
+      setLoggedInUser({
+        sessionID: sessionID,
+        username: username,
+      });
       navigate("/");
     }
     setUsername("");

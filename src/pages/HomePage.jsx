@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import CategorywiseList from "../components/HomePage/CategorywiseList";
 import CurrentlyPlayingContent from "../components/HomePage/CurrentlyPlayingContent";
 import HomePageNavBar from "../components/HomePage/HomePageNavBar";
 import MoviesCategories from "../components/HomePage/MoviesCategories";

@@ -16,12 +16,38 @@
       margin: 0 7.5px;
       background: grey;
       border-radius: 8px;
+      position: relative;
 
       img {
         height: 100%;
         width: 100%;
         border-radius: 8px;
         user-select: none;
+      }
+      .deleteIcon {
+        position: absolute;
+        background: #fff;
+        color: #000;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        top: 5px;
+        right: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        display: none;
+
+        &:hover {
+          background: red;
+          color: #fff;
+        }
+      }
+    }
+    .slide.deletableSlide {
+      .deleteIcon {
+        display: flex;
       }
     }
   }

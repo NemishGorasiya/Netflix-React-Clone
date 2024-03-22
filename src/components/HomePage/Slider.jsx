@@ -2,7 +2,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
 import { fetchMovies } from "../../services/services";
 import { Link } from "react-router-dom";
-const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
+const Slider = ({
+  changeCurrrentMovieData,
+  isViewAll,
+  moviesData = [],
+  isDeletable,
+  handleRemoveFromWatchList,
+  handleRemoveFromFavorite,
+  watchListCategory,
+  isFavoriteList,
+  favoriteCategory,
+}) => {
   const sliderRef = useRef();
   const tempRef = useRef();
   const [isPrevBtnHidden, setIsPrevBtnHidden] = useState(true);
@@ -29,12 +39,26 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
   }, []);
   const handlePrevBtnClick = () => {
     scrollLeft = sliderRef.current.scrollLeft - sliderRef.current.clientWidth;
-    handleSliderBtnVisiblity(scrollLeft);
+    scrollWidth = sliderRef.current.scrollWidth;
+    clientWidth = sliderRef.current.clientWidth;
+    if (scrollWidth === clientWidth) {
+      setIsNextBtnHidden(true);
+      setIsPrevBtnHidden(true);
+    } else {
+      handleSliderBtnVisiblity(scrollLeft);
+    }
     sliderRef.current.scrollLeft -= sliderRef.current.clientWidth;
   };
   const handleNextBtnClick = () => {
     scrollLeft = sliderRef.current.scrollLeft + sliderRef.current.clientWidth;
-    handleSliderBtnVisiblity(scrollLeft);
+    scrollWidth = sliderRef.current.scrollWidth;
+    clientWidth = sliderRef.current.clientWidth;
+    if (scrollWidth === clientWidth) {
+      setIsNextBtnHidden(true);
+      setIsPrevBtnHidden(true);
+    } else {
+      handleSliderBtnVisiblity(scrollLeft);
+    }
     sliderRef.current.scrollLeft += sliderRef.current.clientWidth;
   };
   let startX;
@@ -61,6 +85,7 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
       handlePrevBtnClick();
     }
   };
+
   useEffect(() => {
     if (isViewAll === false) {
       scrollLeft = sliderRef.current.scrollLeft;
@@ -96,7 +121,7 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
         {moviesData.map((movieData, idx) => (
           <div
             key={movieData.id}
-            className="slide"
+            className={isDeletable ? "slide deletableSlide" : "slide"}
             onClick={() => {
               changeCurrrentMovieData(movieData);
             }}
@@ -107,6 +132,30 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
                 alt="image"
               />
             </Link>
+            <div
+              className="deleteIcon"
+              onClick={() => {
+                isFavoriteList
+                  ? handleRemoveFromFavorite({
+                      media_id: movieData.id,
+                      media_type:
+                        favoriteCategory === "movies"
+                          ? "movie"
+                          : favoriteCategory,
+                      addingOrRemoving: false,
+                    })
+                  : handleRemoveFromWatchList({
+                      media_id: movieData.id,
+                      media_type:
+                        watchListCategory === "movies"
+                          ? "movie"
+                          : watchListCategory,
+                      addingOrRemoving: false,
+                    });
+              }}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </div>
           </div>
         ))}
       </div>

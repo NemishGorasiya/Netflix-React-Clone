@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import "./HomePageNavBar.scss";
 import NetflixLogo from "../../assets/Netflix_logo.png";
 import AccountSetting from "./AccountSetting";
+import { Link } from "react-router-dom";
 
 const HomePageNavBar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const sideBarRef = useRef(null);
   const hamBurgerRef = useRef(null);
+
   const handleHamBurgerClick = () => {
     console.log("hamburger");
     console.log(isSideBarOpen);
@@ -47,11 +49,18 @@ const HomePageNavBar = () => {
           ref={sideBarRef}
           className={isSideBarOpen ? "navLinks sideBarOpen" : "navLinks"}
         >
-          <li>Home</li>
+          <Link to={"/"}>
+            <li>Home</li>
+          </Link>
           <li>TV Shows</li>
           <li>Movies</li>
           <li>New & Popular</li>
-          <li>My List</li>
+          <Link to={"/myWatchList"}>
+            <li>My WatchList</li>
+          </Link>
+          <Link to={"/myFavorite"}>
+            <li>My Favorite</li>
+          </Link>
           <li>Browse by Languages</li>
         </ul>
       </div>

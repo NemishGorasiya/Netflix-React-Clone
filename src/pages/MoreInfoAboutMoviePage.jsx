@@ -6,11 +6,18 @@ import Rating from "../UI/Rating";
 import CastProfileCard from "../UI/CastProfileCard";
 import MovieCasts from "../components/MoreInfoPage/MovieCasts";
 import { useSearchParams } from "react-router-dom";
-import { fetchMoreInfoOdMovie } from "../services/services";
+import {
+  addToFavorite,
+  addToWatchList,
+  fetchMoreInfoOdMovie,
+} from "../services/services";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const MoreInfoAboutMoviePage = () => {
   const [isVolumeMuted, setIsVolumeMuted] = useState(true);
   const [moreInfoOfMovie, setMoreInfoOfMovie] = useState({});
+  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", "");
+
   const handleMuteVolumeClick = () => {
     setIsVolumeMuted((prevState) => !prevState);
   };
@@ -27,6 +34,31 @@ const MoreInfoAboutMoviePage = () => {
   const runtime = moreInfoOfMovie.runtime;
   const runTimeHours = parseInt(runtime / 60);
   const runTimeMinutes = runtime - runTimeHours * 60;
+
+  const handleAddToFavorite = async () => {
+    const res = await addToFavorite({
+      sessionID: loggedInUser.sessionID,
+      media_id: moreInfoOfMovie.id,
+      media_type: "movie",
+    });
+    if (res) {
+      console.log("added to favorite");
+    } else {
+      console.log("oops!, somethind went wrong");
+    }
+  };
+  const handleAddToWatchList = async () => {
+    const res = await addToWatchList({
+      sessionID: loggedInUser.sessionID,
+      media_id: moreInfoOfMovie.id,
+      media_type: "movie",
+    });
+    if (res) {
+      console.log("added to WatchList");
+    } else {
+      console.log("oops!, somethind went wrong");
+    }
+  };
 
   return (
     <div className="moreInfoPage">
@@ -47,12 +79,18 @@ const MoreInfoAboutMoviePage = () => {
               text={"Play"}
               style={{ marginRight: "10px" }}
             />
-            <RoundButton iconClassName="fa-solid fa-circle-plus" />
-            <RoundButton iconClassName="fa-solid fa-thumbs-up" />
+            <RoundButton
+              onClick={handleAddToWatchList}
+              iconClassName="fa-solid fa-circle-plus"
+            />
+            <RoundButton
+              onClick={handleAddToFavorite}
+              iconClassName="fa-solid fa-thumbs-up"
+            />
           </div>
           <div className="rightBtns">
             <RoundButton
-              handleMuteVolumeClick={handleMuteVolumeClick}
+              onClick={handleMuteVolumeClick}
               iconClassName={`fa-solid ${
                 isVolumeMuted ? "fa-volume-xmark" : "fa-volume-high"
               } `}

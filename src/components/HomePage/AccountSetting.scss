@@ -25,6 +25,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: #fff;
 
     ul {
       list-style: none;
@@ -38,11 +41,34 @@
         max-width: 100%;
         white-space: nowrap;
         overflow: hidden;
+        font-size: 18px;
         text-overflow: ellipsis;
         padding: 0 5px;
-        background: #000;
+        color: grey;
+
         &:hover {
+          color: #000;
+          transform: scale(1.03);
+        }
+      }
+      li.username {
+        a.viewProfile {
+          // background: violet;
+          display: block;
+          font-size: 13px;
+          text-align: left;
+          line-height: 13px;
+          position: relative;
+          padding-bottom: 5px;
+        }
+        a.viewProfile::after {
+          content: "";
+          position: absolute;
+          height: 2px;
+          width: 100%;
           background: grey;
+          bottom: 0;
+          left: 0;
         }
       }
     }
