@@ -1,20 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
-import CategorywiseList from "../components/HomePage/CategorywiseList";
 import CurrentlyPlayingContent from "../components/HomePage/CurrentlyPlayingContent";
 import HomePageNavBar from "../components/HomePage/HomePageNavBar";
 import MoviesCategories from "../components/HomePage/MoviesCategories";
-import { fetchMovies } from "../services/services.js";
+import { fetchMediaData } from "../services/services.js";
 import Footer from "../components/Footer.jsx";
 import { footerLinks } from "../data/data.js";
 import "./HomePage.scss";
 
-const HomePage = () => {
+const HomePage = ({ mediaType = "movie" }) => {
   const [displayMoviesData, setDisplayMoviesData] = useState({});
 
   const fetchData = useCallback(async () => {
-    const res = await fetchMovies("popular");
+    const res = await fetchMediaData({
+      mediaType: mediaType,
+      mediaCategory: "popular",
+    });
     setDisplayMoviesData(res);
-  }, []);
+  }, [mediaType]);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -24,9 +26,10 @@ const HomePage = () => {
       {displayMoviesData.results && (
         <CurrentlyPlayingContent
           displayMoviesData={displayMoviesData.results}
+          mediaType={mediaType}
         />
       )}
-      <MoviesCategories />
+      <MoviesCategories mediaType={mediaType} />
       <div className="footerWarpper">
         <Footer footerLinks={footerLinks} />
       </div>

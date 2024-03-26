@@ -1,51 +1,36 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./CurrentlyPlayingContent.scss";
 import repeat from "../../assets/Repeat.png";
 import Button from "../../UI/Button";
 import { Link } from "react-router-dom";
 
-const CurrentlyPlayingContent = ({ displayMoviesData }) => {
-  const displayMoviesContainerRef = useRef(null);
+const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
+  const [count, setCount] = useState(0);
   useEffect(() => {
     const myInterval = setInterval(() => {
-      const style = window.getComputedStyle(displayMoviesContainerRef.current);
-      console.log(parseFloat(style.width));
-      const scrollWidth = displayMoviesContainerRef.current.scrollWidth;
-      const offsetWidth = displayMoviesContainerRef.current.offsetWidth;
-      const scrollLeft = displayMoviesContainerRef.current.scrollLeft; 
-      if (scrollLeft + offsetWidth >= scrollWidth) {
-        displayMoviesContainerRef.current.scrollLeft = 0;
-      } else {
-        displayMoviesContainerRef.current.scrollLeft += displayMoviesContainerRef.current.offsetWidth;
-      }
+      setCount((prevCount) =>
+        prevCount + 1 === displayMoviesData.length ? 0 : prevCount + 1
+      );
     }, 4000);
     return () => {
       clearInterval(myInterval);
     };
-  }, []);
+  }, [count, displayMoviesData]);
 
-  useEffect(() => {
-    const displayMoviesContainer = displayMoviesContainerRef.current;
-    window.addEventListener("resize", () => {
-      displayMoviesContainer.scrollLeft = 0;
-    });
-    return () => {
-      window.addEventListener("resize", () => {
-        displayMoviesContainer.scrollLeft = 0;
-      });
-    };
-  }, []);
   return (
-    <div className="displayMoviesContainer" ref={displayMoviesContainerRef}>
+    <div className="displayMoviesContainer">
       {displayMoviesData.map((displayMovie) => (
         <div
           key={displayMovie.id}
           className="currentlyPlayingContent"
           style={{
+            transform: `translateX(-${count * 100}%)`,
             background: `linear-gradient(to right,black 0% ,transparent 100%) , url("https://image.tmdb.org/t/p/original/${displayMovie.backdrop_path}")`,
           }}
         >
-          <h1 className="movieTitle">{displayMovie.original_title}</h1>
+          <h1 className="movieTitle">
+            {displayMovie.title ?? displayMovie.name}
+          </h1>
 
           <p className="movieDesctiption" title={displayMovie.overview}>
             {displayMovie.overview}
@@ -67,7 +52,7 @@ const CurrentlyPlayingContent = ({ displayMoviesData }) => {
               text={"Play"}
               style={{ marginRight: "10px" }}
             />
-            <Link to={`/movies/moreInfo?id=${displayMovie.id}`}>
+            <Link to={`/${mediaType}/moreInfo?id=${displayMovie.id}`}>
               <Button
                 className={"btn moreInfoBtn"}
                 iconClassName={"fa-solid fa-circle-info"}

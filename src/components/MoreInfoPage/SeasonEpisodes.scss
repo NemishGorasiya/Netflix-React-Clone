@@ -1,0 +1,34 @@
+.seasonEpisodes {
+  width: 100%;
+  background: grey;
+  .episodeWrapper {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    padding: 10px 20px;
+
+    .episodePoster {
+      height: 140px;
+      min-width: 200px;
+      width: 200px;
+
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+      }
+    }
+    .episodeDetails {
+      .episodeOverview {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: auto;
+        line-height: 22px;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+}

@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import "./HomePageNavBar.scss";
 import NetflixLogo from "../../assets/Netflix_logo.png";
 import AccountSetting from "./AccountSetting";
+import { Link } from "react-router-dom";
 
 const HomePageNavBar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const sideBarRef = useRef(null);
   const hamBurgerRef = useRef(null);
+
   const handleHamBurgerClick = () => {
-    console.log("hamburger");
-    console.log(isSideBarOpen);
     if (isSideBarOpen) {
       document.body.style.overflow = "auto";
     } else {
@@ -31,11 +31,16 @@ const HomePageNavBar = () => {
   };
 
   useEffect(() => {
+    if (!isSideBarOpen) {
+      document.body.style.overflow = "auto";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [isSideBarOpen]);
   return (
     <div className="homePageNavBar">
       <div className={isSideBarOpen ? "overLay sideBarOpen" : "overLay"}></div>
@@ -47,23 +52,41 @@ const HomePageNavBar = () => {
           ref={sideBarRef}
           className={isSideBarOpen ? "navLinks sideBarOpen" : "navLinks"}
         >
-          <li>Home</li>
-          <li>TV Shows</li>
+          <Link to={"/"}>
+            <li>Home</li>
+          </Link>
+          <Link to={"/tv"}>
+            <li>TV Shows</li>
+          </Link>
           <li>Movies</li>
           <li>New & Popular</li>
-          <li>My List</li>
+          <Link to={"/myWatchList"}>
+            <li>My WatchList</li>
+          </Link>
+          <Link to={"/myFavorite"}>
+            <li>My Favorite</li>
+          </Link>
           <li>Browse by Languages</li>
         </ul>
       </div>
       <div className="navRight">
-        <div
+        {/* <div
           className={
             isSideBarOpen ? "inputWrapper sideBarOpen" : "inputWrapper"
           }
         >
-          <input type="search" name="" id="" />
-          <i className="fa-solid fa-magnifying-glass searchIcon"></i>
-        </div>
+          <input type="search" name="" id="" onChange={handleSearch} />
+          <Link to={"/explore"}>
+            <i className="fa-solid fa-magnifying-glass searchIcon"></i>
+          </Link>
+        </div> */}
+        <button
+          className={isSideBarOpen ? "seachBtn sideBarOpen" : "searchBtn"}
+        >
+          <Link to={"/explore"}>
+            <i className="fa-solid fa-magnifying-glass searchIcon"></i>
+          </Link>
+        </button>
         <button
           className={
             isSideBarOpen ? "notificationBtn sideBarOpen" : "notificationBtn"

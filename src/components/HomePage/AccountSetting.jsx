@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import "./AccountSetting.scss";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { Link } from "react-router-dom";
 
 const AccountSetting = ({ isSideBarOpen }) => {
   const [isAccountSettingVisible, setIsAccountSettingVisible] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", {});
+
   const accountSettingRef = useRef(null);
   const handleAccountSettingClick = () => {
     setIsAccountSettingVisible((prevState) => !prevState);
@@ -15,9 +19,9 @@ const AccountSetting = ({ isSideBarOpen }) => {
       setIsAccountSettingVisible(false);
     }
   };
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    // console.log("called");
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -38,7 +42,12 @@ const AccountSetting = ({ isSideBarOpen }) => {
       {isAccountSettingVisible && (
         <div className="accountSettingOptions">
           <ul>
-            <li>Nemish Gorasiya</li>
+            <li className="username">
+              {loggedInUser.username}
+              <Link to={"/myAccount"} className="viewProfile">
+                view profile
+              </Link>
+            </li>
             <li>Setting</li>
             <li>Logout</li>
           </ul>

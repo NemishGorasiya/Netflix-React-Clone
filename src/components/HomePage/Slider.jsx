@@ -1,8 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
-import { fetchMovies } from "../../services/services";
 import { Link } from "react-router-dom";
-const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
+import posterNotFound from "../../assets/posterNotFound.jpg";
+const Slider = ({
+  isViewAll = false,
+  moviesData,
+  isDeletable = false,
+  removeFromList,
+  mediaType,
+  isSeasonList = false,
+  style,
+}) => {
   const sliderRef = useRef();
   const tempRef = useRef();
   const [isPrevBtnHidden, setIsPrevBtnHidden] = useState(true);
@@ -29,12 +37,26 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
   }, []);
   const handlePrevBtnClick = () => {
     scrollLeft = sliderRef.current.scrollLeft - sliderRef.current.clientWidth;
-    handleSliderBtnVisiblity(scrollLeft);
+    scrollWidth = sliderRef.current.scrollWidth;
+    clientWidth = sliderRef.current.clientWidth;
+    if (scrollWidth === clientWidth) {
+      setIsNextBtnHidden(true);
+      setIsPrevBtnHidden(true);
+    } else {
+      handleSliderBtnVisiblity(scrollLeft);
+    }
     sliderRef.current.scrollLeft -= sliderRef.current.clientWidth;
   };
   const handleNextBtnClick = () => {
     scrollLeft = sliderRef.current.scrollLeft + sliderRef.current.clientWidth;
-    handleSliderBtnVisiblity(scrollLeft);
+    scrollWidth = sliderRef.current.scrollWidth;
+    clientWidth = sliderRef.current.clientWidth;
+    if (scrollWidth === clientWidth) {
+      setIsNextBtnHidden(true);
+      setIsPrevBtnHidden(true);
+    } else {
+      handleSliderBtnVisiblity(scrollLeft);
+    }
     sliderRef.current.scrollLeft += sliderRef.current.clientWidth;
   };
   let startX;
@@ -61,6 +83,7 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
       handlePrevBtnClick();
     }
   };
+
   useEffect(() => {
     if (isViewAll === false) {
       scrollLeft = sliderRef.current.scrollLeft;
@@ -69,7 +92,11 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
   }, [isViewAll]);
 
   return (
-    <div className={isViewAll ? "slider viewAll" : "slider"} ref={tempRef}>
+    <div
+      style={style}
+      className={isViewAll ? "slider viewAll" : "slider"}
+      ref={tempRef}
+    >
       {!isViewAll && (
         <>
           {!isPrevBtnHidden && (
@@ -93,20 +120,37 @@ const Slider = ({ changeCurrrentMovieData, isViewAll, moviesData = [] }) => {
         onDragEnd={handleDragEnd}
         ref={sliderRef}
       >
-        {moviesData.map((movieData, idx) => (
+        {moviesData.map((movieData) => (
           <div
             key={movieData.id}
-            className="slide"
-            onClick={() => {
-              changeCurrrentMovieData(movieData);
-            }}
+            className={isDeletable ? "slide deletableSlide" : "slide"}
           >
-            <Link to={`/movies/moreInfo?id=${movieData.id}`}>
+            <Link to={`/${mediaType}/moreInfo?id=${movieData.id}`}>
               <img
-                src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
+                src={
+                  movieData.poster_path
+                    ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
+                    : posterNotFound
+                }
                 alt="image"
               />
             </Link>
+            <div
+              className="deleteIcon"
+              onClick={() => {
+                removeFromList({
+                  mediaId: movieData.id,
+                  media_type: mediaType,
+                });
+              }}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </div>
+            {isSeasonList && (
+              <div className="slideTitle" title={movieData.name}>
+                {movieData.name}
+              </div>
+            )}
           </div>
         ))}
       </div>
