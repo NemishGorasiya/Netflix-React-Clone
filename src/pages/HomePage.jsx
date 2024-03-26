@@ -11,7 +11,7 @@ const HomePage = () => {
   const [displayMoviesData, setDisplayMoviesData] = useState({});
 
   const fetchData = useCallback(async () => {
-    const res = await fetchMovies("popular");
+    const res = await fetchMovies({ movieCategory: "popular" });
     setDisplayMoviesData(res);
   }, []);
   useEffect(() => {

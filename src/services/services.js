@@ -1,5 +1,22 @@
-export const fetchMovies = async (movieType) => {
-  let url = `https://api.themoviedb.org/3/movie/${movieType}?language=en-US&page=1`;
+export const fetchMovies = async ({ movieCategory }) => {
+  let url = `https://api.themoviedb.org/3/movie/${movieCategory}?language=en-US&page=1`;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
+  };
+  try {
+    const res = await fetch(url, options);
+    const resJSON = await res.json();
+    return resJSON;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const fetchTVShows = async ({ TVSeriesCategory }) => {
+  let url = `https://api.themoviedb.org/3/tv/${TVSeriesCategory}?language=en-US&page=1`;
   const options = {
     method: "GET",
     headers: {
@@ -16,7 +33,7 @@ export const fetchMovies = async (movieType) => {
   }
 };
 
-export const fetchMoreInfoOdMovie = async ({ movieId }) => {
+export const fetchMoreInfoOfMovie = async ({ movieId }) => {
   let url = `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=credits&language=en-US&page=1`;
   const options = {
     method: "GET",
@@ -132,7 +149,7 @@ export const addToFavorite = async ({
   sessionID,
   media_id,
   media_type,
-  addingOrRemoving = true,
+  isAdding = true,
 }) => {
   const url = `https://api.themoviedb.org/3/account/account_id/favorite?session_id=${sessionID}`;
   const options = {
@@ -145,7 +162,7 @@ export const addToFavorite = async ({
     body: JSON.stringify({
       media_type: media_type,
       media_id: media_id,
-      favorite: addingOrRemoving,
+      favorite: isAdding,
     }),
   };
 
@@ -166,7 +183,7 @@ export const addToWatchList = async ({
   sessionID,
   media_id,
   media_type,
-  addingOrRemoving = true,
+  isAdding = true,
 }) => {
   const url = `https://api.themoviedb.org/3/account/account_id/watchlist?session_id=${sessionID}`;
   const options = {
@@ -179,7 +196,7 @@ export const addToWatchList = async ({
     body: JSON.stringify({
       media_type: media_type,
       media_id: media_id,
-      watchlist: addingOrRemoving,
+      watchlist: isAdding,
     }),
   };
 
@@ -213,8 +230,11 @@ export const fetchWatchList = async ({ sessionID, watchListCategory }) => {
     console.error(error);
   }
 };
-export const fetchFavorite = async ({ sessionID, favoriteCategory }) => {
-  let url = `https://api.themoviedb.org/3/account/account_id/favorite/${favoriteCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
+export const fetchFavoriteList = async ({
+  sessionID,
+  favoriteListCategory,
+}) => {
+  let url = `https://api.themoviedb.org/3/account/account_id/favorite/${favoriteListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
   const options = {
     method: "GET",
     headers: {

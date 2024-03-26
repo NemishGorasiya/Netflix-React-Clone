@@ -10,8 +10,6 @@ const HomePageNavBar = () => {
   const hamBurgerRef = useRef(null);
 
   const handleHamBurgerClick = () => {
-    console.log("hamburger");
-    console.log(isSideBarOpen);
     if (isSideBarOpen) {
       document.body.style.overflow = "auto";
     } else {
@@ -19,8 +17,6 @@ const HomePageNavBar = () => {
     }
     setIsSideBarOpen((prevState) => !prevState);
   };
-
-  const handleSearch = () => {};
 
   const handleClickOutside = (event) => {
     if (
@@ -35,11 +31,16 @@ const HomePageNavBar = () => {
   };
 
   useEffect(() => {
+    if (!isSideBarOpen) {
+      document.body.style.overflow = "auto";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [isSideBarOpen]);
   return (
     <div className="homePageNavBar">
       <div className={isSideBarOpen ? "overLay sideBarOpen" : "overLay"}></div>
@@ -54,7 +55,9 @@ const HomePageNavBar = () => {
           <Link to={"/"}>
             <li>Home</li>
           </Link>
-          <li>TV Shows</li>
+          <Link to={"/tvshows"}>
+            <li>TV Shows</li>
+          </Link>
           <li>Movies</li>
           <li>New & Popular</li>
           <Link to={"/myWatchList"}>

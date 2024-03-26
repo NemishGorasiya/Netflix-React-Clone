@@ -1,17 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
-import { fetchMovies } from "../../services/services";
 import { Link } from "react-router-dom";
 const Slider = ({
-  changeCurrrentMovieData,
   isViewAll,
-  moviesData = [],
-  isDeletable,
-  handleRemoveFromWatchList,
-  handleRemoveFromFavorite,
-  watchListCategory,
-  isFavoriteList,
-  favoriteCategory,
+  moviesData,
+  isDeletable = false,
+  removeFromList,
 }) => {
   const sliderRef = useRef();
   const tempRef = useRef();
@@ -122,9 +116,6 @@ const Slider = ({
           <div
             key={movieData.id}
             className={isDeletable ? "slide deletableSlide" : "slide"}
-            onClick={() => {
-              changeCurrrentMovieData(movieData);
-            }}
           >
             <Link to={`/movies/moreInfo?id=${movieData.id}`}>
               <img
@@ -135,23 +126,10 @@ const Slider = ({
             <div
               className="deleteIcon"
               onClick={() => {
-                isFavoriteList
-                  ? handleRemoveFromFavorite({
-                      media_id: movieData.id,
-                      media_type:
-                        favoriteCategory === "movies"
-                          ? "movie"
-                          : favoriteCategory,
-                      addingOrRemoving: false,
-                    })
-                  : handleRemoveFromWatchList({
-                      media_id: movieData.id,
-                      media_type:
-                        watchListCategory === "movies"
-                          ? "movie"
-                          : watchListCategory,
-                      addingOrRemoving: false,
-                    });
+                removeFromList({
+                  mediaId: movieData.id,
+                  media_type: "movie",
+                });
               }}
             >
               <i className="fa-solid fa-xmark"></i>

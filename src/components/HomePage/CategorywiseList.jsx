@@ -1,126 +1,69 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import "./CategorywiseList.scss";
 import Slider from "./Slider";
-import {
-  addToFavorite,
-  addToWatchList,
-  fetchFavorite,
-  fetchMovies,
-  fetchWatchList,
-} from "../../services/services";
-import useLocalStorage from "../../hooks/useLocalStorage.jsx";
 
 const CategorywiseList = ({
-  movieType,
-  isWatchList = false,
-  isFavoriteList = false,
-  watchListCategory,
-  favoriteCategory,
-  isDeletable,
   categoryTitle,
-  data,
+  moviesData,
+  isDeletable = false,
+  removeFromList,
 }) => {
   const [isViewAll, setIsViewAll] = useState(false);
-  const [moviesData, setMoviesData] = useState({});
-  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", {});
 
   const handleViewAllClick = () => {
     setIsViewAll((prev) => !prev);
   };
-  const fetchData = useCallback(async () => {
-    if (isWatchList) {
-      const res = await fetchWatchList({
-        sessionID: loggedInUser.sessionID,
-        watchListCategory: watchListCategory,
-      });
-      setMoviesData(res);
-    } else if (isFavoriteList) {
-      const res = await fetchFavorite({
-        sessionID: loggedInUser.sessionID,
-        favoriteCategory: favoriteCategory,
-      });
-      setMoviesData(res);
-    } else {
-      const res = await fetchMovies(movieType);
-      setMoviesData(res);
-    }
-  }, [
-    favoriteCategory,
-    isFavoriteList,
-    isWatchList,
-    loggedInUser.sessionID,
-    movieType,
-    watchListCategory,
-  ]);
 
-  const handleRemoveFromWatchList = async ({
-    media_id,
-    media_type,
-    addingOrRemoving,
-  }) => {
-    const res = await addToWatchList({
-      sessionID: loggedInUser.sessionID,
-      media_id: media_id,
-      media_type: media_type,
-      addingOrRemoving: addingOrRemoving,
-    });
-    if (res) {
-      fetchData();
-    }
-  };
-  const handleRemoveFromFavorite = async ({
-    media_id,
-    media_type,
-    addingOrRemoving,
-  }) => {
-    const res = await addToFavorite({
-      sessionID: loggedInUser.sessionID,
-      media_id: media_id,
-      media_type: media_type,
-      addingOrRemoving: addingOrRemoving,
-    });
-    if (res) {
-      fetchData();
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-  // useEffect(() => {
-  //   // console.log("data", data);
-  //   setMoviesData(data);
-  // }, [data]);
-
-  let categoryHeading = movieType;
-  if (isWatchList) {
-    categoryHeading = watchListCategory;
-  } else if (isFavoriteList) {
-    categoryHeading = favoriteCategory;
-  }
+  // const handleRemoveFromWatchList = async ({
+  //   media_id,
+  //   media_type,
+  //   addingOrRemoving,
+  // }) => {
+  //   const res = await addToWatchList({
+  //     sessionID: loggedInUser.sessionID,
+  //     media_id: media_id,
+  //     media_type: media_type,
+  //     addingOrRemoving: addingOrRemoving,
+  //   });
+  //   // if (res) {
+  //   //   fetchData();
+  //   // }
+  // };
+  // const handleRemoveFromFavorite = async ({
+  //   media_id,
+  //   media_type,
+  //   addingOrRemoving,
+  // }) => {
+  //   const res = await addToFavorite({
+  //     sessionID: loggedInUser.sessionID,
+  //     media_id: media_id,
+  //     media_type: media_type,
+  //     addingOrRemoving: addingOrRemoving,
+  //   });
+  //   // if (res) {
+  //   //   fetchData();
+  //   // }
+  // };
 
   return (
     <div className="categoryWiseList">
       <div className="categoryHeader">
-        <h3 className="categoryHeading">{categoryHeading}</h3>
-        {moviesData.results && moviesData.results.length !== 0 && (
+        <h3 className="categoryHeading">{categoryTitle}</h3>
+        {moviesData && moviesData.length !== 0 && (
           <p className="viewAll" onClick={handleViewAllClick}>
             View {isViewAll ? "Less" : "More"}
           </p>
         )}
       </div>
-      {moviesData.results && moviesData.results.length !== 0 && (
+      {moviesData && moviesData.length !== 0 && (
         <Slider
           isViewAll={isViewAll}
-          moviesData={moviesData.results}
+          moviesData={moviesData}
           isDeletable={isDeletable}
-          handleRemoveFromWatchList={handleRemoveFromWatchList}
-          watchListCategory={watchListCategory}
-          handleRemoveFromFavorite={handleRemoveFromFavorite}
-          isFavoriteList={isFavoriteList}
-          favoriteCategory={favoriteCategory}
+          removeFromList={removeFromList}
         />
       )}
-      {moviesData.results && moviesData.results.length === 0 && (
+      {moviesData && moviesData.length === 0 && (
         <h1 style={{ color: "#fff" }}>Oops nothing to show</h1>
       )}
     </div>

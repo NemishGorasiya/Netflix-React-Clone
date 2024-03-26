@@ -8,6 +8,7 @@ import MyFavoritePage from "./pages/MyFavoritePage";
 import MyWatchList from "./pages/MyWatchList";
 import OverviewPage from "./pages/OverviewPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import TVShowsPage from "./pages/TVShowsPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,6 +23,10 @@ function App() {
     {
       path: "/myWatchList",
       element: <MyWatchList />,
+    },
+    {
+      path: "/tvshows",
+      element: <TVShowsPage />,
     },
     {
       path: "/explore",

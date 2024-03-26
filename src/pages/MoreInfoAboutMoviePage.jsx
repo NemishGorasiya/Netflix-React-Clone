@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import {
   addToFavorite,
   addToWatchList,
-  fetchMoreInfoOdMovie,
+  fetchMoreInfoOfMovie,
 } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
 
@@ -24,7 +24,7 @@ const MoreInfoAboutMoviePage = () => {
   const [searchParamas] = useSearchParams();
   const movieId = searchParamas.get("id");
   const fetchMovieData = useCallback(async () => {
-    const res = await fetchMoreInfoOdMovie({ movieId: movieId });
+    const res = await fetchMoreInfoOfMovie({ movieId: movieId });
     setMoreInfoOfMovie(res);
   }, [movieId]);
   useEffect(() => {
