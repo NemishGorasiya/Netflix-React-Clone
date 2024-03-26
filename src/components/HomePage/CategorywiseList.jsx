@@ -7,6 +7,9 @@ const CategorywiseList = ({
   moviesData,
   isDeletable = false,
   removeFromList,
+  mediaType,
+  isSeasonList,
+  style,
 }) => {
   const [isViewAll, setIsViewAll] = useState(false);
 
@@ -46,7 +49,7 @@ const CategorywiseList = ({
   // };
 
   return (
-    <div className="categoryWiseList">
+    <div className="categoryWiseList" style={style}>
       <div className="categoryHeader">
         <h3 className="categoryHeading">{categoryTitle}</h3>
         {moviesData && moviesData.length !== 0 && (
@@ -61,11 +64,11 @@ const CategorywiseList = ({
           moviesData={moviesData}
           isDeletable={isDeletable}
           removeFromList={removeFromList}
+          mediaType={mediaType}
+          isSeasonList={isSeasonList}
         />
       )}
-      {moviesData && moviesData.length === 0 && (
-        <h1 style={{ color: "#fff" }}>Oops nothing to show</h1>
-      )}
+      {!moviesData && <h1 style={{ color: "#fff" }}>Oops nothing to show</h1>}
     </div>
   );
 };

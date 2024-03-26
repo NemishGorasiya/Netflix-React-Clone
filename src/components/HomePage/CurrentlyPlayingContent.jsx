@@ -4,7 +4,7 @@ import repeat from "../../assets/Repeat.png";
 import Button from "../../UI/Button";
 import { Link } from "react-router-dom";
 
-const CurrentlyPlayingContent = ({ displayMoviesData }) => {
+const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     const myInterval = setInterval(() => {
@@ -28,7 +28,9 @@ const CurrentlyPlayingContent = ({ displayMoviesData }) => {
             background: `linear-gradient(to right,black 0% ,transparent 100%) , url("https://image.tmdb.org/t/p/original/${displayMovie.backdrop_path}")`,
           }}
         >
-          <h1 className="movieTitle">{displayMovie.original_title}</h1>
+          <h1 className="movieTitle">
+            {displayMovie.title ?? displayMovie.name}
+          </h1>
 
           <p className="movieDesctiption" title={displayMovie.overview}>
             {displayMovie.overview}
@@ -50,7 +52,7 @@ const CurrentlyPlayingContent = ({ displayMoviesData }) => {
               text={"Play"}
               style={{ marginRight: "10px" }}
             />
-            <Link to={`/movies/moreInfo?id=${displayMovie.id}`}>
+            <Link to={`/${mediaType}/moreInfo?id=${displayMovie.id}`}>
               <Button
                 className={"btn moreInfoBtn"}
                 iconClassName={"fa-solid fa-circle-info"}

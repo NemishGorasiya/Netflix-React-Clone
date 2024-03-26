@@ -8,7 +8,6 @@ import MyFavoritePage from "./pages/MyFavoritePage";
 import MyWatchList from "./pages/MyWatchList";
 import OverviewPage from "./pages/OverviewPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import TVShowsPage from "./pages/TVShowsPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,16 +16,24 @@ function App() {
       element: <HomePage />,
     },
     {
-      path: "/movies/moreInfo",
-      element: <MoreInfoAboutMoviePage />,
+      path: "/movies",
+      element: <HomePage mediaType="movie" />,
+    },
+    {
+      path: "/tv",
+      element: <HomePage mediaType="tv" />,
+    },
+    {
+      path: "/movie/moreInfo",
+      element: <MoreInfoAboutMoviePage mediaType="movie" />,
+    },
+    {
+      path: "/tv/moreInfo",
+      element: <MoreInfoAboutMoviePage mediaType="tv" />,
     },
     {
       path: "/myWatchList",
       element: <MyWatchList />,
-    },
-    {
-      path: "/tvshows",
-      element: <TVShowsPage />,
     },
     {
       path: "/explore",

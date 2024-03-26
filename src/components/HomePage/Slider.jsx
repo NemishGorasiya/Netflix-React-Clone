@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
 import { Link } from "react-router-dom";
+import posterNotFound from "../../assets/posterNotFound.jpg";
 const Slider = ({
-  isViewAll,
+  isViewAll = false,
   moviesData,
   isDeletable = false,
   removeFromList,
+  mediaType,
+  isSeasonList = false,
+  style,
 }) => {
   const sliderRef = useRef();
   const tempRef = useRef();
@@ -88,7 +92,11 @@ const Slider = ({
   }, [isViewAll]);
 
   return (
-    <div className={isViewAll ? "slider viewAll" : "slider"} ref={tempRef}>
+    <div
+      style={style}
+      className={isViewAll ? "slider viewAll" : "slider"}
+      ref={tempRef}
+    >
       {!isViewAll && (
         <>
           {!isPrevBtnHidden && (
@@ -117,9 +125,13 @@ const Slider = ({
             key={movieData.id}
             className={isDeletable ? "slide deletableSlide" : "slide"}
           >
-            <Link to={`/movies/moreInfo?id=${movieData.id}`}>
+            <Link to={`/${mediaType}/moreInfo?id=${movieData.id}`}>
               <img
-                src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
+                src={
+                  movieData.poster_path
+                    ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
+                    : posterNotFound
+                }
                 alt="image"
               />
             </Link>
@@ -128,12 +140,17 @@ const Slider = ({
               onClick={() => {
                 removeFromList({
                   mediaId: movieData.id,
-                  media_type: "movie",
+                  media_type: mediaType,
                 });
               }}
             >
               <i className="fa-solid fa-xmark"></i>
             </div>
+            {isSeasonList && (
+              <div className="slideTitle" title={movieData.name}>
+                {movieData.name}
+              </div>
+            )}
           </div>
         ))}
       </div>

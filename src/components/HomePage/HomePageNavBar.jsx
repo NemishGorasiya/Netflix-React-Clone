@@ -55,7 +55,7 @@ const HomePageNavBar = () => {
           <Link to={"/"}>
             <li>Home</li>
           </Link>
-          <Link to={"/tvshows"}>
+          <Link to={"/tv"}>
             <li>TV Shows</li>
           </Link>
           <li>Movies</li>

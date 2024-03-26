@@ -1,31 +1,35 @@
 import CategorywiseList from "./CategorywiseList";
 import "./MoviesCategories.scss";
-import { movieTypes } from "../../data/data.js";
-import { fetchMovies } from "../../services/services.js";
+import { movieTypes, tvShowsTypes } from "../../data/data.js";
+import { fetchMediaData } from "../../services/services.js";
 import { useCallback, useEffect, useState } from "react";
 
-const MoviesCategories = () => {
+const MoviesCategories = ({ mediaType }) => {
   const [homePageMoviesData, setHomePageMoviesData] = useState([]);
-  const fetchMoviesData = async (movieCategory) => {
-    const res = await fetchMovies({ movieCategory: movieCategory });
-    return {
-      categoryTitle: movieCategory,
-      moviesData: res.results,
-    };
-  };
+  const mediaCategories = mediaType === "movie" ? movieTypes : tvShowsTypes;
+  const fetchMoviesData = useCallback(
+    async (mediaCategory) => {
+      const res = await fetchMediaData({
+        mediaType: mediaType,
+        mediaCategory: mediaCategory,
+      });
+      return {
+        categoryTitle: mediaCategory,
+        moviesData: res.results,
+      };
+    },
+    [mediaType]
+  );
   const fetchData = useCallback(async () => {
     try {
-      const response = await Promise.all([
-        fetchMoviesData("now_playing"),
-        fetchMoviesData("upcoming"),
-        fetchMoviesData("popular"),
-        fetchMoviesData("top_rated"),
-      ]);
+      const response = await Promise.all(
+        mediaCategories.map((category) => fetchMoviesData(category))
+      );
       setHomePageMoviesData(response);
     } catch (error) {
       throw Error("Promise failed");
     }
-  }, []);
+  }, [fetchMoviesData, mediaCategories]);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -37,6 +41,7 @@ const MoviesCategories = () => {
             key={moviesCategory.categoryTitle}
             categoryTitle={moviesCategory.categoryTitle}
             moviesData={moviesCategory.moviesData}
+            mediaType={mediaType}
           />
         ))}
     </div>

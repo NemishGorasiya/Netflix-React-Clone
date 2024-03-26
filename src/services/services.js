@@ -1,22 +1,5 @@
-export const fetchMovies = async ({ movieCategory }) => {
-  let url = `https://api.themoviedb.org/3/movie/${movieCategory}?language=en-US&page=1`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error(error);
-  }
-};
-export const fetchTVShows = async ({ TVSeriesCategory }) => {
-  let url = `https://api.themoviedb.org/3/tv/${TVSeriesCategory}?language=en-US&page=1`;
+export const fetchMediaData = async ({ mediaType, mediaCategory }) => {
+  let url = `https://api.themoviedb.org/3/${mediaType}/${mediaCategory}?language=en-US&page=1`;
   const options = {
     method: "GET",
     headers: {
@@ -33,8 +16,8 @@ export const fetchTVShows = async ({ TVSeriesCategory }) => {
   }
 };
 
-export const fetchMoreInfoOfMovie = async ({ movieId }) => {
-  let url = `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=credits&language=en-US&page=1`;
+export const fetchMoreInfoOfMedia = async ({ mediaId, mediaType }) => {
+  let url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}?append_to_response=credits&language=en-US&page=1`;
   const options = {
     method: "GET",
     headers: {
@@ -47,6 +30,23 @@ export const fetchMoreInfoOfMovie = async ({ movieId }) => {
     const resJSON = await res.json();
 
     // console.log(resJSON);
+    return resJSON;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
+  let url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US`;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
+  };
+  try {
+    const res = await fetch(url, options);
+    const resJSON = await res.json();
     return resJSON;
   } catch (error) {
     console.error(error);
