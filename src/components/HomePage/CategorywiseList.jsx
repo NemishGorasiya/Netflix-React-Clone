@@ -17,6 +17,8 @@ const CategorywiseList = ({
   watchListCategory,
   favoriteCategory,
   isDeletable,
+  categoryTitle,
+  data,
 }) => {
   const [isViewAll, setIsViewAll] = useState(false);
   const [moviesData, setMoviesData] = useState({});
@@ -84,6 +86,10 @@ const CategorywiseList = ({
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+  // useEffect(() => {
+  //   // console.log("data", data);
+  //   setMoviesData(data);
+  // }, [data]);
 
   let categoryHeading = movieType;
   if (isWatchList) {

@@ -118,7 +118,7 @@ const Slider = ({
         onDragEnd={handleDragEnd}
         ref={sliderRef}
       >
-        {moviesData.map((movieData, idx) => (
+        {moviesData.map((movieData) => (
           <div
             key={movieData.id}
             className={isDeletable ? "slide deletableSlide" : "slide"}

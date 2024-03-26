@@ -231,7 +231,10 @@ export const fetchFavorite = async ({ sessionID, favoriteCategory }) => {
   }
 };
 
-const fetchDataBySearchQuery = async (searchQuery, media_type = "movie") => {
+export const fetchDataBySearchQuery = async (
+  searchQuery,
+  media_type = "movie"
+) => {
   const url = `https://api.themoviedb.org/3/search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=1`;
   const options = {
     method: "GET",
@@ -242,5 +245,8 @@ const fetchDataBySearchQuery = async (searchQuery, media_type = "movie") => {
   };
   const res = await fetch(url, options);
   const resJSON = await res.json();
-  return resJSON;
+  if (res.status === 200) {
+    return resJSON;
+  }
+  return false;
 };
