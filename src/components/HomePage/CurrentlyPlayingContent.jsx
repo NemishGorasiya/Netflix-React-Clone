@@ -8,13 +8,15 @@ const CurrentlyPlayingContent = ({ displayMoviesData }) => {
   const displayMoviesContainerRef = useRef(null);
   useEffect(() => {
     const myInterval = setInterval(() => {
+      const style = window.getComputedStyle(displayMoviesContainerRef.current);
+      console.log(parseFloat(style.width));
       const scrollWidth = displayMoviesContainerRef.current.scrollWidth;
       const offsetWidth = displayMoviesContainerRef.current.offsetWidth;
-      const scrollLeft = displayMoviesContainerRef.current.scrollLeft;
+      const scrollLeft = displayMoviesContainerRef.current.scrollLeft; 
       if (scrollLeft + offsetWidth >= scrollWidth) {
         displayMoviesContainerRef.current.scrollLeft = 0;
       } else {
-        displayMoviesContainerRef.current.scrollLeft += offsetWidth;
+        displayMoviesContainerRef.current.scrollLeft += displayMoviesContainerRef.current.offsetWidth;
       }
     }, 4000);
     return () => {
