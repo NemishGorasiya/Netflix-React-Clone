@@ -8,7 +8,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [setLoggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", null);
 
   const [searchParamas] = useSearchParams();
   const isLoginPage = searchParamas.get("mode") === "login";
@@ -35,7 +35,7 @@ const AuthForm = () => {
         sessionID: sessionID,
         username: username,
       });
-      navigate("/");
+      navigate("/home");
     }
     setUsername("");
     setPassword("");
@@ -85,7 +85,7 @@ const AuthForm = () => {
               val={password}
             />
             <button className="authFormSubmitBtn" type="submit">
-              Login In
+              Login
             </button>
           </>
         )}
