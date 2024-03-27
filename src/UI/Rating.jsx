@@ -1,5 +1,6 @@
 import CircularProgress from "./CircularProgress";
 import "./Rating.scss";
+import PropTypes from "prop-types";
 
 const Rating = ({ rating, ratingCount }) => {
   return (
@@ -11,6 +12,11 @@ const Rating = ({ rating, ratingCount }) => {
       <CircularProgress rating={rating} />
     </div>
   );
+};
+
+Rating.propTypes = {
+  rating: PropTypes.string,
+  ratingCount: PropTypes.number,
 };
 
 export default Rating;

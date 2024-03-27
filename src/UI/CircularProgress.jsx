@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./CircularProgress.scss";
+import PropTypes from "prop-types";
 
 const CircularProgress = ({ rating }) => {
   const [degree, setDegree] = useState(0);
@@ -7,7 +8,6 @@ const CircularProgress = ({ rating }) => {
   useEffect(() => {
     const setDegreeInterval = setInterval(() => {
       if (degree >= rating * 36) {
-        // console.log("running");
         clearInterval(setDegreeInterval);
         return;
       }
@@ -29,6 +29,10 @@ const CircularProgress = ({ rating }) => {
       </div>
     </div>
   );
+};
+
+CircularProgress.propTypes = {
+  rating: PropTypes.string,
 };
 
 export default CircularProgress;

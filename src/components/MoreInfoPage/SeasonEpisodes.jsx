@@ -1,6 +1,7 @@
 import "./SeasonEpisodes.scss";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
 import { handleFallBackImage } from "../../utils/utilityFunctions.js";
+import PropTypes from "prop-types";
 
 const SeasonEpisodes = ({ seasonEpisodes, currSeasonName }) => {
   return (
@@ -29,6 +30,11 @@ const SeasonEpisodes = ({ seasonEpisodes, currSeasonName }) => {
       ))}
     </div>
   );
+};
+
+SeasonEpisodes.propTypes = {
+  seasonEpisodes: PropTypes.array,
+  currSeasonName: PropTypes.string,
 };
 
 export default SeasonEpisodes;

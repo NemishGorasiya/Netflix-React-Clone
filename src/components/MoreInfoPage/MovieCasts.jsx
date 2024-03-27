@@ -1,6 +1,7 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./MovieCasts.scss";
 import CastProfileCard from "../../UI/CastProfileCard";
+import PropTypes from "prop-types";
 
 const MovieCasts = ({ castsInfo }) => {
   const [isViewAllCasts, setIsViewAllCasts] = useState(false);
@@ -49,6 +50,10 @@ const MovieCasts = ({ castsInfo }) => {
       </div>
     </div>
   );
+};
+
+MovieCasts.propTypes = {
+  castsInfo: PropTypes.array,
 };
 
 export default MovieCasts;

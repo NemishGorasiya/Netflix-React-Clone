@@ -1,6 +1,6 @@
 import "./CustomInput.scss";
-import { debounce } from "../utils/utilityFunctions.js";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const CustomInput = ({
   type = "text",
@@ -40,7 +40,7 @@ const CustomInput = ({
           type={type}
           id={id}
           className={!isEmpty ? "customInput notEmpty" : "customInput"}
-          required
+          required={required}
           value={val}
           autoComplete="off"
           onChange={handleInputChange}
@@ -49,6 +49,15 @@ const CustomInput = ({
       </div>
     </>
   );
+};
+
+CustomInput.propTypes = {
+  type: PropTypes.string,
+  id: PropTypes.string,
+  floatingLabel: PropTypes.string,
+  required: PropTypes.bool,
+  updateState: PropTypes.func,
+  val: PropTypes.string,
 };
 
 export default CustomInput;

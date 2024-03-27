@@ -6,6 +6,7 @@ import { fetchMediaData } from "../services/services.js";
 import Footer from "../components/Footer.jsx";
 import { footerLinks } from "../data/data.js";
 import "./HomePage.scss";
+import PropTypes from "prop-types";
 
 const HomePage = ({ mediaType = "movie" }) => {
   const [displayMoviesData, setDisplayMoviesData] = useState({});
@@ -35,6 +36,10 @@ const HomePage = ({ mediaType = "movie" }) => {
       </div>
     </div>
   );
+};
+
+HomePage.propTypes = {
+  mediaType: PropTypes.string,
 };
 
 export default HomePage;

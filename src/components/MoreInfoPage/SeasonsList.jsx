@@ -1,5 +1,6 @@
 import CategorywiseList from "../HomePage/CategorywiseList";
 import "./SeasonsList.scss";
+import PropTypes from "prop-types";
 
 const SeasonsList = ({ moviesData, onClick }) => {
   return (
@@ -14,6 +15,11 @@ const SeasonsList = ({ moviesData, onClick }) => {
       />
     </div>
   );
+};
+
+SeasonsList.propTypes = {
+  moviesData: PropTypes.array,
+  onClick: PropTypes.func,
 };
 
 export default SeasonsList;

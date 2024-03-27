@@ -1,4 +1,3 @@
-import React from "react";
 import SignupEmail from "./SignupEmail";
 
 const HeroContent = () => {

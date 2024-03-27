@@ -3,9 +3,8 @@ import Button from "../UI/Button";
 import RoundButton from "../UI/RoundButton";
 import "./MoreInfoAboutMoviePage.scss";
 import Rating from "../UI/Rating";
-import CastProfileCard from "../UI/CastProfileCard";
 import MovieCasts from "../components/MoreInfoPage/MovieCasts";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import {
   addToFavorite,
   addToWatchList,
@@ -15,20 +14,20 @@ import {
 import useLocalStorage from "../hooks/useLocalStorage";
 import SeasonsList from "../components/MoreInfoPage/SeasonsList";
 import SeasonEpisodes from "../components/MoreInfoPage/SeasonEpisodes";
+import PropTypes from "prop-types";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const [isVolumeMuted, setIsVolumeMuted] = useState(true);
   const [seasonEpisodes, setSeasonEpisodes] = useState([]);
   const [currSeasonName, setCurrSeasonName] = useState("");
   const [moreInfoOfMovie, setMoreInfoOfMovie] = useState({});
-  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", "");
+  const [loggedInUser] = useLocalStorage("loggedInUser", "");
 
   const handleMuteVolumeClick = () => {
     setIsVolumeMuted((prevState) => !prevState);
   };
   const [searchParamas] = useSearchParams();
   const mediaId = searchParamas.get("id");
-  const seasonNumber = searchParamas.get("season");
 
   const handleSeasonPosterClick = async (seasonNumber) => {
     const res = await fetchEpisodes({
@@ -161,7 +160,6 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
             onClick={handleSeasonPosterClick}
           />
         )}
-        {/* {seasonEpisodes && <SeasonEpisodes moviesData={seasonEpisodes} />} */}
         {seasonEpisodes.length > 0 && (
           <SeasonEpisodes
             seasonEpisodes={seasonEpisodes}
@@ -175,6 +173,10 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       </div>
     </div>
   );
+};
+
+MoreInfoAboutMoviePage.propTypes = {
+  mediaType: PropTypes.string,
 };
 
 export default MoreInfoAboutMoviePage;

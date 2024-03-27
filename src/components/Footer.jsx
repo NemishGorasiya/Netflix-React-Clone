@@ -1,5 +1,6 @@
 import SelectLanguage from "./SelectLanguage.jsx";
 import "./Footer.scss";
+import PropTypes from "prop-types";
 
 const Footer = ({ footerLinks }) => {
   return (
@@ -20,6 +21,10 @@ const Footer = ({ footerLinks }) => {
       <SelectLanguage />
     </div>
   );
+};
+
+Footer.propTypes = {
+  footerLinks: PropTypes.array,
 };
 
 export default Footer;

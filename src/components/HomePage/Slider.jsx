@@ -3,6 +3,8 @@ import "./Slider.scss";
 import { Link } from "react-router-dom";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
 import { handleFallBackImage } from "../../utils/utilityFunctions";
+import PropTypes from "prop-types";
+
 const Slider = ({
   isViewAll = false,
   moviesData,
@@ -25,9 +27,6 @@ const Slider = ({
   const handleSliderBtnVisiblity = useCallback((scrollLeft) => {
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
-    // console.log("scrollWidth", scrollWidth);
-    // console.log("clientWidth", clientWidth);
-    // console.log("scrollLeft", scrollLeft);
     if (scrollLeft <= 0) {
       setIsPrevBtnHidden(true);
     } else {
@@ -191,6 +190,18 @@ const Slider = ({
       </div>
     </div>
   );
+};
+
+Slider.propTypes = {
+  isViewAll: PropTypes.bool,
+  moviesData: PropTypes.array,
+  isDeletable: PropTypes.bool,
+  removeFromList: PropTypes.func,
+  mediaType: PropTypes.string,
+  isSeasonList: PropTypes.bool,
+  style: PropTypes.object,
+  onClick: PropTypes.func,
+  setNeedOfViewAllBtn: PropTypes.func,
 };
 
 export default Slider;

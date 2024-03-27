@@ -3,6 +3,7 @@ import "./MoviesCategories.scss";
 import { movieTypes, tvShowsTypes } from "../../data/data.js";
 import { fetchMediaData } from "../../services/services.js";
 import { useCallback, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const MoviesCategories = ({ mediaType }) => {
   const [homePageMoviesData, setHomePageMoviesData] = useState([]);
@@ -46,6 +47,10 @@ const MoviesCategories = ({ mediaType }) => {
         ))}
     </div>
   );
+};
+
+MoviesCategories.propTypes = {
+  mediaType: PropTypes.string,
 };
 
 export default MoviesCategories;

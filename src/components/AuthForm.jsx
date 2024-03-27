@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CustomInput from "../UI/CustomInput";
 import "./AuthForm.scss";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -8,7 +8,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", {});
+  const [setLoggedInUser] = useLocalStorage("loggedInUser", {});
 
   const [searchParamas] = useSearchParams();
   const isLoginPage = searchParamas.get("mode") === "login";

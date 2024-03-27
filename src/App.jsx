@@ -1,12 +1,13 @@
 import "./App.scss";
 import AuthenticationPage from "./pages/AuthenticationPage";
+import ErrorPage from "./pages/ErrorPage";
 import ExplorePage from "./pages/ExplorePage";
 import HomePage from "./pages/HomePage";
 import ManageAccountsPage from "./pages/ManageAccountsPage";
 import MoreInfoAboutMoviePage from "./pages/MoreInfoAboutMoviePage";
 import MyFavoritePage from "./pages/MyFavoritePage";
 import MyWatchList from "./pages/MyWatchList";
-import OverviewPage from "./pages/OverviewPage";
+// import OverviewPage from "./pages/OverviewPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     {
       path: "/",
       element: <HomePage />,
+      errorElement: <ErrorPage />,
     },
     {
       path: "/movies",

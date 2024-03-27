@@ -1,5 +1,4 @@
 import "./ExplorePage.scss";
-import { debounce } from "../utils/utilityFunctions.js";
 import { useCallback, useState } from "react";
 import { fetchDataBySearchQuery } from "../services/services.js";
 import CategorywiseList from "../components/HomePage/CategorywiseList.jsx";
@@ -19,14 +18,7 @@ const ExplorePage = () => {
       setMovieDataAfterSerach([]);
     }
   }, []);
-  // const handleDebounce = useCallback(debounce(fetchData, 500), [fetchData]);
 
-  // const handleSearch = useCallback(
-  //   ({ target: { value } }) => {
-  //     handleDebounce(value);
-  //   },
-  //   [handleDebounce]
-  // );
   return (
     <div className="explorePage">
       <HomePageNavBar />

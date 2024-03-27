@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./CurrentlyPlayingContent.scss";
 import repeat from "../../assets/Repeat.png";
 import Button from "../../UI/Button";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
@@ -70,6 +71,11 @@ const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
       ))}
     </div>
   );
+};
+
+CurrentlyPlayingContent.propTypes = {
+  displayMoviesData: PropTypes.array,
+  mediaType: PropTypes.string,
 };
 
 export default CurrentlyPlayingContent;

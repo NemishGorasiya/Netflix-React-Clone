@@ -1,0 +1,19 @@
+.errorPage {
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  .errorPageContent {
+    padding-top: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    img {
+      height: 450px;
+      width: 450px;
+      max-height: 50%;
+      max-width: 100%;
+    }
+  }
+}

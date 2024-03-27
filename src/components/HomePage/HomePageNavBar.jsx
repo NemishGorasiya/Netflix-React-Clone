@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./HomePageNavBar.scss";
 import NetflixLogo from "../../assets/Netflix_logo.png";
 import AccountSetting from "./AccountSetting";

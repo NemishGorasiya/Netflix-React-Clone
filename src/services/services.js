@@ -29,7 +29,6 @@ export const fetchMoreInfoOfMedia = async ({ mediaId, mediaType }) => {
     const res = await fetch(url, options);
     const resJSON = await res.json();
 
-    // console.log(resJSON);
     return resJSON;
   } catch (error) {
     console.error(error);
@@ -53,7 +52,7 @@ export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
   }
 };
 
-export const generateRequestToken = async (username, password) => {
+export const generateRequestToken = async () => {
   let url = `https://api.themoviedb.org/3/authentication/token/new`;
   const options = {
     method: "GET",

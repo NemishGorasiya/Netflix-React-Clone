@@ -1,4 +1,3 @@
-import React from "react";
 import { moreReasonsToJoin } from "../data/data.js";
 
 export default function MoreReasonSection() {

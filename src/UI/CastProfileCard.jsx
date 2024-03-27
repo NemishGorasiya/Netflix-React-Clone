@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "./CastProfileCard.scss";
 import profileFallBackImage from "../assets/profile_image.png";
 import { handleFallBackImage } from "../utils/utilityFunctions";
