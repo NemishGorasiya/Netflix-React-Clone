@@ -9,25 +9,25 @@ import { watchListCategories } from "../data/data";
 const MyWatchList = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
   const [watchListData, setWatchListData] = useState([]);
-  const { movies, tv } = watchListCategories;
+  const { movie, tv } = watchListCategories;
 
   const fetchMovies = useCallback(async () => {
     const res = await fetchWatchList({
       sessionID: loggedInUser.sessionID,
-      watchListCategory: movies.toLocaleLowerCase(),
+      watchListCategory: "movies",
     });
     return {
-      categoryTitle: movies,
+      categoryTitle: movie.toLocaleLowerCase(),
       moviesData: res.results,
     };
-  }, [loggedInUser.sessionID, movies]);
+  }, [loggedInUser.sessionID, movie]);
   const fetchTVs = useCallback(async () => {
     const res = await fetchWatchList({
       sessionID: loggedInUser.sessionID,
-      watchListCategory: tv.toLocaleLowerCase(),
+      watchListCategory: "tv",
     });
     return {
-      categoryTitle: tv,
+      categoryTitle: tv.toLocaleLowerCase(),
       moviesData: res.results,
     };
   }, [loggedInUser.sessionID, tv]);
@@ -76,6 +76,7 @@ const MyWatchList = () => {
               moviesData={watchListCategory.moviesData}
               isDeletable={true}
               removeFromList={removeFromWatchList}
+              mediaType={watchListCategory.categoryTitle}
             />
           ))}
       </div>

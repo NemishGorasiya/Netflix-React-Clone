@@ -46,7 +46,7 @@ const HomePageNavBar = () => {
       <div className={isSideBarOpen ? "overLay sideBarOpen" : "overLay"}></div>
       <div className="navLeft">
         <div className="logoContainer">
-          <img src={NetflixLogo} alt="" />
+          <img src={NetflixLogo} alt="Netflix" />
         </div>
         <ul
           ref={sideBarRef}

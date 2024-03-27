@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
 import { Link } from "react-router-dom";
-import posterNotFound from "../../assets/posterNotFound.jpg";
+import posterFallBackImage from "../../assets/posterNotFound.jpg";
+import { handleFallBackImage } from "../../utils/utilityFunctions";
 const Slider = ({
   isViewAll = false,
   moviesData,
@@ -11,11 +12,13 @@ const Slider = ({
   isSeasonList = false,
   style,
   onClick,
+  setNeedOfViewAllBtn,
 }) => {
   const sliderRef = useRef();
   const tempRef = useRef();
   const [isPrevBtnHidden, setIsPrevBtnHidden] = useState(true);
   const [isNextBtnHidden, setIsNextBtnHidden] = useState(false);
+
   let clientWidth = 0;
   let scrollLeft = 0;
   let scrollWidth = 0;
@@ -92,6 +95,15 @@ const Slider = ({
     }
   }, [isViewAll]);
 
+  useEffect(() => {
+    scrollWidth = sliderRef.current.scrollWidth;
+    clientWidth = sliderRef.current.clientWidth;
+    if (scrollWidth <= clientWidth) {
+      setIsNextBtnHidden(true);
+      setNeedOfViewAllBtn(false);
+    }
+  }, [moviesData]);
+
   return (
     <div
       style={style}
@@ -134,9 +146,12 @@ const Slider = ({
                 src={
                   movieData.poster_path
                     ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
-                    : posterNotFound
+                    : posterFallBackImage
                 }
                 alt="image"
+                onError={(event) => {
+                  handleFallBackImage(event, posterFallBackImage);
+                }}
               />
             )}
             {!isSeasonList && (
@@ -145,9 +160,12 @@ const Slider = ({
                   src={
                     movieData.poster_path
                       ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
-                      : posterNotFound
+                      : posterFallBackImage
                   }
                   alt="image"
+                  onError={(event) => {
+                    handleFallBackImage(event, posterFallBackImage);
+                  }}
                 />
               </Link>
             )}

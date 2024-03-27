@@ -62,7 +62,7 @@ const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
           </div>
           <div className="filmCertification">
             <div className="imgWrapper">
-              <img src={repeat} alt="" />
+              <img src={repeat} alt="roundImage" />
             </div>
             <div className="certification">U/A 13+</div>
           </div>

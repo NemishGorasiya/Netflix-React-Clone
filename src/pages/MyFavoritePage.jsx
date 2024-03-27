@@ -9,25 +9,25 @@ import { favoriteListCategories } from "../data/data";
 const MyFavoritePage = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
   const [favoriteListData, setFavoriteListData] = useState([]);
-  const { movies, tv } = favoriteListCategories;
+  const { movie, tv } = favoriteListCategories;
 
   const fetchMovies = useCallback(async () => {
     const res = await fetchFavoriteList({
       sessionID: loggedInUser.sessionID,
-      favoriteListCategory: movies.toLocaleLowerCase(),
+      favoriteListCategory: "movies",
     });
     return {
-      categoryTitle: movies,
+      categoryTitle: movie.toLocaleLowerCase(),
       moviesData: res.results,
     };
-  }, [loggedInUser.sessionID, movies]);
+  }, [loggedInUser.sessionID, movie]);
   const fetchTVs = useCallback(async () => {
     const res = await fetchFavoriteList({
       sessionID: loggedInUser.sessionID,
-      favoriteListCategory: tv.toLocaleLowerCase(),
+      favoriteListCategory: "tv",
     });
     return {
-      categoryTitle: tv,
+      categoryTitle: tv.toLocaleLowerCase(),
       moviesData: res.results,
     };
   }, [loggedInUser.sessionID, tv]);
@@ -75,6 +75,7 @@ const MyFavoritePage = () => {
               moviesData={favoriteListCategory.moviesData}
               isDeletable={true}
               removeFromList={removeFromFavoriteList}
+              mediaType={favoriteListCategory.categoryTitle}
             />
           ))}
       </div>

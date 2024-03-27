@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import "./CastProfileCard.scss";
-import profile_image from "../assets/profile_image.png";
+import profileFallBackImage from "../assets/profile_image.png";
+import { handleFallBackImage } from "../utils/utilityFunctions";
 
 const CastProfileCard = (castInfo) => {
   const { name, character, profile_path, known_for_department } =
@@ -12,9 +13,12 @@ const CastProfileCard = (castInfo) => {
         src={
           profile_path
             ? `https://image.tmdb.org/t/p/original/${profile_path}`
-            : profile_image
+            : profileFallBackImage
         }
-        alt=""
+        alt={name}
+        onError={(event) => {
+          handleFallBackImage(event, profileFallBackImage);
+        }}
       />
       <p className="castName" title={name}>
         {name}

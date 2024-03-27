@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import "./AccountSetting.scss";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const AccountSetting = ({ isSideBarOpen }) => {
   const [isAccountSettingVisible, setIsAccountSettingVisible] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", {});
 
   const accountSettingRef = useRef(null);
   const handleAccountSettingClick = () => {
@@ -55,6 +56,10 @@ const AccountSetting = ({ isSideBarOpen }) => {
       )}
     </div>
   );
+};
+
+AccountSetting.propTypes = {
+  isSideBarOpen: PropTypes.bool,
 };
 
 export default AccountSetting;

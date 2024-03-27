@@ -180,11 +180,11 @@ export const tvShowsTypes = [
 ];
 
 export const watchListCategories = {
-  movies: "MOVIES",
+  movie: "MOVIE",
   tv: "TV",
 };
 
 export const favoriteListCategories = {
-  movies: "MOVIES",
+  movie: "MOVIE",
   tv: "TV",
 };
