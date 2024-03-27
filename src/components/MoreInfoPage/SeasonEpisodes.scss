@@ -1,11 +1,14 @@
 .seasonEpisodes {
   width: 100%;
-  background: grey;
+
+  .seasonName {
+    margin: 10px 0;
+  }
   .episodeWrapper {
     width: 100%;
     display: flex;
     gap: 15px;
-    padding: 10px 20px;
+    padding: 10px 0;
 
     .episodePoster {
       height: 140px;
@@ -19,15 +22,73 @@
       }
     }
     .episodeDetails {
+      .episodeTitle {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: auto;
+        line-height: 22px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-all;
+      }
       .episodeOverview {
         text-overflow: ellipsis;
         overflow: hidden;
         width: auto;
         line-height: 22px;
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .seasonEpisodes {
+    .episodeWrapper {
+      .episodePoster {
+        height: 80px;
+        width: 120px;
+        min-width: 120px;
+        img {
+        }
+      }
+      .episodeDetails {
+        .episodeTitle {
+          font-size: 20px;
+          font-weight: 500;
+        }
+        .episodeOverview {
+          font-size: 17px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 486px) {
+  .seasonEpisodes {
+    .episodeWrapper {
+      gap: 8px;
+      padding: 10px 0;
+      .episodePoster {
+        // height: 60px;
+        // width: 80px;
+        // min-width: 80px;
+        img {
+        }
+      }
+      .episodeDetails {
+        .episodeTitle {
+          font-size: 18px;
+        }
+        .episodeOverview {
+          font-size: 15px;
+        }
       }
     }
   }

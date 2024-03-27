@@ -9,7 +9,6 @@ import { watchListCategories } from "../data/data";
 const MyWatchList = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
   const [watchListData, setWatchListData] = useState([]);
-
   const { movies, tv } = watchListCategories;
 
   const fetchMovies = useCallback(async () => {
@@ -51,7 +50,6 @@ const MyWatchList = () => {
         isAdding: false,
       });
       if (res) {
-        console.log(watchListData);
         fetchWatchListData();
         console.log("Removed successfully from watchlist");
       } else {

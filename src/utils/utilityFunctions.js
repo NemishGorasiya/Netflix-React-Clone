@@ -8,3 +8,7 @@ export function debounce(func, delay = 500) {
     }, delay);
   };
 }
+
+export const handleFallBackImage = (event, fallBackImage) => {
+  event.target.src = fallBackImage;
+};

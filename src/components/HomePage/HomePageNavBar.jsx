@@ -58,7 +58,9 @@ const HomePageNavBar = () => {
           <Link to={"/tv"}>
             <li>TV Shows</li>
           </Link>
-          <li>Movies</li>
+          <Link to={"/movies"}>
+            <li>Movies</li>
+          </Link>
           <li>New & Popular</li>
           <Link to={"/myWatchList"}>
             <li>My WatchList</li>
@@ -66,20 +68,9 @@ const HomePageNavBar = () => {
           <Link to={"/myFavorite"}>
             <li>My Favorite</li>
           </Link>
-          <li>Browse by Languages</li>
         </ul>
       </div>
       <div className="navRight">
-        {/* <div
-          className={
-            isSideBarOpen ? "inputWrapper sideBarOpen" : "inputWrapper"
-          }
-        >
-          <input type="search" name="" id="" onChange={handleSearch} />
-          <Link to={"/explore"}>
-            <i className="fa-solid fa-magnifying-glass searchIcon"></i>
-          </Link>
-        </div> */}
         <button
           className={isSideBarOpen ? "seachBtn sideBarOpen" : "searchBtn"}
         >

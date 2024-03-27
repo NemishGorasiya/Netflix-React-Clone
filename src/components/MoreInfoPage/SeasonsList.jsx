@@ -1,7 +1,7 @@
 import CategorywiseList from "../HomePage/CategorywiseList";
 import "./SeasonsList.scss";
 
-const SeasonsList = ({ moviesData }) => {
+const SeasonsList = ({ moviesData, onClick }) => {
   return (
     <div className="seasonsList">
       <CategorywiseList
@@ -9,6 +9,8 @@ const SeasonsList = ({ moviesData }) => {
         isSeasonList={true}
         categoryTitle={"ALL SEASONS"}
         moviesData={moviesData}
+        mediaType={"tv"}
+        onClick={onClick}
       />
     </div>
   );

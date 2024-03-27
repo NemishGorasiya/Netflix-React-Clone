@@ -9,6 +9,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import {
   addToFavorite,
   addToWatchList,
+  fetchEpisodes,
   fetchMoreInfoOfMedia,
 } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -18,6 +19,7 @@ import SeasonEpisodes from "../components/MoreInfoPage/SeasonEpisodes";
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const [isVolumeMuted, setIsVolumeMuted] = useState(true);
   const [seasonEpisodes, setSeasonEpisodes] = useState([]);
+  const [currSeasonName, setCurrSeasonName] = useState("");
   const [moreInfoOfMovie, setMoreInfoOfMovie] = useState({});
   const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", "");
 
@@ -26,6 +28,17 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   };
   const [searchParamas] = useSearchParams();
   const mediaId = searchParamas.get("id");
+  const seasonNumber = searchParamas.get("season");
+
+  const handleSeasonPosterClick = async (seasonNumber) => {
+    const res = await fetchEpisodes({
+      mediaId: mediaId,
+      mediaType: mediaType,
+      seasonNumber: seasonNumber,
+    });
+    setSeasonEpisodes(res.episodes);
+    setCurrSeasonName(res.name);
+  };
 
   const fetchMovieData = useCallback(async () => {
     const res = await fetchMoreInfoOfMedia({
@@ -46,12 +59,12 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     const res = await addToFavorite({
       sessionID: loggedInUser.sessionID,
       media_id: moreInfoOfMovie.id,
-      media_type: "movie",
+      media_type: mediaType,
     });
     if (res) {
       console.log("added to favorite");
     } else {
-      console.log("oops!, somethind went wrong");
+      console.log("oops!, something went wrong");
     }
   };
   const handleAddToWatchList = async () => {
@@ -63,7 +76,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     if (res) {
       console.log("added to WatchList");
     } else {
-      console.log("oops!, somethind went wrong");
+      console.log("oops!, something went wrong");
     }
   };
 
@@ -143,10 +156,19 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
           </div>
         </div>
         {mediaType === "tv" && moreInfoOfMovie.seasons && (
-          <SeasonsList moviesData={moreInfoOfMovie.seasons} />
+          <SeasonsList
+            moviesData={moreInfoOfMovie.seasons}
+            onClick={handleSeasonPosterClick}
+          />
         )}
         {/* {seasonEpisodes && <SeasonEpisodes moviesData={seasonEpisodes} />} */}
-        <SeasonEpisodes />
+        {seasonEpisodes.length > 0 && (
+          <SeasonEpisodes
+            seasonEpisodes={seasonEpisodes}
+            currSeasonName={currSeasonName}
+          />
+        )}
+
         {moreInfoOfMovie.credits && (
           <MovieCasts castsInfo={moreInfoOfMovie.credits.cast} />
         )}

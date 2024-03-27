@@ -1,0 +1,32 @@
+.manageAccountsPage {
+  background: #000;
+  min-height: 100vh;
+  .manageAccountsPageContentWrapper {
+    padding: 85px 15px 15px 15px;
+    color: #fff;
+    text-align: center;
+
+    .manageAccountsHeading {
+      margin-top: 50px;
+    }
+
+    .profiles {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 250px);
+      gap: 15px;
+      width: auto;
+      justify-content: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .manageAccountsPage {
+    .manageAccountsPageContentWrapper {
+      .profiles {
+        grid-template-columns: repeat(auto-fit, 120px);
+      }
+    }
+  }
+}

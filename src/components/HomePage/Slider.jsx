@@ -10,6 +10,7 @@ const Slider = ({
   mediaType,
   isSeasonList = false,
   style,
+  onClick,
 }) => {
   const sliderRef = useRef();
   const tempRef = useRef();
@@ -125,8 +126,11 @@ const Slider = ({
             key={movieData.id}
             className={isDeletable ? "slide deletableSlide" : "slide"}
           >
-            <Link to={`/${mediaType}/moreInfo?id=${movieData.id}`}>
+            {isSeasonList && (
               <img
+                onClick={() => {
+                  onClick(movieData.season_number);
+                }}
                 src={
                   movieData.poster_path
                     ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
@@ -134,7 +138,20 @@ const Slider = ({
                 }
                 alt="image"
               />
-            </Link>
+            )}
+            {!isSeasonList && (
+              <Link to={`/${mediaType}/moreInfo?id=${movieData.id}`}>
+                <img
+                  src={
+                    movieData.poster_path
+                      ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
+                      : posterNotFound
+                  }
+                  alt="image"
+                />
+              </Link>
+            )}
+
             <div
               className="deleteIcon"
               onClick={() => {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./CategorywiseList.scss";
 import Slider from "./Slider";
+import { useNavigate } from "react-router-dom";
 
 const CategorywiseList = ({
   categoryTitle,
@@ -10,54 +11,30 @@ const CategorywiseList = ({
   mediaType,
   isSeasonList,
   style,
+  onClick,
 }) => {
   const [isViewAll, setIsViewAll] = useState(false);
+  const navigate = useNavigate();
+
+  const handleDefaultPosterClick = () => {};
 
   const handleViewAllClick = () => {
     setIsViewAll((prev) => !prev);
   };
 
-  // const handleRemoveFromWatchList = async ({
-  //   media_id,
-  //   media_type,
-  //   addingOrRemoving,
-  // }) => {
-  //   const res = await addToWatchList({
-  //     sessionID: loggedInUser.sessionID,
-  //     media_id: media_id,
-  //     media_type: media_type,
-  //     addingOrRemoving: addingOrRemoving,
-  //   });
-  //   // if (res) {
-  //   //   fetchData();
-  //   // }
-  // };
-  // const handleRemoveFromFavorite = async ({
-  //   media_id,
-  //   media_type,
-  //   addingOrRemoving,
-  // }) => {
-  //   const res = await addToFavorite({
-  //     sessionID: loggedInUser.sessionID,
-  //     media_id: media_id,
-  //     media_type: media_type,
-  //     addingOrRemoving: addingOrRemoving,
-  //   });
-  //   // if (res) {
-  //   //   fetchData();
-  //   // }
-  // };
-
   return (
     <div className="categoryWiseList" style={style}>
-      <div className="categoryHeader">
-        <h3 className="categoryHeading">{categoryTitle}</h3>
-        {moviesData && moviesData.length !== 0 && (
-          <p className="viewAll" onClick={handleViewAllClick}>
-            View {isViewAll ? "Less" : "More"}
-          </p>
-        )}
-      </div>
+      {moviesData.length > 0 && (
+        <div className="categoryHeader">
+          <h3 className="categoryHeading">{categoryTitle}</h3>
+          {moviesData && moviesData.length !== 0 && (
+            <p className="viewAll" onClick={handleViewAllClick}>
+              View {isViewAll ? "Less" : "More"}
+            </p>
+          )}
+        </div>
+      )}
+
       {moviesData && moviesData.length !== 0 && (
         <Slider
           isViewAll={isViewAll}
@@ -66,6 +43,7 @@ const CategorywiseList = ({
           removeFromList={removeFromList}
           mediaType={mediaType}
           isSeasonList={isSeasonList}
+          onClick={onClick}
         />
       )}
       {!moviesData && <h1 style={{ color: "#fff" }}>Oops nothing to show</h1>}

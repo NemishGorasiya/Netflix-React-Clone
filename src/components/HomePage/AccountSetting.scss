@@ -6,6 +6,7 @@
   cursor: pointer;
   position: relative;
   margin-right: 15px;
+  color: #fff;
   .iconsWrapper {
     i.cheveronDown {
       font-size: 15px;
@@ -53,7 +54,7 @@
       }
       li.username {
         a.viewProfile {
-          // background: violet;
+          color: grey;
           display: block;
           font-size: 13px;
           text-align: left;
@@ -89,15 +90,28 @@
     }
     .accountSettingOptions {
       position: absolute;
-      height: 200px;
-      width: 200px;
-      background: grey;
-      top: 120%;
+      top: 100%;
       right: 0;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      border-radius: 10px;
+      background: #fff;
+
+      ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        display: inline-block;
+        text-align: center;
+
+        li {
+          font-size: 13px;
+        }
+      }
     }
-  }
-  .accountSetting.sideBarOpen {
-    display: none;
   }
 }
 

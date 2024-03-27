@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { favoriteListCategories } from "../data/data";
 
 const MyFavoritePage = () => {
-  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", {});
   const [favoriteListData, setFavoriteListData] = useState([]);
   const { movies, tv } = favoriteListCategories;
 

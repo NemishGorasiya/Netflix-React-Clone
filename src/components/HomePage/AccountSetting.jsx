@@ -44,8 +44,8 @@ const AccountSetting = ({ isSideBarOpen }) => {
           <ul>
             <li className="username">
               {loggedInUser.username}
-              <Link to={"/myAccount"} className="viewProfile">
-                view profile
+              <Link to={"/manageAccounts"} className="viewProfile">
+                manage accounts
               </Link>
             </li>
             <li>Setting</li>

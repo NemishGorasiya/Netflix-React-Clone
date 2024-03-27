@@ -2,8 +2,8 @@ import "./App.scss";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import ExplorePage from "./pages/ExplorePage";
 import HomePage from "./pages/HomePage";
+import ManageAccountsPage from "./pages/ManageAccountsPage";
 import MoreInfoAboutMoviePage from "./pages/MoreInfoAboutMoviePage";
-import MyAccountPage from "./pages/MyAccountPage";
 import MyFavoritePage from "./pages/MyFavoritePage";
 import MyWatchList from "./pages/MyWatchList";
 import OverviewPage from "./pages/OverviewPage";
@@ -44,8 +44,8 @@ function App() {
       element: <MyFavoritePage />,
     },
     {
-      path: "myAccount",
-      element: <MyAccountPage />,
+      path: "/manageAccounts",
+      element: <ManageAccountsPage />,
     },
     {
       path: "auth",

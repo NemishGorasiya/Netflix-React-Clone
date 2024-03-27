@@ -1,60 +1,32 @@
 import "./SeasonEpisodes.scss";
+import posterFallBackImage from "../../assets/posterNotFound.jpg";
+import { handleFallBackImage } from "../../utils/utilityFunctions.js";
 
-const SeasonEpisodes = () => {
+const SeasonEpisodes = ({ seasonEpisodes, currSeasonName }) => {
   return (
     <div className="seasonEpisodes">
-      <div className="episodeWrapper">
-        <div className="episodePoster">
-          <img
-            src="https://image.tmdb.org/t/p/original/cK5bnO5LeBimz6oibtnLCnOmUSJ.jpg"
-            alt=""
-          />
+      <h1 className="seasonName">{currSeasonName}</h1>
+      {seasonEpisodes.map((episode) => (
+        <div className="episodeWrapper" key={episode.id}>
+          <div className="episodePoster">
+            <img
+              src={
+                episode.still_path
+                  ? `https://image.tmdb.org/t/p/original${episode.still_path}`
+                  : posterFallBackImage
+              }
+              alt="not found"
+              onError={(event) => {
+                handleFallBackImage(event, posterFallBackImage);
+              }}
+            />
+          </div>
+          <div className="episodeDetails">
+            <h2 className="episodeTitle">{episode.name}</h2>
+            <p className="episodeOverview">{episode.overview}</p>
+          </div>
         </div>
-        <div className="episodeDetails">
-          <h2 className="episodeTitle">Episode 1</h2>
-          <p className="episodeOverview">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et corporis
-            magni odio unde, dolorum placeat culpa architecto fugit dolore
-            laudantium!
-          </p>
-        </div>
-      </div>
-      <div className="episodeWrapper">
-        <div className="episodePoster">
-          <img
-            src="https://image.tmdb.org/t/p/original/cK5bnO5LeBimz6oibtnLCnOmUSJ.jpg"
-            alt=""
-          />
-        </div>
-        <div className="episodeDetails">
-          <h2 className="episodeTitle">Episode 1</h2>
-          <p className="episodeOverview">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et corporis
-            magni odio unde, dolorum placeat culpa architecto fugit dolore
-            laudantium! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Et corporis magni odio unde, dolorum placeat culpa architecto fugit
-            dolore laudantium! Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Et corporis magni odio unde, dolorum placeat culpa
-            architecto fugit dolore laudantium!
-          </p>
-        </div>
-      </div>
-      <div className="episodeWrapper">
-        <div className="episodePoster">
-          <img
-            src="https://image.tmdb.org/t/p/original/cK5bnO5LeBimz6oibtnLCnOmUSJ.jpg"
-            alt=""
-          />
-        </div>
-        <div className="episodeDetails">
-          <h2 className="episodeTitle">Episode 1</h2>
-          <p className="episodeOverview">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et corporis
-            magni odio unde, dolorum placeat culpa architecto fugit dolore
-            laudantium!
-          </p>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };

@@ -46,6 +46,7 @@
         position: relative;
         cursor: pointer;
         transition: all 0.3s ease;
+        color: #fff;
         &:hover {
           color: grey;
         }
@@ -139,14 +140,9 @@
       display: block;
     }
     .navLeft {
-      .logoContainer {
-        img {
-        }
-      }
       ul.navLinks {
         display: none;
         width: 0;
-        // transition: width 0.3s ease;
       }
 
       ul.navLinks.sideBarOpen {

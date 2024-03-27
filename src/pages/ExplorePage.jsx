@@ -3,39 +3,48 @@ import { debounce } from "../utils/utilityFunctions.js";
 import { useCallback, useState } from "react";
 import { fetchDataBySearchQuery } from "../services/services.js";
 import CategorywiseList from "../components/HomePage/CategorywiseList.jsx";
+import CustomInputWithDeBouncing from "../UI/CustomInputWithDeBouncing.jsx";
+import HomePageNavBar from "../components/HomePage/HomePageNavBar.jsx";
 
 const ExplorePage = () => {
   const [movieDataAfterSerach, setMovieDataAfterSerach] = useState([]);
   const fetchData = useCallback(async (value) => {
+    if (value === "") {
+      return;
+    }
     const res = await fetchDataBySearchQuery(value);
     if (res) {
       setMovieDataAfterSerach(res.results);
+    } else {
+      setMovieDataAfterSerach([]);
     }
   }, []);
-  const handleDebounce = useCallback(debounce(fetchData, 500), [fetchData]);
+  // const handleDebounce = useCallback(debounce(fetchData, 500), [fetchData]);
 
-  const handleSearch = useCallback(
-    ({ target: { value } }) => {
-      handleDebounce(value);
-    },
-    [handleDebounce]
-  );
+  // const handleSearch = useCallback(
+  //   ({ target: { value } }) => {
+  //     handleDebounce(value);
+  //   },
+  //   [handleDebounce]
+  // );
   return (
     <div className="explorePage">
-      <div className="searchInputWrapper">
-        <input
+      <HomePageNavBar />
+      <div className="explorePageContentWrapper">
+        <CustomInputWithDeBouncing
           type="search"
-          name="search"
-          id="search"
-          onChange={handleSearch}
+          id={"search"}
+          floatingLabel="Search here.."
+          updateState={fetchData}
         />
+        {movieDataAfterSerach && (
+          <CategorywiseList
+            categoryTitle={"Search Results.."}
+            moviesData={movieDataAfterSerach}
+          />
+        )}
+        {movieDataAfterSerach.length === 0 && <h1>No Media Found :( </h1>}
       </div>
-      {movieDataAfterSerach && (
-        <CategorywiseList
-          categoryTitle={"Search Results.."}
-          data={movieDataAfterSerach}
-        />
-      )}
     </div>
   );
 };

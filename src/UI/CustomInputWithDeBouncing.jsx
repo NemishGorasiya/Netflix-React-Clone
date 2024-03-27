@@ -7,9 +7,11 @@ const CustomInputWithDeBouncing = ({
   id,
   floatingLabel = "Enter here ...",
   required = true,
-  updateState,
-  inputValidationFn,
-  errorMessage,
+  updateState = () => {},
+  inputValidationFn = () => {
+    return true;
+  },
+  errorMessage = "",
 }) => {
   const [isError, setIsError] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
