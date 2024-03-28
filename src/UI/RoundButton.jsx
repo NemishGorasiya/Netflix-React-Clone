@@ -1,9 +1,9 @@
 import "./RoundButton.scss";
 import PropTypes from "prop-types";
 
-const RoundButton = ({ iconClassName, onClick }) => {
+const RoundButton = ({ iconClassName, onClick, title }) => {
   return (
-    <button className="roundBtn" onClick={onClick}>
+    <button className="roundBtn" title={title} onClick={onClick}>
       <span>
         <i className={iconClassName} />
       </span>
@@ -14,6 +14,7 @@ const RoundButton = ({ iconClassName, onClick }) => {
 RoundButton.propTypes = {
   iconClassName: PropTypes.string,
   onClick: PropTypes.func,
+  title: PropTypes.string,
 };
 
 export default RoundButton;

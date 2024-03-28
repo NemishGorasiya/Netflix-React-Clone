@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./HomePageNavBar.scss";
 import NetflixLogo from "../../assets/Netflix_logo.png";
 import AccountSetting from "./AccountSetting";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const HomePageNavBar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -52,22 +52,46 @@ const HomePageNavBar = () => {
           ref={sideBarRef}
           className={isSideBarOpen ? "navLinks sideBarOpen" : "navLinks"}
         >
-          <Link to={"/"}>
-            <li>Home</li>
-          </Link>
-          <Link to={"/tv"}>
-            <li>TV Shows</li>
-          </Link>
-          <Link to={"/movies"}>
-            <li>Movies</li>
-          </Link>
-          <li>New & Popular</li>
-          <Link to={"/myWatchList"}>
-            <li>My WatchList</li>
-          </Link>
-          <Link to={"/myFavorite"}>
-            <li>My Favorite</li>
-          </Link>
+          <NavLink
+            to="/home"
+            className={({ isActive }) => {
+              return isActive ? "navLink activeLink" : "navLink";
+            }}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/tv"
+            className={({ isActive }) => {
+              return isActive ? "navLink activeLink" : "navLink";
+            }}
+          >
+            TV Shows
+          </NavLink>
+          <NavLink
+            to="/movies"
+            className={({ isActive }) => {
+              return isActive ? "navLink activeLink" : "navLink";
+            }}
+          >
+            Movies
+          </NavLink>
+          <NavLink
+            to="/myWatchList"
+            className={({ isActive }) => {
+              return isActive ? "navLink activeLink" : "navLink";
+            }}
+          >
+            My WatchList
+          </NavLink>
+          <NavLink
+            to="/myFavorite"
+            className={({ isActive }) => {
+              return isActive ? "navLink activeLink" : "navLink";
+            }}
+          >
+            My Favorite
+          </NavLink>
         </ul>
       </div>
       <div className="navRight">

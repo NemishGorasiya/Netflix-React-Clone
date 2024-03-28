@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import CustomInput from "../UI/CustomInput";
+import CustomInput from "../../UI/CustomInput";
 import "./AuthForm.scss";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import Button from "../UI/Button";
-import { handleTMDBLogin } from "../services/services";
-import useLocalStorage from "../hooks/useLocalStorage";
+import Button from "../../UI/Button";
+import { handleTMDBLogin } from "../../services/services";
+import useLocalStorage from "../../hooks/useLocalStorage";
 const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", null);
+  const [accounts, setAccounts] = useLocalStorage("accounts", null);
 
   const [searchParamas] = useSearchParams();
   const isLoginPage = searchParamas.get("mode") === "login";
@@ -26,6 +27,7 @@ const AuthForm = () => {
   };
   const handleLogin = async (event) => {
     event.preventDefault();
+
     const sessionID = await handleTMDBLogin(username, password);
     if (!sessionID) {
       alert("invlid credentials");
@@ -34,6 +36,24 @@ const AuthForm = () => {
       setLoggedInUser({
         sessionID: sessionID,
         username: username,
+      });
+      setAccounts((accountsInfo) => {
+        if (!accountsInfo) {
+          return [{ username: username, profileImg: "" }];
+        }
+        let isAlreadyExist = false;
+        accountsInfo.forEach((account) => {
+          console.log(account);
+          console.log(account.username);
+          if (account.username === username) {
+            isAlreadyExist = true;
+            return;
+          }
+        });
+        if (isAlreadyExist) {
+          return accountsInfo;
+        }
+        return [...accountsInfo, { username: username, profileImg: "" }];
       });
       navigate("/home");
     }

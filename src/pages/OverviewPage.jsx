@@ -1,5 +1,5 @@
-import Hero from "../components/Hero";
-import MoreDetails from "../components/MoreDetails";
+import Hero from "../components/OverViewPage/Hero";
+import MoreDetails from "../components/OverViewPage/MoreDetails";
 
 const OverviewPage = () => {
   return (

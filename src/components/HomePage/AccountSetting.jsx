@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import "./AccountSetting.scss";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const AccountSetting = ({ isSideBarOpen }) => {
   const [isAccountSettingVisible, setIsAccountSettingVisible] = useState(false);
-  const [loggedInUser] = useLocalStorage("loggedInUser", {});
-
+  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", {});
+  const navigate = useNavigate();
   const accountSettingRef = useRef(null);
   const handleAccountSettingClick = () => {
     setIsAccountSettingVisible((prevState) => !prevState);
@@ -20,8 +20,10 @@ const AccountSetting = ({ isSideBarOpen }) => {
       setIsAccountSettingVisible(false);
     }
   };
-  useEffect(() => {}, []);
-
+  const handleLogOut = () => {
+    setLoggedInUser(null);
+    navigate("/");
+  };
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -50,7 +52,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
               </Link>
             </li>
             <li>Setting</li>
-            <li>Logout</li>
+            <li onClick={handleLogOut}>Logout</li>
           </ul>
         </div>
       )}

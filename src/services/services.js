@@ -16,8 +16,17 @@ export const fetchMediaData = async ({ mediaType, mediaCategory }) => {
   }
 };
 
-export const fetchMoreInfoOfMedia = async ({ mediaId, mediaType }) => {
+export const fetchMoreInfoOfMedia = async ({
+  mediaId,
+  mediaType,
+  isEpisode = false,
+  seasonNumber,
+  episodeNumber,
+}) => {
   let url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}?append_to_response=credits&language=en-US&page=1`;
+  if (isEpisode) {
+    url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}?append_to_response=credits&language=en-US&page=1`;
+  }
   const options = {
     method: "GET",
     headers: {
@@ -250,10 +259,10 @@ export const fetchFavoriteList = async ({
   }
 };
 
-export const fetchDataBySearchQuery = async (
+export const fetchDataBySearchQuery = async ({
   searchQuery,
-  media_type = "movie"
-) => {
+  media_type = "movie",
+}) => {
   const url = `https://api.themoviedb.org/3/search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=1`;
   const options = {
     method: "GET",
@@ -268,4 +277,40 @@ export const fetchDataBySearchQuery = async (
     return resJSON;
   }
   return false;
+};
+
+export const submitMediaRating = async ({
+  mediaType,
+  rating,
+  mediaId,
+  sessionID,
+  isEpisode = false,
+  seasonNumber,
+  episodeNumber,
+}) => {
+  let url = `
+https://api.themoviedb.org/3/${mediaType}/${mediaId}/rating?session_id=${sessionID}`;
+
+  if (isEpisode) {
+    url = `
+https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating?session_id=${sessionID}`;
+  }
+  const options = {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
+    body: JSON.stringify({
+      value: rating,
+    }),
+  };
+  try {
+    const res = await fetch(url, options);
+    const resJSON = await res.json();
+    return resJSON.success;
+  } catch (error) {
+    console.error(error);
+  }
 };

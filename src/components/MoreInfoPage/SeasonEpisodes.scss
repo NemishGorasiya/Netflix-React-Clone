@@ -1,5 +1,6 @@
 .seasonEpisodes {
   width: 100%;
+  padding: 0 5px;
 
   .seasonName {
     margin: 10px 0;
@@ -26,7 +27,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
         width: auto;
-        line-height: 22px;
+        line-height: 35px;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
@@ -72,13 +73,11 @@
 }
 @media only screen and (max-width: 486px) {
   .seasonEpisodes {
+    padding: 0;
     .episodeWrapper {
       gap: 8px;
       padding: 10px 0;
       .episodePoster {
-        // height: 60px;
-        // width: 80px;
-        // min-width: 80px;
         img {
         }
       }

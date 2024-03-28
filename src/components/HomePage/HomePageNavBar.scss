@@ -40,7 +40,8 @@
         color: #fff;
       }
 
-      li {
+      li,
+      .navLink {
         margin: 0 10px;
         font-size: 15px;
         position: relative;
@@ -54,7 +55,8 @@
           transform: scale(1);
         }
       }
-      li::after {
+      li::after,
+      .navLink::after {
         content: "";
         position: absolute;
         height: 2px;
@@ -64,6 +66,9 @@
         left: 0;
         transform: scale(0);
         transition: all 0.3s ease;
+      }
+      .activeLink {
+        color: red;
       }
     }
   }

@@ -3,26 +3,69 @@
   border-radius: 10px;
   padding: 20px 10px;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 
-  img {
+  .editProfileBtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+
+  .imgWrapper {
     height: 150px;
     width: 150px;
     border-radius: 50%;
-    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #fff;
-    object-fit: fill;
+
+    img {
+      height: 100%;
+      width: 100%;
+      border: none;
+      border-radius: inherit;
+      background: #fff;
+      object-fit: contain;
+    }
   }
   .profileName {
     text-overflow: ellipsis;
     overflow: hidden;
+    width: 100%;
+  }
+}
+.profileWrapper.addAccount {
+  .imgWrapper {
+    height: 150px;
+    width: 150px;
+
+    img {
+      height: 60%;
+      width: 60%;
+    }
   }
 }
 
 @media only screen and (max-width: 850px) {
   .profileWrapper {
-    img {
+    .imgWrapper {
       height: 80px;
       width: 80px;
+    }
+  }
+  .profileWrapper.addAccount {
+    .imgWrapper {
+      height: 80px;
+      width: 80px;
+      img {
+        height: 60%;
+        width: 60%;
+      }
     }
   }
 }

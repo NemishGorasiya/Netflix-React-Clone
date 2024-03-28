@@ -1,4 +1,4 @@
-import { subscribePlans } from "../data/data.js";
+import { subscribePlans } from "../../data/data.js";
 const Plans = () => {
   return (
     <div className="heroPageSection plansSection">

@@ -1,5 +1,5 @@
 import "./SignupEmail.scss";
-import { chevronRightSVG } from "../data/data.js";
+import { chevronRightSVG } from "../../data/data.js";
 
 const SignupEmail = () => {
   return (

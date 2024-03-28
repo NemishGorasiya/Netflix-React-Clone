@@ -11,3 +11,7 @@ export function debounce(func, delay = 500) {
 export const handleFallBackImage = (event, fallBackImage) => {
   event.target.src = fallBackImage;
 };
+
+export const changeFormatOfTitle = (title) => {
+  return title.replace("_", " ");
+};

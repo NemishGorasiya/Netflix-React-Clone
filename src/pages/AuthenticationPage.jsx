@@ -1,6 +1,6 @@
-import AuthForm from "../components/AuthForm.jsx";
-import Footer from "../components/Footer";
-import NavBar from "../components/NavBar.jsx";
+import AuthForm from "../components/OverViewPage/AuthForm.jsx";
+import Footer from "../components/OverViewPage/Footer.jsx";
+import NavBar from "../components/OverViewPage/NavBar.jsx";
 import { AuthenticationPagefooterLinks } from "../data/data.js";
 import "./AuthenticationPage.scss";
 
@@ -9,7 +9,10 @@ const AuthenticationPage = () => {
     <div className="authenticationPage">
       <NavBar />
       <AuthForm />
-      <Footer footerLinks={AuthenticationPagefooterLinks} />
+      <Footer
+        style={{ width: "80%", margin: "auto" }}
+        footerLinks={AuthenticationPagefooterLinks}
+      />
     </div>
   );
 };

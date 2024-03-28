@@ -3,7 +3,7 @@ import CurrentlyPlayingContent from "../components/HomePage/CurrentlyPlayingCont
 import HomePageNavBar from "../components/HomePage/HomePageNavBar";
 import MoviesCategories from "../components/HomePage/MoviesCategories";
 import { fetchMediaData } from "../services/services.js";
-import Footer from "../components/Footer.jsx";
+import Footer from "../components/OverViewPage/Footer.jsx";
 import { footerLinks } from "../data/data.js";
 import "./HomePage.scss";
 import PropTypes from "prop-types";

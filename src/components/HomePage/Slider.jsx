@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
 import { handleFallBackImage } from "../../utils/utilityFunctions";
 import PropTypes from "prop-types";
@@ -16,6 +16,8 @@ const Slider = ({
   onClick,
   setNeedOfViewAllBtn,
 }) => {
+  const [searchParamas] = useSearchParams();
+  const mediaId = searchParamas.get("id");
   const sliderRef = useRef();
   const tempRef = useRef();
   const [isPrevBtnHidden, setIsPrevBtnHidden] = useState(true);
@@ -137,11 +139,14 @@ const Slider = ({
             key={movieData.id}
             className={isDeletable ? "slide deletableSlide" : "slide"}
           >
-            {isSeasonList && (
+            <Link
+              to={
+                isSeasonList
+                  ? `/${mediaType}/moreInfo?id=${mediaId}&season=${movieData.season_number}`
+                  : `/${mediaType}/moreInfo?id=${movieData.id}`
+              }
+            >
               <img
-                onClick={() => {
-                  onClick(movieData.season_number);
-                }}
                 src={
                   movieData.poster_path
                     ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
@@ -152,22 +157,7 @@ const Slider = ({
                   handleFallBackImage(event, posterFallBackImage);
                 }}
               />
-            )}
-            {!isSeasonList && (
-              <Link to={`/${mediaType}/moreInfo?id=${movieData.id}`}>
-                <img
-                  src={
-                    movieData.poster_path
-                      ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
-                      : posterFallBackImage
-                  }
-                  alt="image"
-                  onError={(event) => {
-                    handleFallBackImage(event, posterFallBackImage);
-                  }}
-                />
-              </Link>
-            )}
+            </Link>
 
             <div
               className="deleteIcon"

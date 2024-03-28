@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./CategorywiseList.scss";
 import Slider from "./Slider";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { changeFormatOfTitle } from "../../utils/utilityFunctions";
 
 const CategorywiseList = ({
   categoryTitle,
@@ -23,7 +25,9 @@ const CategorywiseList = ({
   return (
     <div className="categoryWiseList" style={style}>
       <div className="categoryHeader">
-        <h3 className="categoryHeading">{categoryTitle}</h3>
+        <h3 className="categoryHeading" style={{ textTransform: "capitalize" }}>
+          {changeFormatOfTitle(categoryTitle)}
+        </h3>
         {moviesData && needOfViewAllBtn && moviesData.length !== 0 && (
           <p className="viewAll" onClick={handleViewAllClick}>
             View {isViewAll ? "Less" : "More"}
@@ -44,7 +48,12 @@ const CategorywiseList = ({
         />
       )}
       {moviesData && moviesData.length === 0 && (
-        <h1 style={{ color: "#fff" }}>Oops nothing to show</h1>
+        <p style={{ color: "#fff" }}>
+          Your {mediaType} List Looks empty. Add from{" "}
+          <Link to={`/${mediaType === "movie" ? "movies" : mediaType}`}>
+            <span style={{ textDecoration: "underline" }}>{mediaType}</span>
+          </Link>{" "}
+        </p>
       )}
     </div>
   );
