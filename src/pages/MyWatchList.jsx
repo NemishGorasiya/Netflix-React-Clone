@@ -5,6 +5,7 @@ import { addToWatchList, fetchWatchList } from "../services/services";
 import { useCallback, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { watchListCategories } from "../data/data";
+import toast from "react-hot-toast";
 
 const MyWatchList = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
@@ -49,11 +50,11 @@ const MyWatchList = () => {
         media_type: media_type,
         isAdding: false,
       });
-      if (res) {
+      if (res.success) {
         fetchWatchListData();
-        console.log("Removed successfully from watchlist");
+        toast.success(res.status_message, {});
       } else {
-        console.log("something went wrong while removinfg from watchlist");
+        toast.error(res.status_message, {});
       }
     } catch (error) {
       console.error(error);

@@ -6,6 +6,7 @@ import Rating from "../UI/Rating";
 import MovieCasts from "../components/MoreInfoPage/MovieCasts";
 import CustomModal from "../UI/CustomModal";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
   addToFavorite,
   addToWatchList,
@@ -84,10 +85,13 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       media_id: moreInfoOfMovie.id,
       media_type: mediaType,
     });
-    if (res) {
-      console.log("added to favorite");
+    if (res.success) {
+      toast.success(
+        "The item/record added into your favorite successfully.",
+        {}
+      );
     } else {
-      console.log("oops!, something went wrong");
+      toast.error(res.status_message, {});
     }
   };
   const handleAddToWatchList = async () => {
@@ -96,10 +100,13 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       media_id: moreInfoOfMovie.id,
       media_type: mediaType,
     });
-    if (res) {
-      console.log("added to WatchList");
+    if (res.success) {
+      toast.success(
+        "The item/record added into your watchList successfully.",
+        {}
+      );
     } else {
-      console.log("oops!, something went wrong");
+      toast.error(res.status_message, {});
     }
   };
 

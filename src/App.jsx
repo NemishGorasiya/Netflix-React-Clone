@@ -10,6 +10,7 @@ import MyWatchList from "./pages/MyWatchList";
 import OverviewPage from "./pages/OverviewPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const router = createBrowserRouter([
@@ -71,6 +72,7 @@ function App() {
 
   return (
     <>
+      <Toaster position="bottom-right" />
       <RouterProvider router={router} />
     </>
   );

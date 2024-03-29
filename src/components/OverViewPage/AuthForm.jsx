@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import CustomInput from "../../UI/CustomInput";
 import "./AuthForm.scss";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -30,12 +31,17 @@ const AuthForm = () => {
 
     const sessionID = await handleTMDBLogin(username, password);
     if (!sessionID) {
-      alert("invlid credentials");
+      toast.error("Invalid credentials.", {
+        duration: 1500,
+      });
     } else {
       console.log("sessionID", sessionID);
       setLoggedInUser({
         sessionID: sessionID,
         username: username,
+      });
+      toast.success("LoggedIn Successfully.", {
+        duration: 1500,
       });
       setAccounts((accountsInfo) => {
         if (!accountsInfo) {
@@ -55,7 +61,9 @@ const AuthForm = () => {
         }
         return [...accountsInfo, { username: username, profileImg: "" }];
       });
-      navigate("/home");
+      setTimeout(() => {
+        navigate("/home");
+      }, 1500);
     }
     setUsername("");
     setPassword("");

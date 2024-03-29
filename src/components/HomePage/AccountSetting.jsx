@@ -3,6 +3,7 @@ import "./AccountSetting.scss";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import toast from "react-hot-toast";
 
 const AccountSetting = ({ isSideBarOpen }) => {
   const [isAccountSettingVisible, setIsAccountSettingVisible] = useState(false);
@@ -22,7 +23,12 @@ const AccountSetting = ({ isSideBarOpen }) => {
   };
   const handleLogOut = () => {
     setLoggedInUser(null);
-    navigate("/");
+    toast.success("User LoggedOut successfully.", {
+      duration: 1500,
+    });
+    setTimeout(() => {
+      navigate("/");
+    }, [1500]);
   };
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);

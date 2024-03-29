@@ -5,6 +5,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { addToFavorite, fetchFavoriteList } from "../services/services";
 import { useCallback, useEffect, useState } from "react";
 import { favoriteListCategories } from "../data/data";
+import toast from "react-hot-toast";
 
 const MyFavoritePage = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
@@ -49,11 +50,11 @@ const MyFavoritePage = () => {
         media_type: media_type,
         isAdding: false,
       });
-      if (res) {
+      if (res.success) {
         fetchFavoriteListData();
-        console.log("Removed successfully from favorite");
+        toast.success(res.status_message, {});
       } else {
-        console.log("something went wrong while removinfg from favorite");
+        toast.error(res.status_message, {});
       }
     } catch (error) {
       console.error(error);

@@ -177,11 +177,7 @@ export const addToFavorite = async ({
   try {
     const res = await fetch(url, options);
     const resJSON = await res.json();
-    if (resJSON.success) {
-      return true;
-    } else {
-      return false;
-    }
+    return resJSON;
   } catch (error) {
     console.error(error);
   }
@@ -211,11 +207,7 @@ export const addToWatchList = async ({
   try {
     const res = await fetch(url, options);
     const resJSON = await res.json();
-    if (resJSON.success) {
-      return true;
-    } else {
-      return false;
-    }
+    return resJSON;
   } catch (error) {
     console.error(error);
   }

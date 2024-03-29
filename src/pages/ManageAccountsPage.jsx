@@ -5,6 +5,8 @@ import useLocalStorage from "../hooks/useLocalStorage.jsx";
 import CustomModal from "../UI/CustomModal.jsx";
 import Button from "../UI/Button.jsx";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import fallBackProfileImage from "../assets/profile_image.png";
 
 const ManageAccountsPage = () => {
   const [accounts, setAccounts] = useLocalStorage("accounts", null);
@@ -33,7 +35,12 @@ const ManageAccountsPage = () => {
       const idx = tempArr.findIndex(
         (account) => account.username === usernameOfProfileToEdit
       );
-      tempArr[idx].profileImg = profileImage;
+      if (idx !== -1) {
+        tempArr[idx].profileImg = profileImage;
+        toast.success("Your profile edited successfully.", {
+          duration: 1000,
+        });
+      }
       return tempArr;
     });
     setIsEditProfileModalOpen(false);
@@ -47,7 +54,11 @@ const ManageAccountsPage = () => {
           shouldCloseOnOutSideClick={false}
           handleCloseMyCustomModal={handleCloseMyCustomModal}
         >
-          <form action="" className="editProfileForm">
+          <form
+            action=""
+            className="editProfileForm"
+            onSubmit={handleEditProfileBtnClick}
+          >
             <div className="inputWrapper">
               <label htmlFor="profileName">Profile Name</label>
               <input
@@ -78,12 +89,16 @@ const ManageAccountsPage = () => {
                 id="profileImg"
                 accept="image/png, image/gif, image/jpeg"
                 onChange={handleUploadImageChange}
+                required
               />
               {profileImage && (
                 <img
                   style={{ height: "150px", width: "150px" }}
                   src={profileImage}
                   alt="profileImagePreview"
+                  onError={(event) => {
+                    handleFallBackImage(event, fallBackProfileImage);
+                  }}
                 />
               )}
             </div>
@@ -103,7 +118,6 @@ const ManageAccountsPage = () => {
                   fontSize: "18px",
                 }}
                 text="Edit Profile"
-                onClick={handleEditProfileBtnClick}
               />
             </div>
           </form>
