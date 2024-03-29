@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 
 const MoviesCategories = ({ mediaType }) => {
   const [homePageMoviesData, setHomePageMoviesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const mediaCategories = mediaType === "movie" ? movieTypes : tvShowsTypes;
   const fetchMoviesData = useCallback(
     async (mediaCategory) => {
@@ -23,10 +24,12 @@ const MoviesCategories = ({ mediaType }) => {
   );
   const fetchData = useCallback(async () => {
     try {
+      setIsLoading(true);
       const response = await Promise.all(
         mediaCategories.map((category) => fetchMoviesData(category))
       );
       setHomePageMoviesData(response);
+      setIsLoading(false);
     } catch (error) {
       throw Error("Promise failed");
     }
@@ -36,13 +39,18 @@ const MoviesCategories = ({ mediaType }) => {
   }, [fetchData]);
   return (
     <div className="moviesCategoriesWrapper">
-      {homePageMoviesData &&
+      {isLoading &&
+        movieTypes.map((movieCategory) => (
+          <CategorywiseList key={movieCategory} isLoading={isLoading} />
+        ))}
+      {!isLoading &&
         homePageMoviesData.map((moviesCategory) => (
           <CategorywiseList
             key={moviesCategory.categoryTitle}
             categoryTitle={moviesCategory.categoryTitle}
             moviesData={moviesCategory.moviesData}
             mediaType={mediaType}
+            isLoading={isLoading}
           />
         ))}
     </div>

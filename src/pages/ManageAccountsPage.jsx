@@ -7,15 +7,14 @@ import Button from "../UI/Button.jsx";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import fallBackProfileImage from "../assets/profile_image.png";
+import { handleFallBackImage } from "../utils/utilityFunctions.js";
 
 const ManageAccountsPage = () => {
   const [accounts, setAccounts] = useLocalStorage("accounts", null);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [usernameOfProfileToEdit, setUsernameOfProfileToEdit] = useState();
   const [profileImage, setProfileImage] = useState();
-  const handleAddAccount = () => {
-    console.log("add account called");
-  };
+
   const handleCloseMyCustomModal = () => {
     setIsEditProfileModalOpen(false);
   };
@@ -44,6 +43,7 @@ const ManageAccountsPage = () => {
       return tempArr;
     });
     setIsEditProfileModalOpen(false);
+    setProfileImage(null);
   };
 
   return (
@@ -116,6 +116,7 @@ const ManageAccountsPage = () => {
                   color: "#fff",
                   borderRadius: "5px",
                   fontSize: "18px",
+                  marginTop: "10px",
                 }}
                 text="Edit Profile"
               />
@@ -135,11 +136,7 @@ const ManageAccountsPage = () => {
               handleOpenMyCustomModal={handleOpenMyCustomModal}
             />
           ))}
-          <Profile
-            profileName={"Add"}
-            isAddAccountDiv={true}
-            onClick={handleAddAccount}
-          />
+          <Profile profileName={"Add"} isAddAccountDiv={true} />
         </div>
       </div>
     </div>

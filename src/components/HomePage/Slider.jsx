@@ -153,6 +153,8 @@ const Slider = ({
                     : posterFallBackImage
                 }
                 alt="image"
+                loading="lazy"
+                decoding="async"
                 onError={(event) => {
                   handleFallBackImage(event, posterFallBackImage);
                 }}

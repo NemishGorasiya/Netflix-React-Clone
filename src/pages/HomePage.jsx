@@ -7,7 +7,6 @@ import Footer from "../components/OverViewPage/Footer.jsx";
 import { footerLinks } from "../data/data.js";
 import "./HomePage.scss";
 import PropTypes from "prop-types";
-
 const HomePage = ({ mediaType = "movie" }) => {
   const [displayMoviesData, setDisplayMoviesData] = useState({});
 

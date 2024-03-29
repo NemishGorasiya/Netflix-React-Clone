@@ -40,7 +40,6 @@
         color: #fff;
       }
 
-      li,
       .navLink {
         margin: 0 10px;
         font-size: 15px;
@@ -55,7 +54,7 @@
           transform: scale(1);
         }
       }
-      li::after,
+
       .navLink::after {
         content: "";
         position: absolute;
@@ -163,7 +162,6 @@
         flex-direction: column;
         padding-top: 85px;
         background: #000;
-        // background: #fff;
         text-align: center;
         li {
           color: #fff;
@@ -326,12 +324,12 @@
   }
 }
 
-@media only screen and (min-width: 1121px) {
-  .homePageNavBar {
-    .navRight {
-      .inputWrapper {
-        display: inline-block !important;
-      }
-    }
-  }
-}
+// @media only screen and (min-width: 1121px) {
+//   .homePageNavBar {
+//     .navRight {
+//       .inputWrapper {
+//         display: inline-block !important;
+//       }
+//     }
+//   }
+// }

@@ -4,6 +4,7 @@ import Slider from "./Slider";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { changeFormatOfTitle } from "../../utils/utilityFunctions";
+import CategorywiseListSkeleton from "./CategorywiseListSkeleton";
 
 const CategorywiseList = ({
   categoryTitle,
@@ -14,6 +15,7 @@ const CategorywiseList = ({
   isSeasonList,
   style,
   onClick,
+  isLoading,
 }) => {
   const [isViewAll, setIsViewAll] = useState(false);
   const [needOfViewAllBtn, setNeedOfViewAllBtn] = useState(true);
@@ -22,6 +24,9 @@ const CategorywiseList = ({
     setIsViewAll((prev) => !prev);
   };
 
+  if (isLoading) {
+    return <CategorywiseListSkeleton />;
+  }
   return (
     <div className="categoryWiseList" style={style}>
       <div className="categoryHeader">
@@ -68,6 +73,7 @@ CategorywiseList.propTypes = {
   isSeasonList: PropTypes.bool,
   style: PropTypes.object,
   onClick: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default CategorywiseList;

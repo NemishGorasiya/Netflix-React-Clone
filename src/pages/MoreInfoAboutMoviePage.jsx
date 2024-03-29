@@ -136,11 +136,15 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
           seasonNumber: seasonNumber,
           episodeNumber: episodeNumber,
         });
-        if (res) {
-          console.log("rating submitted successfully");
+        if (res.success) {
+          toast.success("Rating submitted successfully", {
+            duration: 1500,
+          });
           setIsAddRatingModalOpen(false);
         } else {
-          console.log("something went wrong while submitting rating");
+          toast.error(res.status_message, {
+            duration: 1500,
+          });
         }
       } catch (error) {
         console.error(error);

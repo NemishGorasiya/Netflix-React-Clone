@@ -301,7 +301,7 @@ https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}/epis
   try {
     const res = await fetch(url, options);
     const resJSON = await res.json();
-    return resJSON.success;
+    return resJSON;
   } catch (error) {
     console.error(error);
   }

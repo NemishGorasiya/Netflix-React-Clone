@@ -2,6 +2,8 @@
   display: flex;
   overflow: hidden;
   scroll-behavior: smooth;
+  min-height: 650px;
+  height: 80vh;
   .currentlyPlayingContent {
     padding: 85px 0 30px 80px;
     text-align: left;

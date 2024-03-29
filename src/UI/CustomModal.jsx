@@ -58,7 +58,7 @@ const CustomModal = ({
             handleCloseMyCustomModal();
           }}
         >
-          X
+          <i className="fa-solid fa-xmark"></i>
         </button>
         {children}
       </div>

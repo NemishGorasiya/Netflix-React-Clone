@@ -4,6 +4,7 @@ import repeat from "../../assets/Repeat.png";
 import Button from "../../UI/Button";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import CurrentlyPlayingContentSkeleton from "./CurrentlyPlayingContentSkeleton";
 
 const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
   const [count, setCount] = useState(0);
@@ -20,7 +21,8 @@ const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
 
   return (
     <div className="displayMoviesContainer">
-      {displayMoviesData.map((displayMovie) => (
+      <CurrentlyPlayingContentSkeleton />
+      {/* {displayMoviesData.map((displayMovie) => (
         <div
           key={displayMovie.id}
           className="currentlyPlayingContent"
@@ -36,7 +38,7 @@ const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
           <p className="movieDesctiption" title={displayMovie.overview}>
             {displayMovie.overview}
           </p>
-          {/* <div className="trendingContainer">
+          <div className="trendingContainer">
             <span className="top10">
               Top
               <br />
@@ -45,7 +47,7 @@ const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
             <span className="trendingRank">
               #1 in Movies <br /> Today
             </span>
-          </div> */}
+          </div>
           <div className="playBtnsWrapper">
             <Button
               className={"btn playBtn"}
@@ -68,7 +70,7 @@ const CurrentlyPlayingContent = ({ displayMoviesData, mediaType }) => {
             <div className="certification">U/A 13+</div>
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };
