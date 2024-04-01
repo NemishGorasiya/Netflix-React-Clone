@@ -4,6 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
 import { handleFallBackImage } from "../../utils/utilityFunctions";
 import PropTypes from "prop-types";
+import RenderIfVisible from "react-render-if-visible";
 
 const Slider = ({
   isViewAll = false,
@@ -135,49 +136,51 @@ const Slider = ({
         ref={sliderRef}
       >
         {moviesData.map((movieData) => (
-          <div
-            key={movieData.id}
-            className={isDeletable ? "slide deletableSlide" : "slide"}
-          >
-            <Link
-              to={
-                isSeasonList
-                  ? `/${mediaType}/moreInfo?id=${mediaId}&season=${movieData.season_number}`
-                  : `/${mediaType}/moreInfo?id=${movieData.id}`
-              }
-            >
-              <img
-                src={
-                  movieData.poster_path
-                    ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
-                    : posterFallBackImage
+          <RenderIfVisible key={movieData.id}>
+            <div className={isDeletable ? "slide deletableSlide" : "slide"}>
+              <Link
+                to={
+                  isSeasonList
+                    ? `/${mediaType}/moreInfo?id=${mediaId}&season=${movieData.season_number}`
+                    : `/${mediaType}/moreInfo?id=${movieData.id}`
                 }
-                alt="image"
-                loading="lazy"
-                decoding="async"
-                onError={(event) => {
-                  handleFallBackImage(event, posterFallBackImage);
+              >
+                <img
+                  src={
+                    movieData.poster_path
+                      ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
+                      : posterFallBackImage
+                  }
+                  alt="image"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(event) => {
+                    handleFallBackImage(event, posterFallBackImage);
+                  }}
+                />
+              </Link>
+              <div
+                className="deleteIcon"
+                onClick={() => {
+                  removeFromList({
+                    mediaId: movieData.id,
+                    media_type: mediaType,
+                  });
                 }}
-              />
-            </Link>
-
-            <div
-              className="deleteIcon"
-              onClick={() => {
-                removeFromList({
-                  mediaId: movieData.id,
-                  media_type: mediaType,
-                });
-              }}
-            >
-              <i className="fa-solid fa-xmark"></i>
-            </div>
-            {isSeasonList && (
-              <div className="slideTitle" title={movieData.name}>
-                {movieData.name}
+              >
+                <i className="fa-solid fa-xmark"></i>
               </div>
-            )}
-          </div>
+              {movieData.rating && (
+                <span className="rating">{movieData.rating}</span>
+              )}
+
+              {isSeasonList && (
+                <div className="slideTitle" title={movieData.name}>
+                  {movieData.name}
+                </div>
+              )}
+            </div>
+          </RenderIfVisible>
         ))}
       </div>
     </div>

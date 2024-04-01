@@ -1,3 +1,13 @@
+const httpReq = async ({ url, options }) => {
+  try {
+    const res = await fetch(url, options);
+    const resJSON = await res.json();
+    return resJSON;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const fetchMediaData = async ({ mediaType, mediaCategory }) => {
   let url = `https://api.themoviedb.org/3/${mediaType}/${mediaCategory}?language=en-US&page=1`;
   const options = {
@@ -7,13 +17,7 @@ export const fetchMediaData = async ({ mediaType, mediaCategory }) => {
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
   };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error(error);
-  }
+  return await httpReq({ url, options });
 };
 
 export const fetchMoreInfoOfMedia = async ({
@@ -34,6 +38,7 @@ export const fetchMoreInfoOfMedia = async ({
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
   };
+
   try {
     const res = await fetch(url, options);
     const resJSON = await res.json();
@@ -52,13 +57,7 @@ export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
   };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error(error);
-  }
+  return await httpReq({ url, options });
 };
 
 export const generateRequestToken = async () => {
@@ -70,17 +69,24 @@ export const generateRequestToken = async () => {
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
   };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    if (resJSON.success) {
-      return resJSON.request_token;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.error(error);
+  const resJSON = await httpReq({ url, options });
+  if (resJSON.success) {
+    return resJSON.request_token;
+  } else {
+    return false;
   }
+
+  // try {
+  //   const res = await fetch(url, options);
+  //   const resJSON = await res.json();
+  //   if (resJSON.success) {
+  //     return resJSON.request_token;
+  //   } else {
+  //     return false;
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  // }
 };
 
 export const validateRequestTokenWithLogin = async (
@@ -104,13 +110,15 @@ https://api.themoviedb.org/3/authentication/token/validate_with_login`;
       request_token: reqToken,
     }),
   };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON.success;
-  } catch (error) {
-    console.error(error);
-  }
+  const resJSON = await httpReq({ url, options });
+  return resJSON.success;
+  // try {
+  //   const res = await fetch(url, options);
+  //   const resJSON = await res.json();
+  //   return resJSON.success;
+  // } catch (error) {
+  //   console.error(error);
+  // }
 };
 
 export const generateSessionId = async (reqToken) => {
@@ -122,16 +130,11 @@ export const generateSessionId = async (reqToken) => {
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
   };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    if (resJSON.success) {
-      return resJSON.session_id;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.error(error);
+  const resJSON = await httpReq({ url, options });
+  if (resJSON.success) {
+    return resJSON.session_id;
+  } else {
+    return false;
   }
 };
 
@@ -174,13 +177,7 @@ export const addToFavorite = async ({
     }),
   };
 
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error(error);
-  }
+  return await httpReq({ url, options });
 };
 
 export const addToWatchList = async ({
@@ -204,13 +201,7 @@ export const addToWatchList = async ({
     }),
   };
 
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error(error);
-  }
+  return await httpReq({ url, options });
 };
 
 export const fetchWatchList = async ({ sessionID, watchListCategory }) => {
@@ -222,13 +213,8 @@ export const fetchWatchList = async ({ sessionID, watchListCategory }) => {
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
   };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error(error);
-  }
+
+  return await httpReq({ url, options });
 };
 export const fetchFavoriteList = async ({
   sessionID,
@@ -242,13 +228,8 @@ export const fetchFavoriteList = async ({
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
   };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error(error);
-  }
+
+  return await httpReq({ url, options });
 };
 
 export const fetchDataBySearchQuery = async ({
@@ -298,11 +279,24 @@ https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}/epis
       value: rating,
     }),
   };
-  try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-    return resJSON;
-  } catch (error) {
-    console.error(error);
+  return await httpReq({ url, options });
+};
+
+export const fetchRatedList = async ({ sessionID, category }) => {
+  if (category === "episodes") {
+    category = "tv/episodes";
   }
+  if (category === "movie") {
+    category = "movies";
+  }
+  const url = `https://api.themoviedb.org/3/account/account_id/rated/${category}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.asc`;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+    },
+  };
+
+  return await httpReq({ url, options });
 };

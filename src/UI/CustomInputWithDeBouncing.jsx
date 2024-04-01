@@ -25,7 +25,6 @@ const CustomInputWithDeBouncing = ({
         setIsEmpty(false);
       }
       if (inputValidationFn(value)) {
-        console.log("finally", value);
         updateState(value);
         setIsError(false);
       } else {

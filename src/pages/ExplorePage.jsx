@@ -6,7 +6,7 @@ import CustomInputWithDeBouncing from "../UI/CustomInputWithDeBouncing.jsx";
 import HomePageNavBar from "../components/HomePage/HomePageNavBar.jsx";
 
 const ExplorePage = () => {
-  const [movieDataAfterSerach, setMovieDataAfterSerach] = useState([]);
+  const [movieDataAfterSerach, setMovieDataAfterSerach] = useState(null);
   const [selectedMediaType, setSelectedMediaType] = useState("movie");
   const [searchQuery, setSearchQuery] = useState("");
   const fetchData = useCallback(
@@ -75,7 +75,7 @@ const ExplorePage = () => {
             mediaType={selectedMediaType}
           />
         )}
-        {movieDataAfterSerach.length === 0 && (
+        {movieDataAfterSerach && movieDataAfterSerach.length === 0 && (
           <>
             <h1>No Relevant Media Found </h1>
             <p style={{ color: "red" }}>Try to search something else... </p>

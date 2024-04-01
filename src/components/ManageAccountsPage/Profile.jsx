@@ -3,6 +3,8 @@ import profile_image from "../../assets/profile_image.png";
 import addAccountImage from "../../assets/plusImage.jpg";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { handleFallBackImage } from "../../utils/utilityFunctions";
+import fallBackProfileImage from "../../assets/profile_image.png";
 
 const Profile = ({
   profileName,
@@ -39,6 +41,9 @@ const Profile = ({
           <img
             src={profileImage === "" ? profile_image : profileImage}
             alt={profileName}
+            onError={(event) => {
+              handleFallBackImage(event, fallBackProfileImage);
+            }}
           />
         </div>
         <h3 className="profileName">{profileName}</h3>

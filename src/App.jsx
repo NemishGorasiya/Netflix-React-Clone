@@ -11,6 +11,7 @@ import OverviewPage from "./pages/OverviewPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
+import RatedListPage from "./pages/RatedListPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -49,6 +50,10 @@ function App() {
         {
           path: "/myFavorite",
           element: <MyFavoritePage />,
+        },
+        {
+          path: "/rated",
+          element: <RatedListPage />,
         },
         {
           path: "/manageAccounts",

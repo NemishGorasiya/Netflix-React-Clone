@@ -33,3 +33,11 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .authenticationFormContainer {
+    background: #000;
+    max-width: none;
+    border-radius: 0;
+  }
+}

@@ -35,7 +35,6 @@ const AuthForm = () => {
         duration: 1500,
       });
     } else {
-      console.log("sessionID", sessionID);
       setLoggedInUser({
         sessionID: sessionID,
         username: username,
@@ -49,8 +48,6 @@ const AuthForm = () => {
         }
         let isAlreadyExist = false;
         accountsInfo.forEach((account) => {
-          console.log(account);
-          console.log(account.username);
           if (account.username === username) {
             isAlreadyExist = true;
             return;

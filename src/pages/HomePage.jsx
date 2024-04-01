@@ -9,13 +9,16 @@ import "./HomePage.scss";
 import PropTypes from "prop-types";
 const HomePage = ({ mediaType = "movie" }) => {
   const [displayMoviesData, setDisplayMoviesData] = useState({});
+  const [isLoadingCurrentContent, setIsLoadingCurrentContent] = useState(true);
 
   const fetchData = useCallback(async () => {
+    setIsLoadingCurrentContent(true);
     const res = await fetchMediaData({
       mediaType: mediaType,
       mediaCategory: "popular",
     });
     setDisplayMoviesData(res);
+    setIsLoadingCurrentContent(false);
   }, [mediaType]);
   useEffect(() => {
     fetchData();
@@ -23,13 +26,15 @@ const HomePage = ({ mediaType = "movie" }) => {
   return (
     <div className="homePage">
       <HomePageNavBar />
-      {displayMoviesData.results && (
-        <CurrentlyPlayingContent
-          displayMoviesData={displayMoviesData.results}
-          mediaType={mediaType}
-        />
-      )}
+
+      <CurrentlyPlayingContent
+        displayMoviesData={displayMoviesData.results}
+        mediaType={mediaType}
+        isLoading={isLoadingCurrentContent}
+      />
+
       <MoviesCategories mediaType={mediaType} />
+      <MoviesCategories mediaType={"tv"} />
       <div className="footerWarpper">
         <Footer footerLinks={footerLinks} />
       </div>

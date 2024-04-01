@@ -16,16 +16,18 @@ const CategorywiseListSkeleton = () => {
           {Array(9)
             .fill()
             .map((item, index) => (
-              <div key={index} className="slide">
-                <Skeleton
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                  }}
-                />
+              <div key={index} className="renderIfVisible">
+                <div className="slide">
+                  <Skeleton
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      position: "absolute",
+                      top: "0",
+                      left: "0",
+                    }}
+                  />
+                </div>
               </div>
             ))}
         </div>

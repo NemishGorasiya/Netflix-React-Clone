@@ -13,5 +13,5 @@ export const handleFallBackImage = (event, fallBackImage) => {
 };
 
 export const changeFormatOfTitle = (title) => {
-  return title.replace("_", " ");
+  return title.replaceAll("_", " ");
 };

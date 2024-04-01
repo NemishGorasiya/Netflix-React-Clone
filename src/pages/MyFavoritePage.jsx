@@ -6,11 +6,13 @@ import { addToFavorite, fetchFavoriteList } from "../services/services";
 import { useCallback, useEffect, useState } from "react";
 import { favoriteListCategories } from "../data/data";
 import toast from "react-hot-toast";
+import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSkeleton";
 
 const MyFavoritePage = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
   const [favoriteListData, setFavoriteListData] = useState([]);
   const { movie, tv } = favoriteListCategories;
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchMovies = useCallback(async () => {
     const res = await fetchFavoriteList({
@@ -22,6 +24,7 @@ const MyFavoritePage = () => {
       moviesData: res.results,
     };
   }, [loggedInUser.sessionID, movie]);
+
   const fetchTVs = useCallback(async () => {
     const res = await fetchFavoriteList({
       sessionID: loggedInUser.sessionID,
@@ -34,9 +37,11 @@ const MyFavoritePage = () => {
   }, [loggedInUser.sessionID, tv]);
 
   const fetchFavoriteListData = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await Promise.all([fetchMovies(), fetchTVs()]);
       setFavoriteListData(response);
+      setIsLoading(false);
     } catch {
       throw Error("Promise failed");
     }
@@ -68,7 +73,12 @@ const MyFavoritePage = () => {
     <div className="myFavoritePage">
       <HomePageNavBar />
       <div className="categoryWrapper">
-        {favoriteListData &&
+        {isLoading &&
+          Array(2)
+            .fill()
+            .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)}
+        {!isLoading &&
+          favoriteListData &&
           favoriteListData.map((favoriteListCategory) => (
             <CategorywiseList
               key={favoriteListCategory.categoryTitle}

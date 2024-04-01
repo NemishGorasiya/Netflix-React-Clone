@@ -111,6 +111,14 @@ const HomePageNavBar = () => {
           >
             My Favorite
           </NavLink>
+          <NavLink
+            to="/rated"
+            className={({ isActive }) => {
+              return isActive ? "navLink activeLink" : "navLink";
+            }}
+          >
+            My Rated
+          </NavLink>
         </ul>
       </div>
       <div className="navRight">

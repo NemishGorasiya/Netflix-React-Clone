@@ -4,6 +4,8 @@ import { movieTypes, tvShowsTypes } from "../../data/data.js";
 import { fetchMediaData } from "../../services/services.js";
 import { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import RenderIfVisible from "react-render-if-visible";
+import { changeFormatOfTitle } from "../../utils/utilityFunctions.js";
 
 const MoviesCategories = ({ mediaType }) => {
   const [homePageMoviesData, setHomePageMoviesData] = useState([]);
@@ -39,19 +41,23 @@ const MoviesCategories = ({ mediaType }) => {
   }, [fetchData]);
   return (
     <div className="moviesCategoriesWrapper">
+      <h1 className="moviesCategoriesTitle">
+        {changeFormatOfTitle(mediaType)}
+      </h1>
       {isLoading &&
         movieTypes.map((movieCategory) => (
           <CategorywiseList key={movieCategory} isLoading={isLoading} />
         ))}
       {!isLoading &&
         homePageMoviesData.map((moviesCategory) => (
-          <CategorywiseList
-            key={moviesCategory.categoryTitle}
-            categoryTitle={moviesCategory.categoryTitle}
-            moviesData={moviesCategory.moviesData}
-            mediaType={mediaType}
-            isLoading={isLoading}
-          />
+          <RenderIfVisible key={moviesCategory.categoryTitle}>
+            <CategorywiseList
+              categoryTitle={moviesCategory.categoryTitle}
+              moviesData={moviesCategory.moviesData}
+              mediaType={mediaType}
+              isLoading={isLoading}
+            />
+          </RenderIfVisible>
         ))}
     </div>
   );

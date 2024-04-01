@@ -35,7 +35,7 @@
 }
 @media screen and (max-width: 960px) {
   .navbar {
-    padding: 15px 30px;
+    padding: 15px 30px !important;
 
     .logo {
       .logoImage {
@@ -45,6 +45,15 @@
   }
 }
 @media screen and (max-width: 600px) {
+  .navbar {
+    padding: 15px 5px !important;
+
+    .NavBtnWrapper {
+      button {
+        padding: 0 5px;
+      }
+    }
+  }
 }
 @media screen and (max-width: 380px) {
   .navbar {

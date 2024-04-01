@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { changeFormatOfTitle } from "../../utils/utilityFunctions";
 import CategorywiseListSkeleton from "./CategorywiseListSkeleton";
+import RenderIfVisible from "react-render-if-visible";
 
 const CategorywiseList = ({
   categoryTitle,
@@ -41,16 +42,18 @@ const CategorywiseList = ({
       </div>
 
       {moviesData && moviesData.length > 0 && (
-        <Slider
-          isViewAll={isViewAll}
-          moviesData={moviesData}
-          isDeletable={isDeletable}
-          removeFromList={removeFromList}
-          mediaType={mediaType}
-          isSeasonList={isSeasonList}
-          onClick={onClick}
-          setNeedOfViewAllBtn={setNeedOfViewAllBtn}
-        />
+        <RenderIfVisible>
+          <Slider
+            isViewAll={isViewAll}
+            moviesData={moviesData}
+            isDeletable={isDeletable}
+            removeFromList={removeFromList}
+            mediaType={mediaType}
+            isSeasonList={isSeasonList}
+            onClick={onClick}
+            setNeedOfViewAllBtn={setNeedOfViewAllBtn}
+          />
+        </RenderIfVisible>
       )}
       {moviesData && moviesData.length === 0 && (
         <p style={{ color: "#fff" }}>

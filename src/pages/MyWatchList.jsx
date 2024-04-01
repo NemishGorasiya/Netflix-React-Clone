@@ -6,11 +6,13 @@ import { useCallback, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { watchListCategories } from "../data/data";
 import toast from "react-hot-toast";
+import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSkeleton";
 
 const MyWatchList = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
   const [watchListData, setWatchListData] = useState([]);
   const { movie, tv } = watchListCategories;
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchMovies = useCallback(async () => {
     const res = await fetchWatchList({
@@ -34,9 +36,11 @@ const MyWatchList = () => {
   }, [loggedInUser.sessionID, tv]);
 
   const fetchWatchListData = useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await Promise.all([fetchMovies(), fetchTVs()]);
       setWatchListData(response);
+      setIsLoading(false);
     } catch {
       throw Error("Promise failed");
     }
@@ -69,6 +73,10 @@ const MyWatchList = () => {
     <div className="myWatchListPage">
       <HomePageNavBar />
       <div className="categoryWrapper">
+        {isLoading &&
+          Array(2)
+            .fill()
+            .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)}
         {watchListData &&
           watchListData.map((watchListCategory) => (
             <CategorywiseList
