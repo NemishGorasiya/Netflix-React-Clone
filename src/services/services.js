@@ -48,6 +48,7 @@ export const fetchMoreInfoOfMedia = async ({
     console.error(error);
   }
 };
+
 export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
   let url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US`;
   const options = {
@@ -75,18 +76,6 @@ export const generateRequestToken = async () => {
   } else {
     return false;
   }
-
-  // try {
-  //   const res = await fetch(url, options);
-  //   const resJSON = await res.json();
-  //   if (resJSON.success) {
-  //     return resJSON.request_token;
-  //   } else {
-  //     return false;
-  //   }
-  // } catch (error) {
-  //   console.error(error);
-  // }
 };
 
 export const validateRequestTokenWithLogin = async (
@@ -112,13 +101,6 @@ https://api.themoviedb.org/3/authentication/token/validate_with_login`;
   };
   const resJSON = await httpReq({ url, options });
   return resJSON.success;
-  // try {
-  //   const res = await fetch(url, options);
-  //   const resJSON = await res.json();
-  //   return resJSON.success;
-  // } catch (error) {
-  //   console.error(error);
-  // }
 };
 
 export const generateSessionId = async (reqToken) => {
@@ -216,6 +198,7 @@ export const fetchWatchList = async ({ sessionID, watchListCategory }) => {
 
   return await httpReq({ url, options });
 };
+
 export const fetchFavoriteList = async ({
   sessionID,
   favoriteListCategory,

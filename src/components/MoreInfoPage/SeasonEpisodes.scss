@@ -25,6 +25,7 @@
     .episodeDetails {
       .episodeTitle {
         text-overflow: ellipsis;
+        text-transform: capitalize;
         overflow: hidden;
         width: auto;
         line-height: 35px;
@@ -55,8 +56,6 @@
         height: 80px;
         width: 120px;
         min-width: 120px;
-        img {
-        }
       }
       .episodeDetails {
         .episodeTitle {
@@ -77,10 +76,7 @@
     .episodeWrapper {
       gap: 8px;
       padding: 10px 0;
-      .episodePoster {
-        img {
-        }
-      }
+
       .episodeDetails {
         .episodeTitle {
           font-size: 18px;

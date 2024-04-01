@@ -26,7 +26,6 @@
           width: 100%;
           border-radius: 8px;
           user-select: none;
-          // object-fit: cover;
           background-size: cover !important;
         }
         .deleteIcon {
@@ -155,9 +154,6 @@
       width: 100%;
       margin: 0;
     }
-
-    .slide {
-    }
   }
 }
 @media only screen and (max-width: 1180px) {
@@ -166,8 +162,6 @@
     .slideContainer {
       .renderIfVisible {
         min-width: calc((100% - 75px) / 5);
-        .slide {
-        }
       }
     }
   }
@@ -179,8 +173,6 @@
         height: 250px;
         width: 100%;
         margin: 0;
-        .slide {
-        }
       }
     }
   }
@@ -192,8 +184,6 @@
       .renderIfVisible {
         min-width: calc((100% - 60px) / 4);
       }
-      .slide {
-      }
     }
   }
   .slider.viewAll {
@@ -203,8 +193,6 @@
       .renderIfVisible {
         width: 100%;
         margin: 0;
-      }
-      .slide {
       }
     }
   }
@@ -216,8 +204,6 @@
       .renderIfVisible {
         min-width: calc((100% - 45px) / 3);
       }
-      .slide {
-      }
     }
   }
   .slider.viewAll {
@@ -227,8 +213,6 @@
         height: 200px;
         width: 100%;
         margin: 0;
-      }
-      .slide {
       }
     }
   }
@@ -240,8 +224,6 @@
       .renderIfVisible {
         margin: 0 3px;
         min-width: calc((100% - 18px) / 3);
-      }
-      .slide {
       }
     }
     .sliderBtn {
@@ -258,9 +240,6 @@
         height: 180px;
         width: 100%;
         margin: 0;
-      }
-
-      .slide {
       }
     }
   }

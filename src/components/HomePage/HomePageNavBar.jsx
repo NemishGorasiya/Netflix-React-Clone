@@ -10,30 +10,19 @@ const HomePageNavBar = () => {
   const hamBurgerRef = useRef(null);
 
   const handleHamBurgerClick = () => {
-    // if (isSideBarOpen) {
-    //   document.body.style.overflow = "auto";
-    // } else {
-    //   document.body.style.overflow = "hidden";
-    // }
     setIsSideBarOpen((prevState) => !prevState);
   };
 
   useEffect(() => {
-    // set initial value
     const mediaWatcher = window.matchMedia("(min-width: 1140px)");
-    // setIsSideBarOpen(mediaWatcher.matches);
-
-    //watch for updates
-    function updateIsNarrowScreen(e) {
+    function updateSideBarStatus(e) {
       if (e.matches) {
         setIsSideBarOpen(false);
       }
     }
-    mediaWatcher.addEventListener("change", updateIsNarrowScreen);
-
-    // clean up after ourselves
+    mediaWatcher.addEventListener("change", updateSideBarStatus);
     return function cleanup() {
-      mediaWatcher.removeEventListener("change", updateIsNarrowScreen);
+      mediaWatcher.removeEventListener("change", updateSideBarStatus);
     };
   }, []);
 

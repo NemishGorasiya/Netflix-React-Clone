@@ -1,5 +1,4 @@
 import CategorywiseList from "../HomePage/CategorywiseList";
-import "./SeasonsList.scss";
 import PropTypes from "prop-types";
 
 const SeasonsList = ({ moviesData, onClick }) => {

@@ -17,16 +17,6 @@ const DisplayMovie = ({ count, displayMovie, mediaType }) => {
       <p className="movieDesctiption" title={displayMovie.overview}>
         {displayMovie.overview}
       </p>
-      {/* <div className="trendingContainer">
-        <span className="top10">
-          Top
-          <br />
-          10
-        </span>
-        <span className="trendingRank">
-          #1 in Movies <br /> Today
-        </span>
-      </div> */}
       <div className="playBtnsWrapper">
         <Button
           className={"btn playBtn"}

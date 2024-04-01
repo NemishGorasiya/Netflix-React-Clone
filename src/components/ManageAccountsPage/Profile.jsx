@@ -54,9 +54,9 @@ const Profile = ({
 
 Profile.propTypes = {
   profileName: PropTypes.string,
-  onClick: PropTypes.func,
   isAddAccountDiv: PropTypes.bool,
   handleOpenMyCustomModal: PropTypes.func,
+  profileImage: PropTypes.string,
 };
 
 export default Profile;

@@ -13,6 +13,11 @@
     font-weight: 600;
     background: transparent;
     color: #fff;
+
+    option {
+      background: #fff;
+      color: #000;
+    }
   }
 }
 .selectLanguage::before {

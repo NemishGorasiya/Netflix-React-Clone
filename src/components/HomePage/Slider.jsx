@@ -14,7 +14,6 @@ const Slider = ({
   mediaType,
   isSeasonList = false,
   style,
-  onClick,
   setNeedOfViewAllBtn,
 }) => {
   const [searchParamas] = useSearchParams();

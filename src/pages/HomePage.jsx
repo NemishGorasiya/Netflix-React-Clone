@@ -7,7 +7,7 @@ import Footer from "../components/OverViewPage/Footer.jsx";
 import { footerLinks } from "../data/data.js";
 import "./HomePage.scss";
 import PropTypes from "prop-types";
-const HomePage = ({ mediaType = "movie" }) => {
+const HomePage = ({ mediaType = "movie", isHomePage = false }) => {
   const [displayMoviesData, setDisplayMoviesData] = useState({});
   const [isLoadingCurrentContent, setIsLoadingCurrentContent] = useState(true);
 
@@ -34,7 +34,7 @@ const HomePage = ({ mediaType = "movie" }) => {
       />
 
       <MoviesCategories mediaType={mediaType} />
-      <MoviesCategories mediaType={"tv"} />
+      {isHomePage && <MoviesCategories mediaType={"tv"} />}
       <div className="footerWarpper">
         <Footer footerLinks={footerLinks} />
       </div>
@@ -44,6 +44,7 @@ const HomePage = ({ mediaType = "movie" }) => {
 
 HomePage.propTypes = {
   mediaType: PropTypes.string,
+  isHomePage: PropTypes.bool,
 };
 
 export default HomePage;

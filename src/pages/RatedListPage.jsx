@@ -5,6 +5,7 @@ import HomePageNavBar from "../components/HomePage/HomePageNavBar";
 import CategorywiseList from "../components/HomePage/CategorywiseList";
 import { fetchRatedList } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { ratedCategoriesType } from "../data/data.js";
 
 const RatedListPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,11 +28,9 @@ const RatedListPage = () => {
   const fetchRatedListData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await Promise.all([
-        fetchRatedCategoryData("movie"),
-        fetchRatedCategoryData("tv"),
-        fetchRatedCategoryData("episodes"),
-      ]);
+      const response = await Promise.all(
+        ratedCategoriesType.map((category) => fetchRatedCategoryData(category))
+      );
       setRatedListData(response);
       setIsLoading(false);
     } catch {

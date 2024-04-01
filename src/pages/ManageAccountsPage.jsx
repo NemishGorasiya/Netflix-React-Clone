@@ -126,7 +126,7 @@ const ManageAccountsPage = () => {
       )}
 
       <div className="manageAccountsPageContentWrapper">
-        <h1 className="manageAccountsHeading">Who's Watching?</h1>
+        <h1 className="manageAccountsHeading">Who&apos;s Watching?</h1>
         <div className="profiles">
           {accounts?.map((account) => (
             <Profile

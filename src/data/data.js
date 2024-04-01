@@ -179,12 +179,8 @@ export const tvShowsTypes = [
   "top_rated",
 ];
 
-export const watchListCategories = {
-  movie: "MOVIE",
-  tv: "TV",
-};
+export const watchListCategories = ["movie", "tv"];
 
-export const favoriteListCategories = {
-  movie: "MOVIE",
-  tv: "TV",
-};
+export const favoriteListCategories = ["movie", "tv"];
+
+export const ratedCategoriesType = ["movie", "tv", "episodes"];

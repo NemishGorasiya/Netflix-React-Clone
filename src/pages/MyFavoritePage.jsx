@@ -11,41 +11,36 @@ import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSke
 const MyFavoritePage = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
   const [favoriteListData, setFavoriteListData] = useState([]);
-  const { movie, tv } = favoriteListCategories;
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchMovies = useCallback(async () => {
-    const res = await fetchFavoriteList({
-      sessionID: loggedInUser.sessionID,
-      favoriteListCategory: "movies",
-    });
-    return {
-      categoryTitle: movie.toLocaleLowerCase(),
-      moviesData: res.results,
-    };
-  }, [loggedInUser.sessionID, movie]);
-
-  const fetchTVs = useCallback(async () => {
-    const res = await fetchFavoriteList({
-      sessionID: loggedInUser.sessionID,
-      favoriteListCategory: "tv",
-    });
-    return {
-      categoryTitle: tv.toLocaleLowerCase(),
-      moviesData: res.results,
-    };
-  }, [loggedInUser.sessionID, tv]);
+  const fetchCategoryWiseData = useCallback(
+    async (category) => {
+      const res = await fetchFavoriteList({
+        sessionID: loggedInUser.sessionID,
+        favoriteListCategory: category === "movie" ? "movies" : category,
+      });
+      return {
+        categoryTitle: category,
+        moviesData: res.results,
+      };
+    },
+    [loggedInUser.sessionID]
+  );
 
   const fetchFavoriteListData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await Promise.all([fetchMovies(), fetchTVs()]);
+      const response = await Promise.all(
+        favoriteListCategories.map((category) =>
+          fetchCategoryWiseData(category)
+        )
+      );
       setFavoriteListData(response);
       setIsLoading(false);
     } catch {
       throw Error("Promise failed");
     }
-  }, [fetchMovies, fetchTVs]);
+  }, [fetchCategoryWiseData]);
 
   const removeFromFavoriteList = async ({ mediaId, media_type = "movie" }) => {
     try {
