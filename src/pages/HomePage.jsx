@@ -7,9 +7,26 @@ import Footer from "../components/OverViewPage/Footer.jsx";
 import { footerLinks } from "../data/data.js";
 import "./HomePage.scss";
 import PropTypes from "prop-types";
-const HomePage = ({ mediaType = "movie", isHomePage = false }) => {
+const HomePage = () => {
   const [displayMoviesData, setDisplayMoviesData] = useState({});
   const [isLoadingCurrentContent, setIsLoadingCurrentContent] = useState(true);
+  const path = window.location.pathname;
+
+  let mediaType = "";
+  let isHomepage = false;
+
+  switch (path) {
+    case "/home":
+      mediaType = "movie";
+      isHomepage = true;
+      break;
+    case "/movies":
+      mediaType = "movie";
+      break;
+    case "/tv":
+      mediaType = "tv";
+      break;
+  }
 
   const fetchData = useCallback(async () => {
     setIsLoadingCurrentContent(true);
@@ -20,9 +37,11 @@ const HomePage = ({ mediaType = "movie", isHomePage = false }) => {
     setDisplayMoviesData(res);
     setIsLoadingCurrentContent(false);
   }, [mediaType]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
   return (
     <div className="homePage">
       <HomePageNavBar />
@@ -32,9 +51,14 @@ const HomePage = ({ mediaType = "movie", isHomePage = false }) => {
         mediaType={mediaType}
         isLoading={isLoadingCurrentContent}
       />
-
-      <MoviesCategories mediaType={mediaType} />
-      {isHomePage && <MoviesCategories mediaType={"tv"} />}
+      {isHomepage ? (
+        <>
+          <MoviesCategories mediaType={"movie"} />
+          <MoviesCategories mediaType={"tv"} />
+        </>
+      ) : (
+        <MoviesCategories mediaType={mediaType} />
+      )}
       <div className="footerWarpper">
         <Footer footerLinks={footerLinks} />
       </div>

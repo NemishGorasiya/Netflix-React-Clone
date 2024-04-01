@@ -9,10 +9,15 @@ const AuthenticationPage = () => {
     <div className="authenticationPage">
       <NavBar />
       <AuthForm />
-      <Footer
-        style={{ width: "80%", margin: "auto" }}
-        footerLinks={AuthenticationPagefooterLinks}
-      />
+      <div className="footerWrapper">
+        <Footer
+          style={{
+            width: "80%",
+            margin: "auto",
+          }}
+          footerLinks={AuthenticationPagefooterLinks}
+        />
+      </div>
     </div>
   );
 };

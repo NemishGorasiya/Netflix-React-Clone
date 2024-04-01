@@ -138,12 +138,12 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
         });
         if (res.success) {
           toast.success("Rating submitted successfully", {
-            duration: 1500,
+            duration: 2500,
           });
           setIsAddRatingModalOpen(false);
         } else {
           toast.error(res.status_message, {
-            duration: 1500,
+            duration: 2500,
           });
         }
       } catch (error) {

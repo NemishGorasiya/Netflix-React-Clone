@@ -10,8 +10,10 @@ import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSke
 
 const MyFavoritePage = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
-  const [favoriteListData, setFavoriteListData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [favoriteList, setFavoriteList] = useState({
+    list: [],
+    isLoading: true,
+  });
 
   const fetchCategoryWiseData = useCallback(
     async (category) => {
@@ -28,15 +30,16 @@ const MyFavoritePage = () => {
   );
 
   const fetchFavoriteListData = useCallback(async () => {
-    setIsLoading(true);
     try {
       const response = await Promise.all(
         favoriteListCategories.map((category) =>
           fetchCategoryWiseData(category)
         )
       );
-      setFavoriteListData(response);
-      setIsLoading(false);
+      setFavoriteList({
+        list: response,
+        isLoading: false,
+      });
     } catch {
       throw Error("Promise failed");
     }
@@ -68,22 +71,20 @@ const MyFavoritePage = () => {
     <div className="myFavoritePage">
       <HomePageNavBar />
       <div className="categoryWrapper">
-        {isLoading &&
-          Array(2)
-            .fill()
-            .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)}
-        {!isLoading &&
-          favoriteListData &&
-          favoriteListData.map((favoriteListCategory) => (
-            <CategorywiseList
-              key={favoriteListCategory.categoryTitle}
-              categoryTitle={favoriteListCategory.categoryTitle}
-              moviesData={favoriteListCategory.moviesData}
-              isDeletable={true}
-              removeFromList={removeFromFavoriteList}
-              mediaType={favoriteListCategory.categoryTitle}
-            />
-          ))}
+        {favoriteList.isLoading
+          ? Array(2)
+              .fill()
+              .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)
+          : favoriteList.list.map((favoriteListCategory) => (
+              <CategorywiseList
+                key={favoriteListCategory.categoryTitle}
+                categoryTitle={favoriteListCategory.categoryTitle}
+                moviesData={favoriteListCategory.moviesData}
+                isDeletable={true}
+                removeFromList={removeFromFavoriteList}
+                mediaType={favoriteListCategory.categoryTitle}
+              />
+            ))}
       </div>
     </div>
   );

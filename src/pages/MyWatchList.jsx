@@ -10,8 +10,10 @@ import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSke
 
 const MyWatchList = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
-  const [watchListData, setWatchListData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [watchList, setwatchList] = useState({
+    list: [],
+    isLoading: true,
+  });
 
   const fetchCategoryWiseData = useCallback(
     async (category) => {
@@ -28,13 +30,14 @@ const MyWatchList = () => {
   );
 
   const fetchWatchListData = useCallback(async () => {
-    setIsLoading(true);
     try {
       const response = await Promise.all(
         watchListCategories.map((category) => fetchCategoryWiseData(category))
       );
-      setWatchListData(response);
-      setIsLoading(false);
+      setwatchList({
+        list: response,
+        isLoading: false,
+      });
     } catch {
       throw Error("Promise failed");
     }
@@ -67,21 +70,20 @@ const MyWatchList = () => {
     <div className="myWatchListPage">
       <HomePageNavBar />
       <div className="categoryWrapper">
-        {isLoading &&
-          Array(2)
-            .fill()
-            .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)}
-        {watchListData &&
-          watchListData.map((watchListCategory) => (
-            <CategorywiseList
-              key={watchListCategory.categoryTitle}
-              categoryTitle={watchListCategory.categoryTitle}
-              moviesData={watchListCategory.moviesData}
-              isDeletable={true}
-              removeFromList={removeFromWatchList}
-              mediaType={watchListCategory.categoryTitle}
-            />
-          ))}
+        {watchList.isLoading
+          ? Array(2)
+              .fill()
+              .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)
+          : watchList.list.map((watchListCategory) => (
+              <CategorywiseList
+                key={watchListCategory.categoryTitle}
+                categoryTitle={watchListCategory.categoryTitle}
+                moviesData={watchListCategory.moviesData}
+                isDeletable={true}
+                removeFromList={removeFromWatchList}
+                mediaType={watchListCategory.categoryTitle}
+              />
+            ))}
       </div>
     </div>
   );

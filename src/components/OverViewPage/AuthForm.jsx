@@ -32,7 +32,7 @@ const AuthForm = () => {
     const sessionID = await handleTMDBLogin(username, password);
     if (!sessionID) {
       toast.error("Invalid credentials.", {
-        duration: 1500,
+        duration: 2500,
       });
     } else {
       setLoggedInUser({
@@ -40,7 +40,7 @@ const AuthForm = () => {
         username: username,
       });
       toast.success("LoggedIn Successfully.", {
-        duration: 1500,
+        duration: 2500,
       });
       setAccounts((accountsInfo) => {
         if (!accountsInfo) {
@@ -58,9 +58,7 @@ const AuthForm = () => {
         }
         return [...accountsInfo, { username: username, profileImg: "" }];
       });
-      setTimeout(() => {
-        navigate("/home");
-      }, 1500);
+      navigate("/home");
     }
     setUsername("");
     setPassword("");
@@ -95,7 +93,7 @@ const AuthForm = () => {
           <>
             <CustomInput
               updateState={updateUsername}
-              floatingLabel="Enter Username"
+              floatingLabel="Username"
               required={true}
               id="username"
               type="text"
@@ -103,11 +101,12 @@ const AuthForm = () => {
             />
             <CustomInput
               updateState={updatePassword}
-              floatingLabel="Enter Password"
+              floatingLabel="Password"
               required={true}
               id="password"
               type="password"
               val={password}
+              isPassword={true}
             />
             <button className="authFormSubmitBtn" type="submit">
               Login

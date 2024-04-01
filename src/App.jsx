@@ -20,7 +20,7 @@ function App() {
       children: [
         {
           path: "/home",
-          element: <HomePage isHomePage={true} />,
+          element: <HomePage />,
           errorElement: <ErrorPage />,
         },
         {

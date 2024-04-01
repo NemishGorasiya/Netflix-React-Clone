@@ -24,11 +24,9 @@ const AccountSetting = ({ isSideBarOpen }) => {
   const handleLogOut = () => {
     setLoggedInUser(null);
     toast.success("User LoggedOut successfully.", {
-      duration: 1500,
+      duration: 2500,
     });
-    setTimeout(() => {
-      navigate("/");
-    }, [1500]);
+    navigate("/");
   };
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);

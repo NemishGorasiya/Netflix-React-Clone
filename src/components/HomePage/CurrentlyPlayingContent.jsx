@@ -23,8 +23,9 @@ const CurrentlyPlayingContent = ({
 
   return (
     <div className="displayMoviesContainer">
-      {isLoading && <CurrentlyPlayingContentSkeleton />}
-      {!isLoading &&
+      {isLoading ? (
+        <CurrentlyPlayingContentSkeleton />
+      ) : (
         displayMoviesData &&
         displayMoviesData.map((displayMovie) => (
           <DisplayMovie
@@ -33,7 +34,8 @@ const CurrentlyPlayingContent = ({
             displayMovie={displayMovie}
             mediaType={mediaType}
           />
-        ))}
+        ))
+      )}
     </div>
   );
 };
