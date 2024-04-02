@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { watchListCategories } from "../data/data";
 import toast from "react-hot-toast";
-import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSkeleton";
+import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSkeleton";
 
 const MyWatchList = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
@@ -86,7 +86,7 @@ const MyWatchList = () => {
         {watchList.isLoading
           ? Array(2)
               .fill()
-              .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)
+              .map((ele, idx) => <CategoryWiseListSkeleton key={idx} />)
           : watchList.list.map((watchListCategory) => (
               <CategorywiseList
                 key={watchListCategory.categoryTitle}

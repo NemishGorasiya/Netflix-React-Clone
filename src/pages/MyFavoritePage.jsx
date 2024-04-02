@@ -5,7 +5,7 @@ import { addToFavorite, fetchFavoriteList } from "../services/services";
 import { useCallback, useEffect, useState } from "react";
 import { favoriteListCategories } from "../data/data";
 import toast from "react-hot-toast";
-import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSkeleton";
+import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSkeleton";
 
 const MyFavoritePage = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
@@ -87,7 +87,7 @@ const MyFavoritePage = () => {
         {favoriteMedia.isLoading
           ? Array(2)
               .fill()
-              .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)
+              .map((ele, idx) => <CategoryWiseListSkeleton key={idx} />)
           : favoriteMedia.list.map((favoriteListCategory) => (
               <CategorywiseList
                 key={favoriteListCategory.categoryTitle}

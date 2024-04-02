@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./RatedListPage.scss";
-import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSkeleton";
+import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSkeleton.jsx";
 import CategorywiseList from "../components/HomePage/CategorywiseList";
 import { fetchRatedList } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -49,7 +49,7 @@ const RatedListPage = () => {
       <div className="categoryWrapper">
         {ratedMedia.isLoading
           ? ratedCategoriesType.map((ele, idx) => (
-              <CategorywiseListSkeleton key={idx} />
+              <CategoryWiseListSkeleton key={idx} />
             ))
           : ratedMedia.list.map(
               (ratedListCategory) =>

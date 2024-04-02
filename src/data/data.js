@@ -142,7 +142,7 @@ export const footerLinks = [
     redirectTo: "",
   },
 ];
-export const AuthenticationPagefooterLinks = [
+export const AuthenticationPageFooterLinks = [
   {
     linkName: "FAQ",
     redirectTo: "",

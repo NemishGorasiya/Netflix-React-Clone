@@ -17,8 +17,8 @@ const Slider = ({
   style,
   setNeedOfViewAllBtn,
 }) => {
-  const [searchParamas] = useSearchParams();
-  const mediaId = searchParamas.get("id");
+  const [searchParams] = useSearchParams();
+  const mediaId = searchParams.get("id");
   const sliderRef = useRef();
   const tempRef = useRef();
   const [isPrevBtnHidden, setIsPrevBtnHidden] = useState(true);
@@ -27,7 +27,7 @@ const Slider = ({
   let clientWidth = 0;
   let scrollLeft = 0;
   let scrollWidth = 0;
-  const handleSliderBtnVisiblity = useCallback((scrollLeft) => {
+  const handleSliderBtnVisibility = useCallback((scrollLeft) => {
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
     if (scrollLeft <= 0) {
@@ -49,7 +49,7 @@ const Slider = ({
       setIsNextBtnHidden(true);
       setIsPrevBtnHidden(true);
     } else {
-      handleSliderBtnVisiblity(scrollLeft);
+      handleSliderBtnVisibility(scrollLeft);
     }
     sliderRef.current.scrollLeft -= sliderRef.current.clientWidth;
   };
@@ -61,7 +61,7 @@ const Slider = ({
       setIsNextBtnHidden(true);
       setIsPrevBtnHidden(true);
     } else {
-      handleSliderBtnVisiblity(scrollLeft);
+      handleSliderBtnVisibility(scrollLeft);
     }
     sliderRef.current.scrollLeft += sliderRef.current.clientWidth;
   };
@@ -93,7 +93,7 @@ const Slider = ({
   useEffect(() => {
     if (isViewAll === false) {
       scrollLeft = sliderRef.current.scrollLeft;
-      handleSliderBtnVisiblity(scrollLeft);
+      handleSliderBtnVisibility(scrollLeft);
     }
   }, [isViewAll]);
 

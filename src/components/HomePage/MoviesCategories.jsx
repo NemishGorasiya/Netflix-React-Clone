@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
 import { changeFormatOfTitle } from "../../utils/utilityFunctions.js";
-import CategorywiseListSkeleton from "./CategorywiseListSkeleton.jsx";
+import CategoryWiseListSkeleton from "./CategoryWiseListSkeleton.jsx";
 
 const MoviesCategories = ({ mediaType }) => {
   const [mediaList, setMediaList] = useState({
@@ -50,7 +50,7 @@ const MoviesCategories = ({ mediaType }) => {
       </h1>
       {mediaList.isLoading
         ? mediaCategories.map((movieCategory) => (
-            <CategorywiseListSkeleton key={movieCategory} />
+            <CategoryWiseListSkeleton key={movieCategory} />
           ))
         : mediaList.list.map((moviesCategory) => (
             <RenderIfVisible key={moviesCategory.categoryTitle}>

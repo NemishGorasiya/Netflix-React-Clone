@@ -1,6 +1,6 @@
 import Skeleton from "react-loading-skeleton";
 
-const CategorywiseListSkeleton = () => {
+const CategoryWiseListSkeleton = () => {
   return (
     <div className="categoryWiseList">
       <div className="categoryHeader">
@@ -36,4 +36,4 @@ const CategorywiseListSkeleton = () => {
   );
 };
 
-export default CategorywiseListSkeleton;
+export default CategoryWiseListSkeleton;

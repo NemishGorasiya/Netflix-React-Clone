@@ -14,7 +14,7 @@ const DisplayMovie = ({ count, displayMovie, mediaType }) => {
     >
       <h1 className="movieTitle">{displayMovie.title ?? displayMovie.name}</h1>
 
-      <p className="movieDesctiption" title={displayMovie.overview}>
+      <p className="movieDescription" title={displayMovie.overview}>
         {displayMovie.overview}
       </p>
       <div className="playBtnsWrapper">

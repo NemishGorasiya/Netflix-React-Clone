@@ -7,7 +7,7 @@ const CurrentlyPlayingContentSkeleton = () => {
         <Skeleton height={60} width={350} />
       </h1>
 
-      <p className="movieDesctiption">
+      <p className="movieDescription">
         <Skeleton height={15} width={450} count={3} />
       </p>
       <div className="playBtnsWrapper">
