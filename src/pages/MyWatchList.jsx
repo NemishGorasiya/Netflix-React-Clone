@@ -52,7 +52,20 @@ const MyWatchList = () => {
         isAdding: false,
       });
       if (res.success) {
-        fetchWatchListData();
+        let tempWatchList = watchList.list;
+        const idx = tempWatchList.findIndex(
+          (categoryWiseList) => categoryWiseList.categoryTitle === media_type
+        );
+        tempWatchList[idx] = {
+          ...tempWatchList[idx],
+          moviesData: tempWatchList[idx].moviesData.filter(
+            (media) => media.id !== mediaId
+          ),
+        };
+        setwatchList({
+          list: tempWatchList,
+          isLoading: false,
+        });
         toast.success(res.status_message, {});
       } else {
         toast.error(res.status_message, {});
@@ -65,6 +78,8 @@ const MyWatchList = () => {
   useEffect(() => {
     fetchWatchListData();
   }, [fetchWatchListData]);
+
+  console.log(watchList.list);
 
   return (
     <div className="myWatchListPage">

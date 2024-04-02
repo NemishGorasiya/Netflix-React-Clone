@@ -8,8 +8,10 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { ratedCategoriesType } from "../data/data.js";
 
 const RatedListPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [ratedListData, setRatedListData] = useState([]);
+  const [ratedMedia, setRatedMedia] = useState({
+    list: [],
+    isLoading: true,
+  });
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
 
   const fetchRatedCategoryData = useCallback(
@@ -26,13 +28,14 @@ const RatedListPage = () => {
     [loggedInUser.sessionID]
   );
   const fetchRatedListData = useCallback(async () => {
-    setIsLoading(true);
     try {
       const response = await Promise.all(
         ratedCategoriesType.map((category) => fetchRatedCategoryData(category))
       );
-      setRatedListData(response);
-      setIsLoading(false);
+      setRatedMedia({
+        list: response,
+        isLoading: false,
+      });
     } catch {
       throw Error("Promise failed");
     }
@@ -46,22 +49,21 @@ const RatedListPage = () => {
     <div className="myRatedListPage">
       <HomePageNavBar />
       <div className="categoryWrapper">
-        {isLoading &&
-          Array(3)
-            .fill()
-            .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)}
-        {ratedListData &&
-          ratedListData.map(
-            (ratedListCategory) =>
-              ratedListCategory.moviesData && (
-                <CategorywiseList
-                  key={ratedListCategory.categoryTitle}
-                  categoryTitle={ratedListCategory.categoryTitle}
-                  moviesData={ratedListCategory.moviesData}
-                  mediaType={ratedListCategory.categoryTitle}
-                />
-              )
-          )}
+        {ratedMedia.isLoading
+          ? ratedCategoriesType.map((ele, idx) => (
+              <CategorywiseListSkeleton key={idx} />
+            ))
+          : ratedMedia.list.map(
+              (ratedListCategory) =>
+                ratedListCategory.moviesData && (
+                  <CategorywiseList
+                    key={ratedListCategory.categoryTitle}
+                    categoryTitle={ratedListCategory.categoryTitle}
+                    moviesData={ratedListCategory.moviesData}
+                    mediaType={ratedListCategory.categoryTitle}
+                  />
+                )
+            )}
       </div>
     </div>
   );

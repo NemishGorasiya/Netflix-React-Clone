@@ -10,7 +10,7 @@ import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSke
 
 const MyFavoritePage = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
-  const [favoriteList, setFavoriteList] = useState({
+  const [favoriteMedia, setFavoriteMedia] = useState({
     list: [],
     isLoading: true,
   });
@@ -36,7 +36,7 @@ const MyFavoritePage = () => {
           fetchCategoryWiseData(category)
         )
       );
-      setFavoriteList({
+      setFavoriteMedia({
         list: response,
         isLoading: false,
       });
@@ -44,6 +44,8 @@ const MyFavoritePage = () => {
       throw Error("Promise failed");
     }
   }, [fetchCategoryWiseData]);
+
+  console.log(favoriteMedia.list);
 
   const removeFromFavoriteList = async ({ mediaId, media_type = "movie" }) => {
     try {
@@ -54,7 +56,20 @@ const MyFavoritePage = () => {
         isAdding: false,
       });
       if (res.success) {
-        fetchFavoriteListData();
+        let tempFavoriteMediaList = favoriteMedia.list;
+        const idx = tempFavoriteMediaList.findIndex(
+          (categoryWiseList) => categoryWiseList.categoryTitle === media_type
+        );
+        tempFavoriteMediaList[idx] = {
+          ...tempFavoriteMediaList[idx],
+          moviesData: tempFavoriteMediaList[idx].moviesData.filter(
+            (media) => media.id !== mediaId
+          ),
+        };
+        setFavoriteMedia({
+          list: tempFavoriteMediaList,
+          isLoading: false,
+        });
         toast.success(res.status_message, {});
       } else {
         toast.error(res.status_message, {});
@@ -71,11 +86,11 @@ const MyFavoritePage = () => {
     <div className="myFavoritePage">
       <HomePageNavBar />
       <div className="categoryWrapper">
-        {favoriteList.isLoading
+        {favoriteMedia.isLoading
           ? Array(2)
               .fill()
               .map((ele, idx) => <CategorywiseListSkeleton key={idx} />)
-          : favoriteList.list.map((favoriteListCategory) => (
+          : favoriteMedia.list.map((favoriteListCategory) => (
               <CategorywiseList
                 key={favoriteListCategory.categoryTitle}
                 categoryTitle={favoriteListCategory.categoryTitle}

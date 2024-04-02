@@ -6,10 +6,13 @@ import { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
 import { changeFormatOfTitle } from "../../utils/utilityFunctions.js";
+import CategorywiseListSkeleton from "./CategorywiseListSkeleton.jsx";
 
 const MoviesCategories = ({ mediaType }) => {
-  const [homePageMoviesData, setHomePageMoviesData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [mediaList, setMediaList] = useState({
+    list: [],
+    isLoading: true,
+  });
   const mediaCategories = mediaType === "movie" ? movieTypes : tvShowsTypes;
   const fetchMoviesData = useCallback(
     async (mediaCategory) => {
@@ -26,12 +29,13 @@ const MoviesCategories = ({ mediaType }) => {
   );
   const fetchData = useCallback(async () => {
     try {
-      setIsLoading(true);
       const response = await Promise.all(
         mediaCategories.map((category) => fetchMoviesData(category))
       );
-      setHomePageMoviesData(response);
-      setIsLoading(false);
+      setMediaList({
+        list: response,
+        isLoading: false,
+      });
     } catch (error) {
       throw Error("Promise failed");
     }
@@ -44,21 +48,19 @@ const MoviesCategories = ({ mediaType }) => {
       <h1 className="moviesCategoriesTitle">
         {changeFormatOfTitle(mediaType)}
       </h1>
-      {isLoading &&
-        movieTypes.map((movieCategory) => (
-          <CategorywiseList key={movieCategory} isLoading={isLoading} />
-        ))}
-      {!isLoading &&
-        homePageMoviesData.map((moviesCategory) => (
-          <RenderIfVisible key={moviesCategory.categoryTitle}>
-            <CategorywiseList
-              categoryTitle={moviesCategory.categoryTitle}
-              moviesData={moviesCategory.moviesData}
-              mediaType={mediaType}
-              isLoading={isLoading}
-            />
-          </RenderIfVisible>
-        ))}
+      {mediaList.isLoading
+        ? mediaCategories.map((movieCategory) => (
+            <CategorywiseListSkeleton key={movieCategory} />
+          ))
+        : mediaList.list.map((moviesCategory) => (
+            <RenderIfVisible key={moviesCategory.categoryTitle}>
+              <CategorywiseList
+                categoryTitle={moviesCategory.categoryTitle}
+                moviesData={moviesCategory.moviesData}
+                mediaType={mediaType}
+              />
+            </RenderIfVisible>
+          ))}
     </div>
   );
 };

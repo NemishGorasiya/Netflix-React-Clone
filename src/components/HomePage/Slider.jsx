@@ -170,7 +170,7 @@ const Slider = ({
                 <i className="fa-solid fa-xmark"></i>
               </div>
               {movieData.rating && (
-                <span className="rating">{movieData.rating}</span>
+                <span className="rating">{movieData.rating.toFixed(1)}</span>
               )}
 
               {isSeasonList && (
