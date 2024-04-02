@@ -34,6 +34,19 @@
     opacity: 1;
   }
 
+  input[type="search"]:-webkit-autofill,
+  input[type="search"]:-webkit-autofill:hover,
+  input[type="search"]:-webkit-autofill:focus,
+  input[type="search"]:-webkit-autofill:active {
+    background: red;
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: #fff !important;
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-size-adjust: none !important;
+    caret-color: #fff;
+  }
+
   .eyeBtn {
     position: absolute;
     top: 50%;

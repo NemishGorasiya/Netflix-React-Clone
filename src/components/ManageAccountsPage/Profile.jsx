@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { handleFallBackImage } from "../../utils/utilityFunctions";
 import fallBackProfileImage from "../../assets/profile_image.png";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Profile = ({
   profileName,
@@ -12,7 +13,14 @@ const Profile = ({
   isAddAccountDiv = false,
   handleOpenMyCustomModal,
 }) => {
+  const [loggedInUser] = useLocalStorage("loggedInUser", null);
   const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+    if (loggedInUser.username !== profileName) {
+      navigate("/auth?mode=login");
+    }
+  };
 
   const handleAddAccount = () => {
     navigate("/auth");
@@ -39,6 +47,7 @@ const Profile = ({
         </div>
         <div className="imgWrapper">
           <img
+            onClick={handleProfileClick}
             src={profileImage === "" ? profile_image : profileImage}
             alt={profileName}
             onError={(event) => {
