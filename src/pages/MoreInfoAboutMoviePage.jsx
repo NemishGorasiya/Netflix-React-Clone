@@ -118,10 +118,6 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     setUserRating(value);
   };
 
-  const handleBackBtnClick = () => {
-    navigate(-1);
-  };
-
   const submitReview = async (event) => {
     event.preventDefault();
     const ratingRegEx = /^(10(\.0)?|\d(\.\d)?)$/;
@@ -169,9 +165,6 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
         <h1 className="movieTitle">
           {moreInfoOfMovie.title ?? moreInfoOfMovie.name}
         </h1>
-        <button className="backBtn" onClick={handleBackBtnClick}>
-          <i className="fa-solid fa-arrow-left"></i>
-        </button>
       </div>
       <div className="movieDetailsWrapper">
         <div className="functionBtns">

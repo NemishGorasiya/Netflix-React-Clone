@@ -1,6 +1,5 @@
 import "./MyFavoritePage.scss";
 import CategorywiseList from "../components/HomePage/CategorywiseList";
-import HomePageNavBar from "../components/HomePage/HomePageNavBar";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { addToFavorite, fetchFavoriteList } from "../services/services";
 import { useCallback, useEffect, useState } from "react";
@@ -84,7 +83,6 @@ const MyFavoritePage = () => {
   }, [fetchFavoriteListData]);
   return (
     <div className="myFavoritePage">
-      <HomePageNavBar />
       <div className="categoryWrapper">
         {favoriteMedia.isLoading
           ? Array(2)

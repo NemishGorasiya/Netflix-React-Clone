@@ -4,7 +4,6 @@ import Slider from "./Slider";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { changeFormatOfTitle } from "../../utils/utilityFunctions";
-import CategorywiseListSkeleton from "./CategorywiseListSkeleton";
 import RenderIfVisible from "react-render-if-visible";
 
 const CategorywiseList = ({

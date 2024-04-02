@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./RatedListPage.scss";
 import CategorywiseListSkeleton from "../components/HomePage/CategorywiseListSkeleton";
-import HomePageNavBar from "../components/HomePage/HomePageNavBar";
 import CategorywiseList from "../components/HomePage/CategorywiseList";
 import { fetchRatedList } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -47,7 +46,6 @@ const RatedListPage = () => {
 
   return (
     <div className="myRatedListPage">
-      <HomePageNavBar />
       <div className="categoryWrapper">
         {ratedMedia.isLoading
           ? ratedCategoriesType.map((ele, idx) => (

@@ -1,5 +1,4 @@
 import "./ManageAccountsPage.scss";
-import HomePageNavBar from "../components/HomePage/HomePageNavBar.jsx";
 import Profile from "../components/ManageAccountsPage/Profile.jsx";
 import useLocalStorage from "../hooks/useLocalStorage.jsx";
 import CustomModal from "../UI/CustomModal.jsx";
@@ -48,7 +47,6 @@ const ManageAccountsPage = () => {
 
   return (
     <div className="manageAccountsPage">
-      <HomePageNavBar />
       {isEditProfileModalOpen && (
         <CustomModal
           shouldCloseOnOutSideClick={false}

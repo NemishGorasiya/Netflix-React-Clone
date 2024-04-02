@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
 import { Link, useSearchParams } from "react-router-dom";
@@ -194,7 +195,6 @@ Slider.propTypes = {
   mediaType: PropTypes.string,
   isSeasonList: PropTypes.bool,
   style: PropTypes.object,
-  onClick: PropTypes.func,
   setNeedOfViewAllBtn: PropTypes.func,
 };
 

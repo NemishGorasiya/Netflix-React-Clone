@@ -6,6 +6,9 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../UI/Button";
 import { handleTMDBLogin } from "../../services/services";
 import useLocalStorage from "../../hooks/useLocalStorage";
+
+const TMDB_LOGIN_PAGE_LINK = "https://www.themoviedb.org/login";
+
 const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +26,7 @@ const AuthForm = () => {
     setPassword(val);
   };
   const redirectToTMDBPage = () => {
-    window.open("https://www.themoviedb.org/login", "_blank");
+    window.open(TMDB_LOGIN_PAGE_LINK, "_blank");
     navigate("/auth?mode=login");
   };
   const handleLogin = async (event) => {

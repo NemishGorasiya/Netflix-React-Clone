@@ -1,4 +1,3 @@
-import HomePageNavBar from "../components/HomePage/HomePageNavBar";
 import "./MyWatchList.scss";
 import CategorywiseList from "../components/HomePage/CategorywiseList";
 import { addToWatchList, fetchWatchList } from "../services/services";
@@ -83,7 +82,6 @@ const MyWatchList = () => {
 
   return (
     <div className="myWatchListPage">
-      <HomePageNavBar />
       <div className="categoryWrapper">
         {watchList.isLoading
           ? Array(2)
