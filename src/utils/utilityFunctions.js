@@ -15,3 +15,9 @@ export const handleFallBackImage = (event, fallBackImage) => {
 export const changeFormatOfTitle = (title) => {
   return title.replaceAll("_", " ");
 };
+
+// export const validateEmail = (email) => {
+//   const emailRegEx =
+//     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+//   return email.match(emailRegEx);
+// };

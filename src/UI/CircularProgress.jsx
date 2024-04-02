@@ -14,7 +14,7 @@ const CircularProgress = ({ rating }) => {
       setDegree((prev) => prev + 18);
     }, 50);
 
-    return () => clearInterval(setDegreeInterval); // Cleanup function
+    return () => clearInterval(setDegreeInterval);
   }, [degree, rating]);
 
   return (

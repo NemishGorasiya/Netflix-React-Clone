@@ -6,25 +6,28 @@ const CustomInput = ({
   type = "text",
   id,
   floatingLabel = "Enter here ...",
-  required = true,
+  required = false,
   updateState,
   val,
   isPassword = false,
-  errorMessage = "Enter valid",
+  errorMessage = "Please fill out this field.",
   style,
 }) => {
   const [isEmpty, setIsEmpty] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const handleInputChange = (event) => {
-    if (event.target.value === "") {
+  const handleInputChange = ({ target: { value } }) => {
+    if (value === "") {
       setIsEmpty(true);
+      setIsError(true);
     } else {
+      setIsError(false);
       if (isEmpty) {
         setIsEmpty(false);
       }
     }
-    updateState(event.target.value);
+    updateState(value);
   };
 
   const handlePasswordVisibility = () => {
@@ -43,7 +46,10 @@ const CustomInput = ({
 
   return (
     <>
-      <div className="customInputContainer" style={style}>
+      <div
+        className={`customInputContainer ${isError ? "hasError" : ""}`}
+        style={style}
+      >
         <input
           type={isPasswordVisible ? "text" : type}
           id={id}
@@ -62,6 +68,12 @@ const CustomInput = ({
               isPasswordVisible ? "-slash" : ""
             } eyeBtn`}
           ></i>
+        )}
+        {isError && (
+          <div className="errorMessage">
+            <i className="fa-regular fa-circle-xmark"></i>
+            {errorMessage}
+          </div>
         )}
       </div>
     </>

@@ -23,19 +23,25 @@
 
   .heroContent {
     margin: 50px auto;
-    max-width: 600px;
     text-align: center;
     color: #fff;
 
     h1 {
-      font-size: 45px;
-      margin-bottom: 15px;
+      font-family: "Netflix Sans Blk";
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 20px;
     }
     h4 {
-      margin-bottom: 15px;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 20px;
     }
     p {
+      font-size: 20px;
+      font-weight: 400;
       margin-bottom: 15px;
+      line-height: 30px;
     }
   }
 
@@ -101,24 +107,6 @@
     .navbar {
       padding: 15px 80px;
     }
-    .heroContent {
-      margin: 50px auto;
-      max-width: 450px;
-      text-align: center;
-      color: #fff;
-
-      h1 {
-        font-size: 35px;
-        margin-bottom: 15px;
-      }
-      h4 {
-        margin-bottom: 15px;
-        font-weight: 500;
-      }
-      p {
-        margin-bottom: 10px;
-      }
-    }
   }
 }
 @media screen and (max-width: 960px) {
@@ -127,16 +115,19 @@
       margin: 50px auto;
       text-align: center;
       color: #fff;
+      padding: 0 50px;
 
       h1 {
-        font-size: 30px;
-        margin-bottom: 15px;
+        font-size: 32px;
+        font-weight: 700;
       }
       h4 {
-        margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: 400;
       }
       p {
-        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: 400;
       }
     }
   }
@@ -148,16 +139,16 @@
       max-width: none;
       width: 100%;
 
-      h1 {
-        font-size: 30px;
-        margin-bottom: 15px;
-      }
-      h4 {
-        margin-bottom: 15px;
-      }
-      p {
-        margin-bottom: 10px;
-      }
+      // h1 {
+      //   font-size: 30px;
+      //   margin-bottom: 15px;
+      // }
+      // h4 {
+      //   margin-bottom: 15px;
+      // }
+      // p {
+      //   margin-bottom: 10px;
+      // }
     }
   }
 }

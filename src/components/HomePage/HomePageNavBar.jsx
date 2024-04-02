@@ -26,12 +26,12 @@ const HomePageNavBar = () => {
     };
   }, []);
 
-  const handleClickOutside = (event) => {
+  const handleClickOutside = ({ target }) => {
     if (
       sideBarRef.current &&
       hamBurgerRef.current &&
-      !sideBarRef.current.contains(event.target) &&
-      !hamBurgerRef.current.contains(event.target)
+      !sideBarRef.current.contains(target) &&
+      !hamBurgerRef.current.contains(target)
     ) {
       setIsSideBarOpen(false);
       document.body.style.overflow = "auto";

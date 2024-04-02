@@ -16,11 +16,11 @@ const CustomModal = ({
       }
     };
 
-    const handleClickToCloseModal = (event) => {
+    const handleClickToCloseModal = ({ target }) => {
       if (
         modalRef.current &&
-        !modalRef.current.contains(event.target) &&
-        backDropRef.current.contains(event.target)
+        !modalRef.current.contains(target) &&
+        backDropRef.current.contains(target)
       ) {
         handleCloseMyCustomModal();
       }

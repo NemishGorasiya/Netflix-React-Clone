@@ -5,7 +5,7 @@ import "./MoreInfoAboutMoviePage.scss";
 import Rating from "../UI/Rating";
 import MovieCasts from "../components/MoreInfoPage/MovieCasts";
 import CustomModal from "../UI/CustomModal";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
   addToFavorite,
@@ -36,10 +36,10 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const handleMuteVolumeClick = () => {
     setIsVolumeMuted((prevState) => !prevState);
   };
-  const [searchParamas] = useSearchParams();
-  const mediaId = searchParamas.get("id");
-  const seasonNumber = searchParamas.get("season");
-  const episodeNumber = searchParamas.get("episode");
+  const [searchParams] = useSearchParams();
+  const mediaId = searchParams.get("id");
+  const seasonNumber = searchParams.get("season");
+  const episodeNumber = searchParams.get("episode");
 
   const handleSeasonPosterClick = useCallback(async () => {
     const res = await fetchEpisodes({

@@ -1,16 +1,17 @@
 .customInputContainer {
   position: relative;
-  height: 50px;
-  margin-bottom: 15px;
+  height: 56px;
+  // margin-bottom: 30px;
+  width: 100%;
 
   .floatingLabel {
-    font-size: 13px;
+    font-size: 17px;
     color: rgba(0, 0, 0, 0.7);
     position: absolute;
     pointer-events: none;
     top: 50%;
     transform: translateY(-50%);
-    left: 12px;
+    left: 15px;
     transition: all 0.1s ease;
     color: rgba(150, 150, 150);
   }
@@ -20,7 +21,7 @@
     font-size: 20px;
     border-radius: 5px;
     padding-top: 8px;
-    padding-left: 12px;
+    padding-left: 15px;
     background: rgba(0, 0, 0, 0.3);
     border: 1.5px solid rgba(255, 255, 255, 0.3);
     color: #fff;
@@ -38,7 +39,6 @@
   input[type="search"]:-webkit-autofill:hover,
   input[type="search"]:-webkit-autofill:focus,
   input[type="search"]:-webkit-autofill:active {
-    background: red;
     -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
     -webkit-text-fill-color: #fff !important;
     -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
@@ -56,10 +56,27 @@
     cursor: pointer;
   }
 }
+.customInputContainer.hasError {
+  // margin-bottom: 30px;
+  input {
+    border: 1px solid red;
+    outline: none;
+  }
+}
 
 .errorMessage {
+  position: absolute;
+  bottom: -30px;
   color: red;
   font-size: 13px;
   margin-top: -10px;
   margin-bottom: 5px;
+  display: block;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  i {
+    font-size: 17px;
+  }
 }

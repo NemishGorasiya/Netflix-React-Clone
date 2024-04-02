@@ -17,8 +17,8 @@ const ManageAccountsPage = () => {
   const handleCloseMyCustomModal = () => {
     setIsEditProfileModalOpen(false);
   };
-  const handleUploadImageChange = (event) => {
-    setProfileImage(URL.createObjectURL(event.target.files[0]));
+  const handleUploadImageChange = ({ target: { files } }) => {
+    setProfileImage(URL.createObjectURL(files[0]));
   };
 
   const handleOpenMyCustomModal = (profileName) => {

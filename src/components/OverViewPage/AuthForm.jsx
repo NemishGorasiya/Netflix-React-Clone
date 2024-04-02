@@ -12,11 +12,14 @@ const TMDB_LOGIN_PAGE_LINK = "https://www.themoviedb.org/login";
 const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", null);
-  const [accounts, setAccounts] = useLocalStorage("accounts", null);
+  const [_loggedInUser, setLoggedInUser] = useLocalStorage(
+    "loggedInUser",
+    null
+  );
+  const [_accounts, setAccounts] = useLocalStorage("accounts", null);
 
-  const [searchParamas] = useSearchParams();
-  const isLoginPage = searchParamas.get("mode") === "login";
+  const [searchParams] = useSearchParams();
+  const isLoginPage = searchParams.get("mode") === "login";
   const navigate = useNavigate();
 
   const updateUsername = (val) => {
@@ -31,6 +34,9 @@ const AuthForm = () => {
   };
   const handleLogin = async (event) => {
     event.preventDefault();
+    if (username === "" || password === "") {
+      return;
+    }
 
     const sessionID = await handleTMDBLogin(username, password);
     if (!sessionID) {
@@ -97,7 +103,6 @@ const AuthForm = () => {
             <CustomInput
               updateState={updateUsername}
               floatingLabel="Username"
-              required={true}
               id="username"
               type="text"
               val={username}
@@ -105,7 +110,6 @@ const AuthForm = () => {
             <CustomInput
               updateState={updatePassword}
               floatingLabel="Password"
-              required={true}
               id="password"
               type="password"
               val={password}

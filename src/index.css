@@ -28,3 +28,24 @@
   left: 0;
   right: 0;
 }
+
+@font-face {
+  font-family: "Netflix Sans Regular";
+  src: local("NetflixSans-Regular"),
+    url("./fonts/NetflixSans_W_Rg.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Netflix Sans Bold";
+  src: local("NetflixSans-Bold"),
+    url("./fonts/NetflixSans_W_Bd.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Netflix Sans Medium";
+  src: local("NetflixSans-Medium"),
+    url("./fonts/NetflixSans_W_Md.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Netflix Sans Blk";
+  src: local("NetflixSans-Blk"),
+    url("./fonts/NetflixSans_W_Blk.woff2") format("woff2");
+}

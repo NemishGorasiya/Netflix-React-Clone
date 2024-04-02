@@ -2,33 +2,32 @@
   width: 100%;
   display: flex;
   gap: 10px;
+  max-width: 560px;
+  margin: auto;
+  // background: yellow;
 
-  // input {
-  //   height: 50px;
-  //   flex: 1;
-  //   margin-right: 5px;
-  //   padding-left: 15px;
-  //   border-radius: 5px;
-  //   border: 1.5px solid rgba(255, 255, 255, 0.3);
-  //   background: rgba(0, 0, 0, 0.3);
-  //   color: #fff;
-  //   font-size: 18px;
-  // }
   button {
-    height: 50px;
+    height: 56px;
     border-radius: 5px;
     border: none;
     background: rgb(229, 9, 20);
     color: #fff;
-    padding: 0 20px;
-    font-size: 25px;
+    font-size: 24px;
     display: flex;
     align-items: center;
-    font-weight: 600;
+    justify-content: center;
+    font-weight: 500;
+    width: 210px;
+    transition: background 0.2s ease;
+    font-family: "Netflix Sans Medium";
 
-    span {
-      display: flex;
-      align-items: center;
+    &:hover {
+      background: rgb(193, 17, 25);
+    }
+
+    i {
+      margin-left: 10px;
+      font-size: 22px;
     }
   }
 }
@@ -41,10 +40,10 @@
     align-items: center;
 
     input {
-      min-height: 50px;
+      height: 56px;
     }
     button {
-      width: fit-content;
+      margin-top: 25px;
     }
   }
 }

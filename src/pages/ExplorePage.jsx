@@ -27,9 +27,9 @@ const ExplorePage = () => {
     [selectedMediaType]
   );
 
-  const handleSelectMediaTypeChange = (event) => {
-    setSelectedMediaType(event.target.value);
-    fetchData(searchQuery, event.target.value);
+  const handleSelectMediaTypeChange = ({ target: { value } }) => {
+    setSelectedMediaType(value);
+    fetchData(searchQuery, value);
   };
 
   return (
