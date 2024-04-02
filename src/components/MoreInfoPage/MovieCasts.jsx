@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./MovieCasts.scss";
-import CastProfileCard from "../../UI/CastProfileCard";
+import CastProfileCard from "./CastProfileCard.jsx";
 import PropTypes from "prop-types";
 
 const MovieCasts = ({ castsInfo }) => {

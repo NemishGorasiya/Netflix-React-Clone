@@ -8,15 +8,24 @@ const httpReq = async ({ url, options }) => {
   }
 };
 
+const setOptions = ({ method = "GET", headers, body }) => {
+  const defaultHeaders = {
+    accept: "application/json",
+    Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+  };
+  const options = {
+    method: method,
+    headers: { ...defaultHeaders, ...headers },
+  };
+  if (body) {
+    options.body = JSON.stringify(body);
+  }
+  return options;
+};
+
 export const fetchMediaData = async ({ mediaType, mediaCategory }) => {
   let url = `https://api.themoviedb.org/3/${mediaType}/${mediaCategory}?language=en-US&page=1`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
+  const options = setOptions({});
   return await httpReq({ url, options });
 };
 
@@ -31,13 +40,7 @@ export const fetchMoreInfoOfMedia = async ({
   if (isEpisode) {
     url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}?append_to_response=credits&language=en-US&page=1`;
   }
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
+  const options = setOptions({});
 
   try {
     const res = await fetch(url, options);
@@ -51,25 +54,13 @@ export const fetchMoreInfoOfMedia = async ({
 
 export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
   let url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
+  const options = setOptions({});
   return await httpReq({ url, options });
 };
 
 export const generateRequestToken = async () => {
   let url = `https://api.themoviedb.org/3/authentication/token/new`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
+  const options = setOptions({});
   const resJSON = await httpReq({ url, options });
   if (resJSON.success) {
     return resJSON.request_token;
@@ -86,32 +77,24 @@ export const validateRequestTokenWithLogin = async (
   let url = `
 https://api.themoviedb.org/3/authentication/token/validate_with_login`;
 
-  const options = {
+  const options = setOptions({
     method: "POST",
     headers: {
-      accept: "application/json",
       "content-type": "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
-    body: JSON.stringify({
+    body: {
       username: username,
       password: password,
       request_token: reqToken,
-    }),
-  };
+    },
+  });
   const resJSON = await httpReq({ url, options });
   return resJSON.success;
 };
 
 export const generateSessionId = async (reqToken) => {
   let url = `https://api.themoviedb.org/3/authentication/session/new?request_token=${reqToken}`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
+  const options = setOptions({});
   const resJSON = await httpReq({ url, options });
   if (resJSON.success) {
     return resJSON.session_id;
@@ -145,19 +128,17 @@ export const addToFavorite = async ({
   isAdding = true,
 }) => {
   const url = `https://api.themoviedb.org/3/account/account_id/favorite?session_id=${sessionID}`;
-  const options = {
+  const options = setOptions({
     method: "POST",
     headers: {
-      accept: "application/json",
       "content-type": "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
-    body: JSON.stringify({
+    body: {
       media_type: media_type,
       media_id: media_id,
       favorite: isAdding,
-    }),
-  };
+    },
+  });
 
   return await httpReq({ url, options });
 };
@@ -169,32 +150,24 @@ export const addToWatchList = async ({
   isAdding = true,
 }) => {
   const url = `https://api.themoviedb.org/3/account/account_id/watchlist?session_id=${sessionID}`;
-  const options = {
+  const options = setOptions({
     method: "POST",
     headers: {
-      accept: "application/json",
       "content-type": "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY} `,
     },
-    body: JSON.stringify({
+    body: {
       media_type: media_type,
       media_id: media_id,
       watchlist: isAdding,
-    }),
-  };
+    },
+  });
 
   return await httpReq({ url, options });
 };
 
 export const fetchWatchList = async ({ sessionID, watchListCategory }) => {
   let url = `https://api.themoviedb.org/3/account/account_id/watchlist/${watchListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
+  const options = setOptions({});
 
   return await httpReq({ url, options });
 };
@@ -204,14 +177,8 @@ export const fetchFavoriteList = async ({
   favoriteListCategory,
 }) => {
   let url = `https://api.themoviedb.org/3/account/account_id/favorite/${favoriteListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
 
+  const options = setOptions({});
   return await httpReq({ url, options });
 };
 
@@ -220,13 +187,7 @@ export const fetchDataBySearchQuery = async ({
   media_type = "movie",
 }) => {
   const url = `https://api.themoviedb.org/3/search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=1`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
+  const options = setOptions({});
   const res = await fetch(url, options);
   const resJSON = await res.json();
   if (res.status === 200) {
@@ -251,17 +212,15 @@ https://api.themoviedb.org/3/${mediaType}/${mediaId}/rating?session_id=${session
     url = `
 https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating?session_id=${sessionID}`;
   }
-  const options = {
+  const options = setOptions({
     method: "POST",
     headers: {
-      accept: "application/json",
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
     },
-    body: JSON.stringify({
+    body: {
       value: rating,
-    }),
-  };
+    },
+  });
   return await httpReq({ url, options });
 };
 
@@ -273,13 +232,7 @@ export const fetchRatedList = async ({ sessionID, category }) => {
     category = "movies";
   }
   const url = `https://api.themoviedb.org/3/account/account_id/rated/${category}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.asc`;
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
-    },
-  };
+  const options = setOptions({});
 
   return await httpReq({ url, options });
 };

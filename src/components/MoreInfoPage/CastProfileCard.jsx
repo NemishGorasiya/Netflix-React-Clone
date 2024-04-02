@@ -1,6 +1,6 @@
 import "./CastProfileCard.scss";
-import profileFallBackImage from "../assets/profile_image.png";
-import { handleFallBackImage } from "../utils/utilityFunctions";
+import profileFallBackImage from "../../assets/profile_image.png";
+import { handleFallBackImage } from "../../utils/utilityFunctions.js";
 
 const CastProfileCard = (castInfo) => {
   const { name, character, profile_path, known_for_department } =
