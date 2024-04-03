@@ -5,7 +5,6 @@ const SeasonsList = ({ moviesData, onClick }) => {
   return (
     <div className="seasonsList">
       <CategoryWiseList
-        style={{ margin: "30px 0", fontSize: "21px" }}
         isSeasonList={true}
         categoryTitle={"ALL SEASONS"}
         moviesData={moviesData}

@@ -13,6 +13,7 @@ const MyFavoritePage = () => {
     list: [],
     isLoading: true,
   });
+  const { list, isLoading } = favoriteMedia;
 
   const fetchCategoryWiseData = useCallback(
     async (category) => {
@@ -53,7 +54,7 @@ const MyFavoritePage = () => {
         isAdding: false,
       });
       if (res.success) {
-        let tempFavoriteMediaList = favoriteMedia.list;
+        let tempFavoriteMediaList = list;
         const idx = tempFavoriteMediaList.findIndex(
           (categoryWiseList) => categoryWiseList.categoryTitle === media_type
         );
@@ -67,9 +68,9 @@ const MyFavoritePage = () => {
           list: tempFavoriteMediaList,
           isLoading: false,
         });
-        toast.success(res.status_message, {});
+        toast.success(res.status_message);
       } else {
-        toast.error(res.status_message, {});
+        toast.error(res.status_message);
       }
     } catch (error) {
       console.error(error);
@@ -82,18 +83,18 @@ const MyFavoritePage = () => {
   return (
     <div className="myFavoritePage">
       <div className="categoryWrapper">
-        {favoriteMedia.isLoading
+        {isLoading
           ? Array(2)
               .fill()
               .map((_ele, idx) => <CategoryWiseListSkeleton key={idx} />)
-          : favoriteMedia.list.map((favoriteListCategory) => (
+          : list.map(({ categoryTitle, moviesData }) => (
               <CategoryWiseList
-                key={favoriteListCategory.categoryTitle}
-                categoryTitle={favoriteListCategory.categoryTitle}
-                moviesData={favoriteListCategory.moviesData}
+                key={categoryTitle}
+                categoryTitle={categoryTitle}
+                moviesData={moviesData}
                 isDeletable={true}
                 removeFromList={removeFromFavoriteList}
-                mediaType={favoriteListCategory.categoryTitle}
+                mediaType={categoryTitle}
               />
             ))}
       </div>

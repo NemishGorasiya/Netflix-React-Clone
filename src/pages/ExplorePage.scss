@@ -8,6 +8,7 @@
 
     .mediaTypeSelectContainer {
       display: flex;
+      margin: 20px 0;
 
       .radioInputWrapper {
         margin-right: 15px;
@@ -15,6 +16,11 @@
         input {
           margin: 0 5px;
         }
+      }
+    }
+    .fallBackText {
+      p {
+        color: red;
       }
     }
   }

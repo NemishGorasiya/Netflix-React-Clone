@@ -10,6 +10,7 @@ const HomePage = () => {
     list: [],
     isLoading: true,
   });
+  const { list, isLoading } = displayMedia;
   const path = window.location.pathname;
 
   const mediaTypeDetails = useMemo(() => {
@@ -31,17 +32,18 @@ const HomePage = () => {
         };
     }
   }, [path]);
+  const { mediaType, isHomePage } = mediaTypeDetails;
 
   const fetchData = useCallback(async () => {
     const response = await fetchMediaData({
-      mediaType: mediaTypeDetails.mediaType,
+      mediaType: mediaType,
       mediaCategory: "popular",
     });
     setDisplayMedia({
       list: response.results,
       isLoading: false,
     });
-  }, [mediaTypeDetails.mediaType]);
+  }, [mediaType]);
 
   useEffect(() => {
     fetchData();
@@ -50,17 +52,17 @@ const HomePage = () => {
   return (
     <div className="homePage">
       <CurrentlyPlayingContent
-        displayMoviesData={displayMedia.list}
-        mediaType={mediaTypeDetails.mediaType}
-        isLoading={displayMedia.isLoading}
+        displayMoviesData={list}
+        mediaType={mediaType}
+        isLoading={isLoading}
       />
-      {mediaTypeDetails.isHomePage ? (
+      {isHomePage ? (
         <>
           <MoviesCategories mediaType={"movie"} />
           <MoviesCategories mediaType={"tv"} />
         </>
       ) : (
-        <MoviesCategories mediaType={mediaTypeDetails.mediaType} />
+        <MoviesCategories mediaType={mediaType} />
       )}
       <div className="footerWrapper">
         <Footer footerLinks={footerLinks} />

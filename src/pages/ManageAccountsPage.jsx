@@ -124,11 +124,11 @@ const ManageAccountsPage = () => {
       <div className="manageAccountsPageContentWrapper">
         <h1 className="manageAccountsHeading">Who&apos;s Watching?</h1>
         <div className="profiles">
-          {accounts?.map((account) => (
+          {accounts?.map(({ username, profileImg }) => (
             <Profile
-              key={account.username}
-              profileName={account.username}
-              profileImage={account.profileImg}
+              key={username}
+              profileName={username}
+              profileImage={profileImg}
               handleOpenMyCustomModal={handleOpenMyCustomModal}
             />
           ))}

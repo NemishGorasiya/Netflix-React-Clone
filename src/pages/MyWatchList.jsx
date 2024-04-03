@@ -13,6 +13,7 @@ const MyWatchList = () => {
     list: [],
     isLoading: true,
   });
+  const { list, isLoading } = watchList;
 
   const fetchCategoryWiseData = useCallback(
     async (category) => {
@@ -51,7 +52,7 @@ const MyWatchList = () => {
         isAdding: false,
       });
       if (res.success) {
-        let tempWatchList = watchList.list;
+        let tempWatchList = list;
         const idx = tempWatchList.findIndex(
           (categoryWiseList) => categoryWiseList.categoryTitle === media_type
         );
@@ -81,18 +82,18 @@ const MyWatchList = () => {
   return (
     <div className="myWatchListPage">
       <div className="categoryWrapper">
-        {watchList.isLoading
+        {isLoading
           ? Array(2)
               .fill()
-              .map((ele, idx) => <CategoryWiseListSkeleton key={idx} />)
-          : watchList.list.map((watchListCategory) => (
+              .map((_ele, idx) => <CategoryWiseListSkeleton key={idx} />)
+          : list.map(({ categoryTitle, moviesData }) => (
               <CategoryWiseList
-                key={watchListCategory.categoryTitle}
-                categoryTitle={watchListCategory.categoryTitle}
-                moviesData={watchListCategory.moviesData}
+                key={categoryTitle}
+                categoryTitle={categoryTitle}
+                moviesData={moviesData}
                 isDeletable={true}
                 removeFromList={removeFromWatchList}
-                mediaType={watchListCategory.categoryTitle}
+                mediaType={categoryTitle}
               />
             ))}
       </div>

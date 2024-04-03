@@ -12,9 +12,9 @@ const Footer = ({ footerLinks, style }) => {
         </a>
       </p>
       <div className="footerLinksContainer">
-        {footerLinks.map((link) => (
-          <a key={link.linkName} className="footerLink" href="">
-            {link.linkName}
+        {footerLinks.map(({ linkName }) => (
+          <a key={linkName} className="footerLink" href="">
+            {linkName}
           </a>
         ))}
       </div>

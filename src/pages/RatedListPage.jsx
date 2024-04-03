@@ -11,6 +11,7 @@ const RatedListPage = () => {
     list: [],
     isLoading: true,
   });
+  const { list, isLoading } = ratedMedia;
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
 
   const fetchRatedCategoryData = useCallback(
@@ -47,11 +48,11 @@ const RatedListPage = () => {
   return (
     <div className="myRatedListPage">
       <div className="categoryWrapper">
-        {ratedMedia.isLoading
-          ? ratedCategoriesType.map((ele, idx) => (
+        {isLoading
+          ? ratedCategoriesType.map((_ele, idx) => (
               <CategoryWiseListSkeleton key={idx} />
             ))
-          : ratedMedia.list.map(
+          : list.map(
               (ratedListCategory) =>
                 ratedListCategory.moviesData && (
                   <CategoryWiseList

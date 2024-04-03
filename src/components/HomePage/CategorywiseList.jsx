@@ -26,7 +26,7 @@ const CategoryWiseList = ({
   return (
     <div className="categoryWiseList" style={style}>
       <div className="categoryHeader">
-        <h3 className="categoryHeading" style={{ textTransform: "capitalize" }}>
+        <h3 className="categoryHeading">
           {changeFormatOfTitle(categoryTitle)}
         </h3>
         {moviesData && needOfViewAllBtn && moviesData.length !== 0 && (
@@ -51,10 +51,10 @@ const CategoryWiseList = ({
         </RenderIfVisible>
       )}
       {moviesData && moviesData.length === 0 && (
-        <p style={{ color: "#fff" }}>
+        <p className="fallBackMessage">
           Your {mediaType} List Looks empty. Add from{" "}
           <Link to={`/${mediaType === "movie" ? "movies" : mediaType}`}>
-            <span style={{ textDecoration: "underline" }}>{mediaType}</span>
+            <span>{mediaType}</span>
           </Link>{" "}
         </p>
       )}

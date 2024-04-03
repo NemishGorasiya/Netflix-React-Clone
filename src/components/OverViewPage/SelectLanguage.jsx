@@ -1,11 +1,16 @@
 import "./SelectLanguage.scss";
 
+import { supportedLanguages } from "../../data/data.jsx";
+
 const SelectLanguage = () => {
   return (
     <div className="selectLanguage">
-      <select name="" id="">
-        <option value="English">English</option>
-        <option value="Hindi">Hindi</option>
+      <select>
+        {supportedLanguages.map(({ value, label }) => (
+          <option key={value} value="value">
+            {label}
+          </option>
+        ))}
       </select>
     </div>
   );

@@ -8,6 +8,7 @@
 
     .categoryHeading {
       margin: 15px 0 15px 7.5px;
+      text-transform: capitalize;
     }
     p.viewAll {
       font-size: 15px;
@@ -15,6 +16,11 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+  }
+  p.fallBackMessage {
+    a {
+      text-decoration: underline;
     }
   }
 }

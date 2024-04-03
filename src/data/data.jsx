@@ -207,3 +207,14 @@ export const navbarLinks = [
     label: "My Rated",
   },
 ];
+
+export const supportedLanguages = [
+  {
+    value: "english",
+    label: "English",
+  },
+  {
+    value: "hindi",
+    label: "हिंदी",
+  },
+];

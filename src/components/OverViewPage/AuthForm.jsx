@@ -10,8 +10,11 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 const TMDB_LOGIN_PAGE_LINK = "https://www.themoviedb.org/login";
 
 const AuthForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [userAuthDetails, setUserAuthDetails] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = userAuthDetails;
   const [_loggedInUser, setLoggedInUser] = useLocalStorage(
     "loggedInUser",
     null
@@ -23,10 +26,10 @@ const AuthForm = () => {
   const navigate = useNavigate();
 
   const updateUsername = (val) => {
-    setUsername(val);
+    setUserAuthDetails((prevDetails) => ({ ...prevDetails, username: val }));
   };
   const updatePassword = (val) => {
-    setPassword(val);
+    setUserAuthDetails((prevDetails) => ({ ...prevDetails, password: val }));
   };
   const redirectToTMDBPage = () => {
     window.open(TMDB_LOGIN_PAGE_LINK, "_blank");
@@ -65,14 +68,20 @@ const AuthForm = () => {
       });
       navigate("/home");
     }
-    setUsername("");
-    setPassword("");
+    setUserAuthDetails((prevDetails) => ({
+      ...prevDetails,
+      username: "",
+      password: "",
+    }));
   };
 
   useEffect(() => {
     if (isLoginPage) {
-      setUsername("");
-      setPassword("");
+      setUserAuthDetails((prevDetails) => ({
+        ...prevDetails,
+        username: "",
+        password: "",
+      }));
     }
   }, [isLoginPage]);
 

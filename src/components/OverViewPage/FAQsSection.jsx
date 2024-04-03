@@ -5,11 +5,12 @@ const FAQsSection = () => {
   const [openedQuestionIndex, setOpenedQuestionIndex] = useState(-1);
   const handleRevealAnswer = (idx) => {
     setOpenedQuestionIndex((prevOpenedQuestionIndex) => {
-      if (idx === prevOpenedQuestionIndex) {
-        return -1;
-      } else {
-        return idx;
-      }
+      // if (idx === prevOpenedQuestionIndex) {
+      //   return -1;
+      // } else {
+      //   return idx;
+      // }
+      return idx === prevOpenedQuestionIndex ? -1 : idx;
     });
   };
 
@@ -17,7 +18,7 @@ const FAQsSection = () => {
     <div className="FAQsSection" id="FAQsSection">
       <h3 className="sectionHeading">Frequently Asked Questions</h3>
       <div className="FAQsContainer">
-        {FAQs.map((question, idx) => (
+        {FAQs.map(({ question, answer }, idx) => (
           <div key={idx} className="questionContainer">
             <div
               className="questionWrapper"
@@ -25,7 +26,7 @@ const FAQsSection = () => {
                 handleRevealAnswer(idx);
               }}
             >
-              <div className="question">{question.question}</div>
+              <div className="question">{question}</div>
               <span
                 className={
                   idx === openedQuestionIndex ? "plusBtn opened" : "plusBtn"
@@ -38,7 +39,7 @@ const FAQsSection = () => {
               className={
                 idx === openedQuestionIndex ? "answer opened" : "answer"
               }
-              dangerouslySetInnerHTML={{ __html: question.answer }}
+              dangerouslySetInnerHTML={{ __html: answer }}
             />
           </div>
         ))}

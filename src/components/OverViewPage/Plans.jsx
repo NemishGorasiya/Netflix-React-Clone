@@ -4,12 +4,12 @@ const Plans = () => {
     <div className="heroPageSection plansSection">
       <h3 className="sectionHeading">A plan to suit your needs</h3>
       <div className="cardsContainer">
-        {subscribePlans.map((plan, idx) => (
+        {subscribePlans.map(({ type, services, price, duration }, idx) => (
           <div key={idx} className="card">
-            <h2>{plan.type}</h2>
-            <p>{plan.services}</p>
+            <h2>{type}</h2>
+            <p>{services}</p>
             <div className="bottomDiv">
-              &#8377; {plan.price}/{plan.duration}
+              &#8377; {price}/{duration}
             </div>
           </div>
         ))}

@@ -3,7 +3,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
 import { Link, useSearchParams } from "react-router-dom";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
-import { handleFallBackImage } from "../../utils/utilityFunctions";
+import {
+  getImagePath,
+  handleFallBackImage,
+} from "../../utils/utilityFunctions";
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
 
@@ -14,7 +17,7 @@ const Slider = ({
   removeFromList,
   mediaType,
   isSeasonList = false,
-  style,
+  // style,
   setNeedOfViewAllBtn,
 }) => {
   const [searchParams] = useSearchParams();
@@ -108,7 +111,7 @@ const Slider = ({
 
   return (
     <div
-      style={style}
+      // style={style}
       className={isViewAll ? "slider viewAll" : "slider"}
       ref={tempRef}
     >
@@ -135,20 +138,20 @@ const Slider = ({
         onDragEnd={handleDragEnd}
         ref={sliderRef}
       >
-        {moviesData.map((movieData) => (
-          <RenderIfVisible key={movieData.id}>
+        {moviesData.map(({ id, season_number, poster_path, rating, name }) => (
+          <RenderIfVisible key={id}>
             <div className={isDeletable ? "slide deletableSlide" : "slide"}>
               <Link
                 to={
                   isSeasonList
-                    ? `/${mediaType}/moreInfo?id=${mediaId}&season=${movieData.season_number}`
-                    : `/${mediaType}/moreInfo?id=${movieData.id}`
+                    ? `/${mediaType}/moreInfo?id=${mediaId}&season=${season_number}`
+                    : `/${mediaType}/moreInfo?id=${id}`
                 }
               >
                 <img
                   src={
-                    movieData.poster_path
-                      ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}`
+                    poster_path
+                      ? getImagePath(poster_path)
                       : posterFallBackImage
                   }
                   alt="image"
@@ -163,20 +166,18 @@ const Slider = ({
                 className="deleteIcon"
                 onClick={() => {
                   removeFromList({
-                    mediaId: movieData.id,
+                    mediaId: id,
                     media_type: mediaType,
                   });
                 }}
               >
                 <i className="fa-solid fa-xmark"></i>
               </div>
-              {movieData.rating && (
-                <span className="rating">{movieData.rating.toFixed(1)}</span>
-              )}
+              {rating && <span className="rating">{rating.toFixed(1)}</span>}
 
               {isSeasonList && (
-                <div className="slideTitle" title={movieData.name}>
-                  {movieData.name}
+                <div className="slideTitle" title={name}>
+                  {name}
                 </div>
               )}
             </div>
@@ -194,7 +195,7 @@ Slider.propTypes = {
   removeFromList: PropTypes.func,
   mediaType: PropTypes.string,
   isSeasonList: PropTypes.bool,
-  style: PropTypes.object,
+  // style: PropTypes.object,
   setNeedOfViewAllBtn: PropTypes.func,
 };
 

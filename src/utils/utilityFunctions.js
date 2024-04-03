@@ -15,3 +15,7 @@ export const handleFallBackImage = (event, fallBackImage) => {
 export const changeFormatOfTitle = (title) => {
   return title.replaceAll("_", " ");
 };
+
+export const getImagePath = (relativePath) => {
+  return `https://image.tmdb.org/t/p/original/${relativePath}`;
+};

@@ -19,16 +19,37 @@ import SeasonsList from "../components/MoreInfoPage/SeasonsList";
 import SeasonEpisodes from "../components/MoreInfoPage/SeasonEpisodes";
 import PropTypes from "prop-types";
 import CastProfileCardSkeleton from "../components/MoreInfoPage/CastProfileCardSkeleton";
+import { getImagePath } from "../utils/utilityFunctions";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const [isVolumeMuted, setIsVolumeMuted] = useState(true);
-  const [seasonEpisodes, setSeasonEpisodes] = useState([]);
-  const [currSeasonName, setCurrSeasonName] = useState("");
-  const [currSeasonNumber, setCurrSeasonNumber] = useState(-1);
+  const [seasonDetails, setSeasonDetails] = useState({
+    seasonEpisodes: [],
+    currSeasonName: "",
+    currSeasonNumber: -1,
+  });
+  const { seasonEpisodes, currSeasonName, currSeasonNumber } = seasonDetails;
   const [moreInfoOfMedia, setMoreInfoOfMedia] = useState({
     list: {},
     isLoading: true,
   });
+  const { list, isLoading } = moreInfoOfMedia;
+  const {
+    credits,
+    seasons,
+    vote_count,
+    vote_average,
+    overview,
+    genres,
+    release_date,
+    name,
+    title,
+    still_path,
+    poster_path,
+    backdrop_path,
+    id,
+    runtime,
+  } = list;
   const [isAddRatingModalOpen, setIsAddRatingModalOpen] = useState(false);
   const [userRating, setUserRating] = useState("");
   const [loggedInUser] = useLocalStorage("loggedInUser", null);
@@ -42,14 +63,17 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const episodeNumber = searchParams.get("episode");
 
   const handleSeasonPosterClick = useCallback(async () => {
-    const res = await fetchEpisodes({
+    const response = await fetchEpisodes({
       mediaId: mediaId,
       mediaType: mediaType,
       seasonNumber: seasonNumber,
     });
-    setSeasonEpisodes(res.episodes);
-    setCurrSeasonName(res.name);
-    setCurrSeasonNumber(res.season_number);
+    const { episodes, name, season_number } = response;
+    setSeasonDetails({
+      seasonEpisodes: episodes,
+      currSeasonName: name,
+      currSeasonNumber: season_number,
+    });
   }, [mediaId, mediaType, seasonNumber]);
 
   const handleCloseMyCustomModal = () => {
@@ -80,14 +104,13 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     }
   }, [fetchMovieData, handleSeasonPosterClick, seasonNumber]);
 
-  const runtime = moreInfoOfMedia.list.runtime;
   const runTimeHours = parseInt(runtime / 60);
   const runTimeMinutes = runtime - runTimeHours * 60;
 
   const handleAddToFavorite = async () => {
     const res = await addToFavorite({
       sessionID: loggedInUser.sessionID,
-      media_id: moreInfoOfMedia.list.id,
+      media_id: id,
       media_type: mediaType,
     });
     if (res.success) {
@@ -102,7 +125,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const handleAddToWatchList = async () => {
     const res = await addToWatchList({
       sessionID: loggedInUser.sessionID,
-      media_id: moreInfoOfMedia.list.id,
+      media_id: id,
       media_type: mediaType,
     });
     if (res.success) {
@@ -156,16 +179,12 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       <div
         className="moviePoster"
         style={{
-          background: `linear-gradient(to right,black 0% ,transparent 100%) , url("https://image.tmdb.org/t/p/original/${
-            moreInfoOfMedia.list.backdrop_path ??
-            moreInfoOfMedia.list.poster_path ??
-            moreInfoOfMedia.list.still_path
-          }")`,
+          background: `linear-gradient(to right,black 0% ,transparent 100%) , url(${getImagePath(
+            backdrop_path ?? poster_path ?? still_path
+          )})`,
         }}
       >
-        <h1 className="movieTitle">
-          {moreInfoOfMedia.list.title ?? moreInfoOfMedia.list.name}
-        </h1>
+        <h1 className="movieTitle">{title ?? name}</h1>
       </div>
       <div className="movieDetailsWrapper">
         <div className="functionBtns">
@@ -200,9 +219,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
           {mediaType === "movie" && (
             <p className="movieDetails">
               <span className="releaseYear">
-                {moreInfoOfMedia.list.release_date
-                  ? moreInfoOfMedia.list.release_date.slice(0, 4)
-                  : ""}
+                {release_date ? release_date.slice(0, 4) : ""}
               </span>
               <span className="movieLength">
                 {"| "}
@@ -211,29 +228,22 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
               <span className="movieVideoQuality">HD</span>
             </p>
           )}
-          {moreInfoOfMedia.list.genres && (
+          {genres && (
             <p className="movieGenres">
-              {moreInfoOfMedia.list.genres.map((genre, idx) => (
+              {genres.map((genre, idx) => (
                 <span key={genre.id}>
-                  {genre.name}{" "}
-                  {idx === moreInfoOfMedia.list.genres.length - 1 ? "" : "| "}
+                  {genre.name} {idx === genres.length - 1 ? "" : "| "}
                 </span>
               ))}
             </p>
           )}
 
-          <div className="movieDescription">
-            {moreInfoOfMedia.list.overview}
-          </div>
+          <div className="movieDescription">{overview}</div>
 
           <div className="movieRating">
             <Rating
-              rating={
-                moreInfoOfMedia.list.vote_average
-                  ? moreInfoOfMedia.list.vote_average.toFixed(2)
-                  : "0.0"
-              }
-              ratingCount={moreInfoOfMedia.list.vote_count}
+              rating={vote_average ? vote_average.toFixed(2) : "0.0"}
+              ratingCount={vote_count}
             />
             <Button
               text={"Rate Now"}
@@ -250,11 +260,8 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
             />
           </div>
         </div>
-        {mediaType === "tv" && moreInfoOfMedia.list.seasons && (
-          <SeasonsList
-            moviesData={moreInfoOfMedia.list.seasons}
-            onClick={handleSeasonPosterClick}
-          />
+        {mediaType === "tv" && seasons && (
+          <SeasonsList moviesData={seasons} onClick={handleSeasonPosterClick} />
         )}
         {seasonEpisodes?.length > 0 && (
           <SeasonEpisodes
@@ -265,10 +272,10 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
           />
         )}
 
-        {moreInfoOfMedia.isLoading ? (
+        {isLoading ? (
           <CastProfileCardSkeleton />
         ) : (
-          <MovieCasts castsInfo={moreInfoOfMedia.list.credits.cast} />
+          <MovieCasts castsInfo={credits.cast} />
         )}
       </div>
       {isAddRatingModalOpen && (
@@ -291,7 +298,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
                 }}
                 type="text"
                 id="mediaName"
-                value={moreInfoOfMedia.list.title ?? moreInfoOfMedia.list.name}
+                value={title ?? name}
                 readOnly
               />
             </div>

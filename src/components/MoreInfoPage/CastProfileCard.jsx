@@ -1,6 +1,9 @@
 import "./CastProfileCard.scss";
 import profileFallBackImage from "../../assets/profile_image.png";
-import { handleFallBackImage } from "../../utils/utilityFunctions.js";
+import {
+  getImagePath,
+  handleFallBackImage,
+} from "../../utils/utilityFunctions.js";
 
 const CastProfileCard = (castInfo) => {
   const { name, character, profile_path, known_for_department } =
@@ -9,11 +12,7 @@ const CastProfileCard = (castInfo) => {
     <div className="castProfileCard">
       <img
         className="castImage"
-        src={
-          profile_path
-            ? `https://image.tmdb.org/t/p/original/${profile_path}`
-            : profileFallBackImage
-        }
+        src={profile_path ? getImagePath(profile_path) : profileFallBackImage}
         alt={name}
         onError={(event) => {
           handleFallBackImage(event, profileFallBackImage);

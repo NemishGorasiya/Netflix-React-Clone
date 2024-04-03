@@ -74,10 +74,10 @@ const ExplorePage = () => {
           />
         )}
         {movieList && movieList.length === 0 && (
-          <>
+          <div className="fallBackText">
             <h1>No Relevant Media Found </h1>
-            <p style={{ color: "red" }}>Try to search something else... </p>
-          </>
+            <p>Try to search something else... </p>
+          </div>
         )}
       </div>
     </div>

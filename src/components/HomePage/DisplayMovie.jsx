@@ -2,20 +2,24 @@ import { Link } from "react-router-dom";
 import Button from "../../UI/Button";
 import repeat from "../../assets/Repeat.png";
 import PropTypes from "prop-types";
+import { getImagePath } from "../../utils/utilityFunctions";
 
 const DisplayMovie = ({ count, displayMovie, mediaType }) => {
+  const { title, name, backdrop_path, overview, id } = displayMovie;
   return (
     <div
       className="currentlyPlayingContent"
       style={{
         transform: `translateX(-${count * 100}%)`,
-        background: `linear-gradient(to right,black 0% ,transparent 100%) , url("https://image.tmdb.org/t/p/original/${displayMovie.backdrop_path}")`,
+        background: `linear-gradient(to right,black 0% ,transparent 100%) , url(${getImagePath(
+          backdrop_path
+        )})`,
       }}
     >
-      <h1 className="movieTitle">{displayMovie.title ?? displayMovie.name}</h1>
+      <h1 className="movieTitle">{title ?? name}</h1>
 
-      <p className="movieDescription" title={displayMovie.overview}>
-        {displayMovie.overview}
+      <p className="movieDescription" title={overview}>
+        {overview}
       </p>
       <div className="playBtnsWrapper">
         <Button
@@ -24,7 +28,7 @@ const DisplayMovie = ({ count, displayMovie, mediaType }) => {
           text={"Play"}
           style={{ marginRight: "10px" }}
         />
-        <Link to={`/${mediaType}/moreInfo?id=${displayMovie.id}`}>
+        <Link to={`/${mediaType}/moreInfo?id=${id}`}>
           <Button
             className={"btn moreInfoBtn"}
             iconClassName={"fa-solid fa-circle-info"}

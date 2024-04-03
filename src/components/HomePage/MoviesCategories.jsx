@@ -52,11 +52,11 @@ const MoviesCategories = ({ mediaType }) => {
         ? mediaCategories.map((movieCategory) => (
             <CategoryWiseListSkeleton key={movieCategory} />
           ))
-        : mediaList.list.map((moviesCategory) => (
-            <RenderIfVisible key={moviesCategory.categoryTitle}>
+        : mediaList.list.map(({ categoryTitle, moviesData }) => (
+            <RenderIfVisible key={categoryTitle}>
               <CategoryWiseList
-                categoryTitle={moviesCategory.categoryTitle}
-                moviesData={moviesCategory.moviesData}
+                categoryTitle={categoryTitle}
+                moviesData={moviesData}
                 mediaType={mediaType}
               />
             </RenderIfVisible>

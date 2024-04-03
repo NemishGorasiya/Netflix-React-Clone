@@ -9,7 +9,7 @@ const CastProfileCardSkeleton = () => {
       <div className="castProfileCardWrapper">
         {Array(15)
           .fill()
-          .map((ele, idx) => (
+          .map((_ele, idx) => (
             <div key={idx} className="castProfileCard">
               <Skeleton className="castImage" />
               <p className="castName">
