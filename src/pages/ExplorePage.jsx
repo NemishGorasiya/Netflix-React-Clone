@@ -1,7 +1,7 @@
 import "./ExplorePage.scss";
 import { useCallback, useState } from "react";
 import { fetchDataBySearchQuery } from "../services/services.js";
-import CategorywiseList from "../components/HomePage/CategorywiseList.jsx";
+import CategoryWiseList from "../components/HomePage/CategoryWiseList.jsx";
 import CustomInputWithDeBouncing from "../UI/CustomInputWithDeBouncing.jsx";
 
 const ExplorePage = () => {
@@ -67,7 +67,7 @@ const ExplorePage = () => {
           </div>
         </div>
         {movieList && movieList.length > 0 && (
-          <CategorywiseList
+          <CategoryWiseList
             categoryTitle={"Search Results"}
             moviesData={movieList}
             mediaType={selectedMediaType}

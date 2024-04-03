@@ -1,12 +1,12 @@
 import { useState } from "react";
-import "./CategorywiseList.scss";
+import "./CategoryWiseList.scss";
 import Slider from "./Slider";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { changeFormatOfTitle } from "../../utils/utilityFunctions";
 import RenderIfVisible from "react-render-if-visible";
 
-const CategorywiseList = ({
+const CategoryWiseList = ({
   categoryTitle,
   moviesData,
   isDeletable = false,
@@ -62,7 +62,7 @@ const CategorywiseList = ({
   );
 };
 
-CategorywiseList.propTypes = {
+CategoryWiseList.propTypes = {
   categoryTitle: PropTypes.string,
   moviesData: PropTypes.array,
   isDeletable: PropTypes.bool,
@@ -73,4 +73,4 @@ CategorywiseList.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default CategorywiseList;
+export default CategoryWiseList;

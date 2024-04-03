@@ -1,5 +1,5 @@
 import "./MyFavoritePage.scss";
-import CategorywiseList from "../components/HomePage/CategorywiseList";
+import CategoryWiseList from "../components/HomePage/CategoryWiseList";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { addToFavorite, fetchFavoriteList } from "../services/services";
 import { useCallback, useEffect, useState } from "react";
@@ -87,7 +87,7 @@ const MyFavoritePage = () => {
               .fill()
               .map((_ele, idx) => <CategoryWiseListSkeleton key={idx} />)
           : favoriteMedia.list.map((favoriteListCategory) => (
-              <CategorywiseList
+              <CategoryWiseList
                 key={favoriteListCategory.categoryTitle}
                 categoryTitle={favoriteListCategory.categoryTitle}
                 moviesData={favoriteListCategory.moviesData}

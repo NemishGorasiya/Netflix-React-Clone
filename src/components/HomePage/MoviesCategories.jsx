@@ -1,4 +1,4 @@
-import CategorywiseList from "./CategorywiseList";
+import CategoryWiseList from "./CategoryWiseList";
 import "./MoviesCategories.scss";
 import { movieTypes, tvShowsTypes } from "../../data/data.jsx";
 import { fetchMediaData } from "../../services/services.js";
@@ -54,7 +54,7 @@ const MoviesCategories = ({ mediaType }) => {
           ))
         : mediaList.list.map((moviesCategory) => (
             <RenderIfVisible key={moviesCategory.categoryTitle}>
-              <CategorywiseList
+              <CategoryWiseList
                 categoryTitle={moviesCategory.categoryTitle}
                 moviesData={moviesCategory.moviesData}
                 mediaType={mediaType}

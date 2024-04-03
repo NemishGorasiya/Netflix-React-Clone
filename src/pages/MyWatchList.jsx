@@ -1,5 +1,5 @@
 import "./MyWatchList.scss";
-import CategorywiseList from "../components/HomePage/CategorywiseList";
+import CategoryWiseList from "../components/HomePage/CategoryWiseList";
 import { addToWatchList, fetchWatchList } from "../services/services";
 import { useCallback, useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -86,7 +86,7 @@ const MyWatchList = () => {
               .fill()
               .map((ele, idx) => <CategoryWiseListSkeleton key={idx} />)
           : watchList.list.map((watchListCategory) => (
-              <CategorywiseList
+              <CategoryWiseList
                 key={watchListCategory.categoryTitle}
                 categoryTitle={watchListCategory.categoryTitle}
                 moviesData={watchListCategory.moviesData}

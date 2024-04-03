@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import "./RatedListPage.scss";
 import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSkeleton.jsx";
-import CategorywiseList from "../components/HomePage/CategorywiseList";
+import CategoryWiseList from "../components/HomePage/CategoryWiseList";
 import { fetchRatedList } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { ratedCategoriesType } from "../data/data.jsx";
@@ -54,7 +54,7 @@ const RatedListPage = () => {
           : ratedMedia.list.map(
               (ratedListCategory) =>
                 ratedListCategory.moviesData && (
-                  <CategorywiseList
+                  <CategoryWiseList
                     key={ratedListCategory.categoryTitle}
                     categoryTitle={ratedListCategory.categoryTitle}
                     moviesData={ratedListCategory.moviesData}

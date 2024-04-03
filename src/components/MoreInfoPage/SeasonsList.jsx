@@ -1,10 +1,10 @@
-import CategorywiseList from "../HomePage/CategorywiseList";
+import CategoryWiseList from "../HomePage/CategoryWiseList";
 import PropTypes from "prop-types";
 
 const SeasonsList = ({ moviesData, onClick }) => {
   return (
     <div className="seasonsList">
-      <CategorywiseList
+      <CategoryWiseList
         style={{ margin: "30px 0", fontSize: "21px" }}
         isSeasonList={true}
         categoryTitle={"ALL SEASONS"}
