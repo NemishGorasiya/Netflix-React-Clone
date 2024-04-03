@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import "./RatedListPage.scss";
 import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSkeleton.jsx";
-import CategoryWiseList from "../components/HomePage/CategoryWiseList";
+import CategoryWiseList from "../components/HomePage/CategoryWiseList.jsx";
 import { fetchRatedList } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { ratedCategoriesType } from "../data/data.jsx";

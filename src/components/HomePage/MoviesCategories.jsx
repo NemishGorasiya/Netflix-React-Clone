@@ -1,4 +1,4 @@
-import CategoryWiseList from "./CategoryWiseList";
+import CategoryWiseList from "./CategoryWiseList.jsx";
 import "./MoviesCategories.scss";
 import { movieTypes, tvShowsTypes } from "../../data/data.jsx";
 import { fetchMediaData } from "../../services/services.js";
