@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./CurrentlyPlayingContent.scss";
 import PropTypes from "prop-types";
 import CurrentlyPlayingContentSkeleton from "./CurrentlyPlayingContentSkeleton";
-import DisplayMovie from "./DisplayMovie";
+import CarouselSlider from "./CarouselSlider";
 
 const CurrentlyPlayingContent = ({
   displayMoviesData,
@@ -28,7 +28,7 @@ const CurrentlyPlayingContent = ({
       ) : (
         displayMoviesData &&
         displayMoviesData.map((displayMovie) => (
-          <DisplayMovie
+          <CarouselSlider
             key={displayMovie.id}
             count={count}
             displayMovie={displayMovie}

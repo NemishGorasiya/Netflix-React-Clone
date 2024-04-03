@@ -42,7 +42,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
     >
       <div className="iconsWrapper">
         <i className="fa-solid fa-user"></i>
-        <i className="fa-solid fa-chevron-down cheveronDown"></i>
+        <i className="fa-solid fa-chevron-down chevronDown"></i>
       </div>
       {isAccountSettingVisible && (
         <div className="accountSettingOptions">
@@ -53,8 +53,9 @@ const AccountSetting = ({ isSideBarOpen }) => {
                 manage accounts
               </Link>
             </li>
-            <li>Setting</li>
-            <li onClick={handleLogOut}>Logout</li>
+            <li className="logOut" onClick={handleLogOut}>
+              Logout
+            </li>
           </ul>
         </div>
       )}

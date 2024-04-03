@@ -4,11 +4,11 @@ import repeat from "../../assets/Repeat.png";
 import PropTypes from "prop-types";
 import { getImagePath } from "../../utils/utilityFunctions";
 
-const DisplayMovie = ({ count, displayMovie, mediaType }) => {
+const CarouselSlider = ({ count, displayMovie, mediaType }) => {
   const { title, name, backdrop_path, overview, id } = displayMovie;
   return (
     <div
-      className="currentlyPlayingContent"
+      className="carouselSlide"
       style={{
         transform: `translateX(-${count * 100}%)`,
         background: `linear-gradient(to right,black 0% ,transparent 100%) , url(${getImagePath(
@@ -46,10 +46,10 @@ const DisplayMovie = ({ count, displayMovie, mediaType }) => {
   );
 };
 
-DisplayMovie.propTypes = {
+CarouselSlider.propTypes = {
   count: PropTypes.number,
   displayMovie: PropTypes.object,
   mediaType: PropTypes.string,
 };
 
-export default DisplayMovie;
+export default CarouselSlider;

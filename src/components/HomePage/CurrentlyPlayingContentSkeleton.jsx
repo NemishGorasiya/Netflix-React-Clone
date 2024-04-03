@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton";
 
 const CurrentlyPlayingContentSkeleton = () => {
   return (
-    <div className="currentlyPlayingContent">
+    <div className="carouselSlide">
       <h1 className="movieTitle">
         <Skeleton height={60} width={350} />
       </h1>

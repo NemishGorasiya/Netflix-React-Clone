@@ -275,7 +275,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
         {isLoading ? (
           <CastProfileCardSkeleton />
         ) : (
-          <MovieCasts castsInfo={credits.cast} />
+          credits.cast.length > 0 && <MovieCasts castsInfo={credits.cast} />
         )}
       </div>
       {isAddRatingModalOpen && (

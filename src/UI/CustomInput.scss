@@ -38,11 +38,11 @@
   input[type="search"]:-webkit-autofill:hover,
   input[type="search"]:-webkit-autofill:focus,
   input[type="search"]:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
-    -webkit-text-fill-color: #fff !important;
-    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-size-adjust: none !important;
+    -webkit-box-shadow: 0 0 0 1000px transparent inset;
+    -webkit-text-fill-color: #fff;
+    -webkit-box-shadow: 0 0 0 1000px rgba(131, 131, 205, 0.201) inset;
+    -webkit-background-clip: text;
+    -webkit-text-size-adjust: none;
     caret-color: #fff;
   }
 

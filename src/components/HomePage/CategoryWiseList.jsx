@@ -13,7 +13,6 @@ const CategoryWiseList = ({
   removeFromList,
   mediaType,
   isSeasonList,
-  style,
   onClick,
 }) => {
   const [isViewAll, setIsViewAll] = useState(false);
@@ -24,7 +23,7 @@ const CategoryWiseList = ({
   };
 
   return (
-    <div className="categoryWiseList" style={style}>
+    <div className="categoryWiseList">
       <div className="categoryHeader">
         <h3 className="categoryHeading">
           {changeFormatOfTitle(categoryTitle)}

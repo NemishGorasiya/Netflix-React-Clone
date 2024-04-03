@@ -3,7 +3,7 @@
   overflow: hidden;
   scroll-behavior: smooth;
 
-  .currentlyPlayingContent {
+  .carouselSlide {
     background: #696666;
     padding: 85px 0 30px 80px;
     text-align: left;
@@ -80,7 +80,7 @@
 
 @media only screen and (max-width: 1120px) {
   .displayMoviesContainer {
-    .currentlyPlayingContent {
+    .carouselSlide {
       padding: 85px 0 30px 40px;
 
       p.movieDescription {
@@ -91,7 +91,7 @@
 }
 @media only screen and (max-width: 720px) {
   .displayMoviesContainer {
-    .currentlyPlayingContent {
+    .carouselSlide {
       padding: 85px 0 30px 30px;
 
       p.movieDescription {
@@ -102,7 +102,7 @@
 }
 @media only screen and (max-width: 450px) {
   .displayMoviesContainer {
-    .currentlyPlayingContent {
+    .carouselSlide {
       padding: 85px 0 30px 30px;
       min-height: 400px;
       height: 50vh;
