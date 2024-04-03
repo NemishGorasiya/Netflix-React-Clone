@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import CurrentlyPlayingContent from "../components/HomePage/CurrentlyPlayingContent";
+import CarouselSlider from "../components/HomePage/CarouselSlider";
 import MoviesCategories from "../components/HomePage/MoviesCategories";
 import { fetchMediaData } from "../services/services.js";
 import Footer from "../components/OverViewPage/Footer.jsx";
@@ -51,7 +51,7 @@ const HomePage = () => {
 
   return (
     <div className="homePage">
-      <CurrentlyPlayingContent
+      <CarouselSlider
         displayMoviesData={list}
         mediaType={mediaType}
         isLoading={isLoading}

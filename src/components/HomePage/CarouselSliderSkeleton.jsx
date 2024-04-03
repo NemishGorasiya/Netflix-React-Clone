@@ -1,6 +1,6 @@
 import Skeleton from "react-loading-skeleton";
 
-const CurrentlyPlayingContentSkeleton = () => {
+const CarouselSliderSkeleton = () => {
   return (
     <div className="carouselSlide">
       <h1 className="movieTitle">
@@ -20,4 +20,4 @@ const CurrentlyPlayingContentSkeleton = () => {
   );
 };
 
-export default CurrentlyPlayingContentSkeleton;
+export default CarouselSliderSkeleton;

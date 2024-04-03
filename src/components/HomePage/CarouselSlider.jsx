@@ -1,55 +1,45 @@
-import { Link } from "react-router-dom";
-import Button from "../../UI/Button";
-import repeat from "../../assets/Repeat.png";
+import { useEffect, useState } from "react";
+import "./CarouselSlider.scss";
 import PropTypes from "prop-types";
-import { getImagePath } from "../../utils/utilityFunctions";
+import CarouselSliderSkeleton from "./CarouselSliderSkeleton";
+import CarouselSlide from "./CarouselSlide";
 
-const CarouselSlider = ({ count, displayMovie, mediaType }) => {
-  const { title, name, backdrop_path, overview, id } = displayMovie;
+const CarouselSlider = ({ displayMoviesData, mediaType, isLoading }) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const myInterval = setInterval(() => {
+      setCount((prevCount) =>
+        prevCount + 1 === displayMoviesData.length ? 0 : prevCount + 1
+      );
+    }, 4000);
+    return () => {
+      clearInterval(myInterval);
+    };
+  }, [count, displayMoviesData]);
+
   return (
-    <div
-      className="carouselSlide"
-      style={{
-        transform: `translateX(-${count * 100}%)`,
-        background: `linear-gradient(to right,black 0% ,transparent 100%) , url(${getImagePath(
-          backdrop_path
-        )})`,
-      }}
-    >
-      <h1 className="movieTitle">{title ?? name}</h1>
-
-      <p className="movieDescription" title={overview}>
-        {overview}
-      </p>
-      <div className="playBtnsWrapper">
-        <Button
-          className={"btn playBtn"}
-          iconClassName={"fa-solid fa-play"}
-          text={"Play"}
-          style={{ marginRight: "10px" }}
-        />
-        <Link to={`/${mediaType}/moreInfo?id=${id}`}>
-          <Button
-            className={"btn moreInfoBtn"}
-            iconClassName={"fa-solid fa-circle-info"}
-            text={"More Info"}
+    <div className="displayMoviesContainer">
+      {isLoading ? (
+        <CarouselSliderSkeleton />
+      ) : (
+        displayMoviesData &&
+        displayMoviesData.map((displayMovie) => (
+          <CarouselSlide
+            key={displayMovie.id}
+            count={count}
+            displayMovie={displayMovie}
+            mediaType={mediaType}
           />
-        </Link>
-      </div>
-      <div className="filmCertification">
-        <div className="imgWrapper">
-          <img src={repeat} alt="roundImage" />
-        </div>
-        <div className="certification">U/A 13+</div>
-      </div>
+        ))
+      )}
     </div>
   );
 };
 
 CarouselSlider.propTypes = {
-  count: PropTypes.number,
-  displayMovie: PropTypes.object,
+  displayMoviesData: PropTypes.array,
   mediaType: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 export default CarouselSlider;
