@@ -1,14 +1,14 @@
-import "./SignupEmail.scss";
+import "./SignUpEmail.scss";
 import CustomInput from "../../UI/CustomInput.jsx";
 import { useState } from "react";
 
-const SignupEmail = () => {
+const SignUpEmail = () => {
   const [email, setEmail] = useState("");
   const handleEmailChange = (val) => {
     setEmail(val);
   };
   return (
-    <div className="signupEmailWrapper">
+    <div className="signUpEmailWrapper">
       <CustomInput
         floatingLabel="Email address"
         required={true}
@@ -26,4 +26,4 @@ const SignupEmail = () => {
   );
 };
 
-export default SignupEmail;
+export default SignUpEmail;

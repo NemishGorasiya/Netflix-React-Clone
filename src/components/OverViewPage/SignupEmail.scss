@@ -1,10 +1,9 @@
-.signupEmailWrapper {
+.signUpEmailWrapper {
   width: 100%;
   display: flex;
   gap: 10px;
   max-width: 560px;
   margin: auto;
-  // background: yellow;
 
   button {
     height: 56px;
@@ -33,7 +32,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .signupEmailWrapper {
+  .signUpEmailWrapper {
     width: 100%;
     display: flex;
     flex-direction: column;

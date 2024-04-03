@@ -44,8 +44,6 @@ const MyFavoritePage = () => {
     }
   }, [fetchCategoryWiseData]);
 
-  console.log(favoriteMedia.list);
-
   const removeFromFavoriteList = async ({ mediaId, media_type = "movie" }) => {
     try {
       const res = await addToFavorite({
@@ -87,7 +85,7 @@ const MyFavoritePage = () => {
         {favoriteMedia.isLoading
           ? Array(2)
               .fill()
-              .map((ele, idx) => <CategoryWiseListSkeleton key={idx} />)
+              .map((_ele, idx) => <CategoryWiseListSkeleton key={idx} />)
           : favoriteMedia.list.map((favoriteListCategory) => (
               <CategorywiseList
                 key={favoriteListCategory.categoryTitle}

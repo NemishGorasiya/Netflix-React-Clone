@@ -62,6 +62,13 @@
 @media screen and (max-width: 600px) {
   .moreInfoPage {
     .moviePoster {
+      min-height: 400px;
+      height: 50vh;
+    }
+    .movieDetailsWrapper {
+      padding: 15px;
+    }
+    .moviePoster {
       background-position: center !important;
     }
   }

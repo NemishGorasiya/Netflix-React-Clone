@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FAQs } from "../../data/data.js";
+import { FAQs } from "../../data/data.jsx";
 
 const FAQsSection = () => {
   const [openedQuestionIndex, setOpenedQuestionIndex] = useState(-1);

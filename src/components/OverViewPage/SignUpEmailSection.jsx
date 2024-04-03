@@ -1,4 +1,4 @@
-import SignupEmail from "./SignupEmail.jsx";
+import SignUpEmail from "./SignUpEmail.jsx";
 
 const SignUpEmailSection = () => {
   return (
@@ -6,7 +6,7 @@ const SignUpEmailSection = () => {
       <p>
         Ready to watch? Enter your email to create or restart your membership.
       </p>
-      <SignupEmail />
+      <SignUpEmail />
     </div>
   );
 };

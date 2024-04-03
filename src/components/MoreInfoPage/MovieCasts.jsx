@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import "./MovieCasts.scss";
 import CastProfileCard from "./CastProfileCard.jsx";
 import PropTypes from "prop-types";
-import CastProfileCardSkeleton from "./CastProfileCardSkeleton.jsx";
 
 const MovieCasts = ({ castsInfo }) => {
   const [isViewAllCasts, setIsViewAllCasts] = useState(false);

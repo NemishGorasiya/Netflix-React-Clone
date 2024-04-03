@@ -5,7 +5,7 @@ import CategorywiseList from "../components/HomePage/CategorywiseList.jsx";
 import CustomInputWithDeBouncing from "../UI/CustomInputWithDeBouncing.jsx";
 
 const ExplorePage = () => {
-  const [movieDataAfterSerach, setMovieDataAfterSerach] = useState(null);
+  const [movieList, setMovieList] = useState(null);
   const [selectedMediaType, setSelectedMediaType] = useState("movie");
   const [searchQuery, setSearchQuery] = useState("");
   const fetchData = useCallback(
@@ -19,9 +19,9 @@ const ExplorePage = () => {
         media_type: mediaType ?? selectedMediaType,
       });
       if (res) {
-        setMovieDataAfterSerach(res.results);
+        setMovieList(res.results);
       } else {
-        setMovieDataAfterSerach([]);
+        setMovieList([]);
       }
     },
     [selectedMediaType]
@@ -66,14 +66,14 @@ const ExplorePage = () => {
             <label htmlFor="tv">TVs</label>
           </div>
         </div>
-        {movieDataAfterSerach && movieDataAfterSerach.length > 0 && (
+        {movieList && movieList.length > 0 && (
           <CategorywiseList
             categoryTitle={"Search Results"}
-            moviesData={movieDataAfterSerach}
+            moviesData={movieList}
             mediaType={selectedMediaType}
           />
         )}
-        {movieDataAfterSerach && movieDataAfterSerach.length === 0 && (
+        {movieList && movieList.length === 0 && (
           <>
             <h1>No Relevant Media Found </h1>
             <p style={{ color: "red" }}>Try to search something else... </p>

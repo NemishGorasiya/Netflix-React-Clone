@@ -23,9 +23,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
   };
   const handleLogOut = () => {
     setLoggedInUser(null);
-    toast.success("User LoggedOut successfully.", {
-      duration: 2500,
-    });
+    toast.success("User LoggedOut successfully.");
     navigate("/");
   };
   useEffect(() => {

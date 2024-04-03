@@ -9,6 +9,11 @@
   margin-right: 10px;
   background: none;
   color: #fff;
+  transition: color 0.3s ease;
+  &:hover {
+    color: rgba(106, 104, 104, 0.75);
+    border-color: rgba(106, 104, 104, 0.75);
+  }
   span {
     display: flex;
     justify-content: center;

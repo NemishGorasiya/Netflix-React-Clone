@@ -50,7 +50,7 @@
         }
       }
     }
-    .morereasonsToJoinSection {
+    .moreReasonsToJoinSection {
       margin-top: 60px;
       .cardsContainer {
         .card {
@@ -91,8 +91,8 @@
       .FAQsContainer {
         .questionContainer {
           line-height: 30px;
-          font-size: 22px;
-          font-weight: 450;
+          font-size: 24px;
+          font-weight: 400;
           margin-bottom: 10px;
 
           .questionWrapper {
@@ -109,8 +109,6 @@
 
             .question {
               flex: 1;
-              font-size: 20px;
-              font-weight: 400;
             }
             span.plusBtn {
               font-size: 45px;
@@ -124,15 +122,18 @@
           }
           .answer {
             margin-top: 1px;
-            padding: 25px;
+            padding: 0 25px;
             background: rgb(45, 45, 45);
-            display: none;
-            font-size: 20px;
-            font-weight: 400;
+            height: 0;
+            visibility: collapse;
+            overflow: hidden;
             line-height: 25px;
+            transition: all 0.3s ease;
           }
           .answer.opened {
-            display: block;
+            padding: 25px;
+            visibility: visible;
+            height: fit-content;
           }
         }
       }
@@ -144,6 +145,9 @@
 
       p {
         margin-bottom: 15px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 400;
       }
     }
 
@@ -179,7 +183,6 @@
           .questionContainer {
             line-height: 25px;
             font-size: 18px;
-            font-weight: 400;
 
             .questionWrapper {
               padding: 20px;
@@ -191,9 +194,11 @@
               }
             }
             .answer {
-              font-size: 18px;
-              padding: 20px;
+              padding: 0 20px;
               line-height: 22px;
+            }
+            .answer.opened {
+              padding: 20px;
             }
           }
         }
@@ -229,8 +234,6 @@
         .FAQsContainer {
           .questionContainer {
             line-height: 20px;
-            font-size: 17px;
-            font-weight: 300;
 
             .questionWrapper {
               padding: 15px;
@@ -241,9 +244,11 @@
               }
             }
             .answer {
-              font-size: 15px;
-              padding: 15px;
+              padding: 0 15px;
               line-height: 19px;
+            }
+            .answer.opened {
+              padding: 15px;
             }
           }
         }

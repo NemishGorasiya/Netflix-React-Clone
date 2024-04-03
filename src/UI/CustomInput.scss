@@ -1,7 +1,6 @@
 .customInputContainer {
   position: relative;
   height: 56px;
-  // margin-bottom: 30px;
   width: 100%;
 
   .floatingLabel {
@@ -57,7 +56,6 @@
   }
 }
 .customInputContainer.hasError {
-  // margin-bottom: 30px;
   input {
     border: 1px solid red;
     outline: none;

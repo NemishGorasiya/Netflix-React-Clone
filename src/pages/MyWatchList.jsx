@@ -9,7 +9,7 @@ import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSke
 
 const MyWatchList = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
-  const [watchList, setwatchList] = useState({
+  const [watchList, setWatchList] = useState({
     list: [],
     isLoading: true,
   });
@@ -33,7 +33,7 @@ const MyWatchList = () => {
       const response = await Promise.all(
         watchListCategories.map((category) => fetchCategoryWiseData(category))
       );
-      setwatchList({
+      setWatchList({
         list: response,
         isLoading: false,
       });
@@ -61,7 +61,7 @@ const MyWatchList = () => {
             (media) => media.id !== mediaId
           ),
         };
-        setwatchList({
+        setWatchList({
           list: tempWatchList,
           isLoading: false,
         });
@@ -77,8 +77,6 @@ const MyWatchList = () => {
   useEffect(() => {
     fetchWatchListData();
   }, [fetchWatchListData]);
-
-  console.log(watchList.list);
 
   return (
     <div className="myWatchListPage">

@@ -1,8 +1,7 @@
-import { moreReasonsToJoin } from "../../data/data.js";
-
+import { moreReasonsToJoin } from "../../data/data.jsx";
 export default function MoreReasonSection() {
   return (
-    <div className="heroPageSection morereasonsToJoinSection">
+    <div className="heroPageSection moreReasonsToJoinSection">
       <h3 className="sectionHeading">More reasons to join</h3>
       <div className="cardsContainer">
         {moreReasonsToJoin.map((reason, idx) => (

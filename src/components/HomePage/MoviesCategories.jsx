@@ -1,6 +1,6 @@
 import CategorywiseList from "./CategorywiseList";
 import "./MoviesCategories.scss";
-import { movieTypes, tvShowsTypes } from "../../data/data.js";
+import { movieTypes, tvShowsTypes } from "../../data/data.jsx";
 import { fetchMediaData } from "../../services/services.js";
 import { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";

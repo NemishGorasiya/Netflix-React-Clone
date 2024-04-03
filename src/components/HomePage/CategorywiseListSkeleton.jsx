@@ -15,7 +15,7 @@ const CategoryWiseListSkeleton = () => {
         <div className="slideContainer">
           {Array(9)
             .fill()
-            .map((item, index) => (
+            .map((_item, index) => (
               <div key={index} className="renderIfVisible">
                 <div className="slide">
                   <Skeleton

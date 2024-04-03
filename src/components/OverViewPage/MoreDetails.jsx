@@ -5,7 +5,7 @@ import FAQsSection from "./FAQsSection.jsx";
 import SignUpEmailSection from "./SignUpEmailSection.jsx";
 import Footer from "./Footer.jsx";
 import CopyRightSection from "./CopyRightSection.jsx";
-import { footerLinks } from "../../data/data.js";
+import { footerLinks } from "../../data/data.jsx";
 
 export default function MoreDetails() {
   return (

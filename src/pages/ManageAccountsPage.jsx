@@ -35,9 +35,7 @@ const ManageAccountsPage = () => {
       );
       if (idx !== -1) {
         tempArr[idx].profileImg = profileImage;
-        toast.success("Your profile edited successfully.", {
-          duration: 1000,
-        });
+        toast.success("Your profile edited successfully.");
       }
       return tempArr;
     });

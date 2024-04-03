@@ -50,7 +50,7 @@ const CustomModal = ({
   }, []);
 
   return createPortal(
-    <div ref={backDropRef}>
+    <div ref={backDropRef} className="modalContainer">
       <div className="modal" ref={modalRef}>
         <button
           className="closeModalBtn"

@@ -138,14 +138,10 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
           episodeNumber: episodeNumber,
         });
         if (res.success) {
-          toast.success("Rating submitted successfully", {
-            duration: 2500,
-          });
+          toast.success("Rating submitted successfully");
           setIsAddRatingModalOpen(false);
         } else {
-          toast.error(res.status_message, {
-            duration: 2500,
-          });
+          toast.error(res.status_message);
         }
       } catch (error) {
         console.error(error);
@@ -332,10 +328,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
                 rows="5"
               ></textarea>
             </div>
-            <div
-              className="submitRevieBtnWrapper"
-              style={{ width: "100%", textAlign: "center" }}
-            >
+            <div style={{ width: "100%", textAlign: "center" }}>
               <Button
                 text="Submit Review"
                 style={{

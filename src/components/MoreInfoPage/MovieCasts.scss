@@ -33,7 +33,8 @@
   }
   .viewAllCastsBtn::after {
     cursor: pointer;
-    content: "View All >";
+    font-family: "Font Awesome";
+    content: "View All \203A";
     height: 100%;
     color: #fff;
     padding: 0 15px 0 30px;
@@ -48,8 +49,19 @@
   }
   .castProfileCardWrapper.viewAllCasts {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 150px);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     row-gap: 30px;
     justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .movieCasts {
+    .castProfileCardWrapper.viewAllCasts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      row-gap: 30px;
+      justify-content: space-between;
+    }
   }
 }

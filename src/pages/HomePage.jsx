@@ -3,7 +3,7 @@ import CurrentlyPlayingContent from "../components/HomePage/CurrentlyPlayingCont
 import MoviesCategories from "../components/HomePage/MoviesCategories";
 import { fetchMediaData } from "../services/services.js";
 import Footer from "../components/OverViewPage/Footer.jsx";
-import { footerLinks } from "../data/data.js";
+import { footerLinks } from "../data/data.jsx";
 import "./HomePage.scss";
 const HomePage = () => {
   const [displayMedia, setDisplayMedia] = useState({
@@ -62,7 +62,7 @@ const HomePage = () => {
       ) : (
         <MoviesCategories mediaType={mediaTypeDetails.mediaType} />
       )}
-      <div className="footerWarpper">
+      <div className="footerWrapper">
         <Footer footerLinks={footerLinks} />
       </div>
     </div>

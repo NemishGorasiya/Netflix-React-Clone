@@ -3,6 +3,7 @@ import "./HomePageNavBar.scss";
 import NetflixLogo from "../../assets/Netflix_logo.png";
 import AccountSetting from "./AccountSetting";
 import { Link, NavLink } from "react-router-dom";
+import { navbarLinks } from "../../data/data";
 
 const HomePageNavBar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -60,60 +61,21 @@ const HomePageNavBar = () => {
           ref={sideBarRef}
           className={isSideBarOpen ? "navLinks sideBarOpen" : "navLinks"}
         >
-          <NavLink
-            to="/home"
-            className={({ isActive }) => {
-              return isActive ? "navLink activeLink" : "navLink";
-            }}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/tv"
-            className={({ isActive }) => {
-              return isActive ? "navLink activeLink" : "navLink";
-            }}
-          >
-            TV Shows
-          </NavLink>
-          <NavLink
-            to="/movies"
-            className={({ isActive }) => {
-              return isActive ? "navLink activeLink" : "navLink";
-            }}
-          >
-            Movies
-          </NavLink>
-          <NavLink
-            to="/myWatchList"
-            className={({ isActive }) => {
-              return isActive ? "navLink activeLink" : "navLink";
-            }}
-          >
-            My WatchList
-          </NavLink>
-          <NavLink
-            to="/myFavorite"
-            className={({ isActive }) => {
-              return isActive ? "navLink activeLink" : "navLink";
-            }}
-          >
-            My Favorite
-          </NavLink>
-          <NavLink
-            to="/rated"
-            className={({ isActive }) => {
-              return isActive ? "navLink activeLink" : "navLink";
-            }}
-          >
-            My Rated
-          </NavLink>
+          {navbarLinks.map(({ link, label }) => (
+            <NavLink
+              key={link}
+              to={`/${link}`}
+              className={({ isActive }) => {
+                return isActive ? "navLink activeLink" : "navLink";
+              }}
+            >
+              {label}
+            </NavLink>
+          ))}
         </ul>
       </div>
       <div className="navRight">
-        <button
-          className={isSideBarOpen ? "seachBtn sideBarOpen" : "searchBtn"}
-        >
+        <button className={isSideBarOpen ? "sideBarOpen" : ""}>
           <Link to={"/explore"}>
             <i className="fa-solid fa-magnifying-glass searchIcon"></i>
           </Link>

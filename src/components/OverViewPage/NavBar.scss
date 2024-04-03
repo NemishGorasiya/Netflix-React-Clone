@@ -24,6 +24,11 @@
       color: #fff;
       font-size: 14px;
       font-weight: 600;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: rgb(193, 17, 25);
+      }
     }
   }
 }
@@ -46,7 +51,7 @@
 }
 @media screen and (max-width: 600px) {
   .navbar {
-    padding: 15px 5px !important;
+    padding: 15px 0px !important;
 
     .NavBtnWrapper {
       button {

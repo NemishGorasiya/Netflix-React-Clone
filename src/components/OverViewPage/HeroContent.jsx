@@ -1,4 +1,4 @@
-import SignupEmail from "./SignupEmail";
+import SignUpEmail from "./SignUpEmail";
 
 const HeroContent = () => {
   return (
@@ -10,7 +10,7 @@ const HeroContent = () => {
       <p>
         Ready to watch? Enter your email to create or restart your membership.
       </p>
-      <SignupEmail />
+      <SignUpEmail />
     </div>
   );
 };

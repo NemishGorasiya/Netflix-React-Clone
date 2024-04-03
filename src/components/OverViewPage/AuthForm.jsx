@@ -40,17 +40,13 @@ const AuthForm = () => {
 
     const sessionID = await handleTMDBLogin(username, password);
     if (!sessionID) {
-      toast.error("Invalid credentials.", {
-        duration: 2500,
-      });
+      toast.error("Invalid credentials.");
     } else {
       setLoggedInUser({
         sessionID: sessionID,
         username: username,
       });
-      toast.success("LoggedIn Successfully.", {
-        duration: 2500,
-      });
+      toast.success("LoggedIn Successfully.");
       setAccounts((accountsInfo) => {
         if (!accountsInfo) {
           return [{ username: username, profileImg: "" }];
@@ -128,8 +124,8 @@ const AuthForm = () => {
           : "Already have a TMDB Account ?"}
       </p>
 
-      <Link to={`/auth?mode=${isLoginPage ? "signup" : "login"}`}>
-        Move to {isLoginPage ? "Signup" : "Login"} Page&nbsp;{" "}
+      <Link to={`/auth?mode=${isLoginPage ? "signUp" : "login"}`}>
+        Move to {isLoginPage ? "SignUp" : "Login"} Page&nbsp;{" "}
         <i className="fa-solid fa-arrow-right"></i>
       </Link>
     </div>
