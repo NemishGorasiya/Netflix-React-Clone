@@ -23,34 +23,36 @@ const Slider = ({
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
   const sliderRef = useRef();
-  const tempRef = useRef();
-  const [isPrevBtnHidden, setIsPrevBtnHidden] = useState(true);
-  const [isNextBtnHidden, setIsNextBtnHidden] = useState(false);
+
+  const [sliderBtnsHiddenStatus, setSliderBtnsHiddenStatus] = useState({
+    prevBtn: true,
+    nextBtn: false,
+  });
 
   let clientWidth = 0;
   let scrollLeft = 0;
   let scrollWidth = 0;
+
   const handleSliderBtnVisibility = useCallback((scrollLeft) => {
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
-    if (scrollLeft <= 0) {
-      setIsPrevBtnHidden(true);
-    } else {
-      setIsPrevBtnHidden(false);
-    }
-    if (scrollLeft + clientWidth >= scrollWidth) {
-      setIsNextBtnHidden(true);
-    } else {
-      setIsNextBtnHidden(false);
-    }
+    setSliderBtnsHiddenStatus((prevState) => ({
+      ...prevState,
+      prevBtn: scrollLeft <= 0,
+      nextBtn: scrollLeft + clientWidth >= scrollWidth,
+    }));
   }, []);
+
   const handlePrevBtnClick = () => {
     scrollLeft = sliderRef.current.scrollLeft - sliderRef.current.clientWidth;
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
     if (scrollWidth === clientWidth) {
-      setIsNextBtnHidden(true);
-      setIsPrevBtnHidden(true);
+      setSliderBtnsHiddenStatus((prevState) => ({
+        ...prevState,
+        prevBtn: true,
+        nextBtn: true,
+      }));
     } else {
       handleSliderBtnVisibility(scrollLeft);
     }
@@ -61,8 +63,11 @@ const Slider = ({
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
     if (scrollWidth === clientWidth) {
-      setIsNextBtnHidden(true);
-      setIsPrevBtnHidden(true);
+      setSliderBtnsHiddenStatus((prevState) => ({
+        ...prevState,
+        prevBtn: true,
+        nextBtn: true,
+      }));
     } else {
       handleSliderBtnVisibility(scrollLeft);
     }
@@ -104,8 +109,11 @@ const Slider = ({
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
     if (scrollWidth <= clientWidth) {
-      setIsNextBtnHidden(true);
       setNeedOfViewAllBtn(false);
+      setSliderBtnsHiddenStatus((prevState) => ({
+        ...prevState,
+        nextBtn: true,
+      }));
     }
   }, [moviesData]);
 
@@ -113,16 +121,16 @@ const Slider = ({
     <div
       // style={style}
       className={isViewAll ? "slider viewAll" : "slider"}
-      ref={tempRef}
+      // ref={tempRef}
     >
       {!isViewAll && (
         <>
-          {!isPrevBtnHidden && (
+          {!sliderBtnsHiddenStatus.prevBtn && (
             <button className="sliderBtn prevBtn" onClick={handlePrevBtnClick}>
               <i className="fa-solid fa-chevron-left"></i>
             </button>
           )}
-          {!isNextBtnHidden && (
+          {!sliderBtnsHiddenStatus.nextBtn && (
             <button className="sliderBtn nextBtn" onClick={handleNextBtnClick}>
               <i className="fa-solid fa-chevron-right"></i>
             </button>

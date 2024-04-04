@@ -10,14 +10,15 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 const Profile = ({
   profileName,
   profileImage,
-  isAddAccountDiv = false,
+  isAddAccount = false,
   handleOpenMyCustomModal,
 }) => {
   const [loggedInUser] = useLocalStorage("loggedInUser", null);
+  const { username } = loggedInUser;
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    if (loggedInUser.username !== profileName) {
+    if (username !== profileName) {
       navigate("/auth?mode=login");
     }
   };
@@ -25,18 +26,13 @@ const Profile = ({
   const handleAddAccount = () => {
     navigate("/auth");
   };
-  if (isAddAccountDiv) {
-    return (
-      <div className="profileWrapper addAccount" onClick={handleAddAccount}>
-        <div className="imgWrapper">
-          <img src={addAccountImage} alt="addAccount" />
-        </div>
-        <h3 className="profileName">Add</h3>
-      </div>
-    );
-  } else {
-    return (
-      <div className="profileWrapper">
+
+  return (
+    <div
+      className={`profileWrapper ${isAddAccount ? "addAccount" : ""}`}
+      onClick={isAddAccount ? handleAddAccount : null}
+    >
+      {!isAddAccount && (
         <div
           className="editProfileBtn"
           onClick={() => {
@@ -45,7 +41,12 @@ const Profile = ({
         >
           <i className="fa-solid fa-pen"></i>
         </div>
-        <div className="imgWrapper">
+      )}
+
+      <div className="imgWrapper">
+        {isAddAccount ? (
+          <img src={addAccountImage} alt="addAccount" />
+        ) : (
           <img
             onClick={handleProfileClick}
             src={profileImage === "" ? profile_image : profileImage}
@@ -54,16 +55,16 @@ const Profile = ({
               handleFallBackImage(event, fallBackProfileImage);
             }}
           />
-        </div>
-        <h3 className="profileName">{profileName}</h3>
+        )}
       </div>
-    );
-  }
+      <h3 className="profileName">{isAddAccount ? "Add" : profileName}</h3>
+    </div>
+  );
 };
 
 Profile.propTypes = {
   profileName: PropTypes.string,
-  isAddAccountDiv: PropTypes.bool,
+  isAddAccount: PropTypes.bool,
   handleOpenMyCustomModal: PropTypes.func,
   profileImage: PropTypes.string,
 };

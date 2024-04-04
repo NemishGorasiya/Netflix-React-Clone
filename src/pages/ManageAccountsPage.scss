@@ -6,6 +6,7 @@
     padding: 85px 15px 15px 15px;
     color: #fff;
     text-align: center;
+    min-height: 100vh;
 
     .manageAccountsHeading {
       margin-top: 50px;
@@ -16,7 +17,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, 250px);
       gap: 15px;
-      width: auto;
+      width: 100%;
       justify-content: center;
     }
   }

@@ -132,7 +132,7 @@ const ManageAccountsPage = () => {
               handleOpenMyCustomModal={handleOpenMyCustomModal}
             />
           ))}
-          <Profile profileName={"Add"} isAddAccountDiv={true} />
+          <Profile profileName={"Add"} isAddAccount />
         </div>
       </div>
     </div>
