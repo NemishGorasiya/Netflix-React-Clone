@@ -27,6 +27,7 @@ const MoviesCategories = ({ mediaType }) => {
     },
     [mediaType]
   );
+
   const fetchData = useCallback(async () => {
     try {
       const response = await Promise.all(

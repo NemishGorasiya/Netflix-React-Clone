@@ -1,11 +1,12 @@
 import Skeleton from "react-loading-skeleton";
+import "./CategoryWiseListSkeleton.scss";
 
 const CategoryWiseListSkeleton = () => {
   return (
-    <div className="categoryWiseList">
+    <div className="categoryWiseList categoryWiseListSkeleton">
       <div className="categoryHeader">
         <h3 className="categoryHeading">
-          <Skeleton height={50} width={250} />
+          <Skeleton />
         </h3>
         <p className="viewAll">
           <Skeleton height={20} width={80} />
@@ -18,15 +19,7 @@ const CategoryWiseListSkeleton = () => {
             .map((_item, index) => (
               <div key={index} className="renderIfVisible">
                 <div className="slide">
-                  <Skeleton
-                    style={{
-                      height: "100%",
-                      width: "100%",
-                      position: "absolute",
-                      top: "0",
-                      left: "0",
-                    }}
-                  />
+                  <Skeleton />
                 </div>
               </div>
             ))}

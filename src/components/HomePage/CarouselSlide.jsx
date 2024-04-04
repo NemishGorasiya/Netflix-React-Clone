@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { getImagePath } from "../../utils/utilityFunctions";
 
 const CarouselSlide = ({ count, displayMovie, mediaType }) => {
-  const { title, name, backdrop_path, overview, id } = displayMovie;
+  const { title, name, backdrop_path, overview, id } = displayMovie ?? {};
   return (
     <div
       className="carouselSlide"
@@ -21,7 +21,7 @@ const CarouselSlide = ({ count, displayMovie, mediaType }) => {
       <p className="movieDescription" title={overview}>
         {overview}
       </p>
-      <div className="playBtnsWrapper">
+      <div className="functionButtonsWrapper">
         <Button
           className={"btn playBtn"}
           iconClassName={"fa-solid fa-play"}

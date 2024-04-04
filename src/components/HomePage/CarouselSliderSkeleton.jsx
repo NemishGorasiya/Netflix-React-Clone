@@ -10,7 +10,7 @@ const CarouselSliderSkeleton = () => {
       <p className="movieDescription">
         <Skeleton height={15} width={450} count={3} />
       </p>
-      <div className="playBtnsWrapper">
+      <div className="functionButtonsWrapper">
         <span>
           <Skeleton height={60} width={100} />
         </span>

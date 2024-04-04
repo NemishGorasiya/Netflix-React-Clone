@@ -2,9 +2,9 @@ import SelectLanguage from "./SelectLanguage.jsx";
 import "./Footer.scss";
 import PropTypes from "prop-types";
 
-const Footer = ({ footerLinks, style }) => {
+const Footer = ({ footerLinks }) => {
   return (
-    <div className="footerSection" style={style}>
+    <div className="footerSection">
       <p>
         Questions? Call{" "}
         <a href="" className="mobileNo">
@@ -25,7 +25,6 @@ const Footer = ({ footerLinks, style }) => {
 
 Footer.propTypes = {
   footerLinks: PropTypes.array,
-  style: PropTypes.object,
 };
 
 export default Footer;

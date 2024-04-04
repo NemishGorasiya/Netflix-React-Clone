@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./CategoryWiseList.scss";
 import Slider from "./Slider";
 import PropTypes from "prop-types";
@@ -16,19 +16,26 @@ const CategoryWiseList = ({
   onClick,
 }) => {
   const [isViewAll, setIsViewAll] = useState(false);
-  const [needOfViewAllBtn, setNeedOfViewAllBtn] = useState(true);
+  const [isViewAllBtnVisible, setIsViewAllBtnVisible] = useState(true);
 
   const handleViewAllClick = () => {
     setIsViewAll((prev) => !prev);
   };
 
+  const makeViewAllButtonHidden = () => {
+    setIsViewAllBtnVisible(false);
+  };
+
+  const categoryHeading = useMemo(
+    () => changeFormatOfTitle(categoryTitle),
+    [categoryTitle]
+  );
+
   return (
     <div className="categoryWiseList">
       <div className="categoryHeader">
-        <h3 className="categoryHeading">
-          {changeFormatOfTitle(categoryTitle)}
-        </h3>
-        {moviesData && needOfViewAllBtn && moviesData.length !== 0 && (
+        <h3 className="categoryHeading">{categoryHeading}</h3>
+        {moviesData && isViewAllBtnVisible && moviesData.length !== 0 && (
           <p className="viewAll" onClick={handleViewAllClick}>
             View {isViewAll ? "Less" : "More"}
           </p>
@@ -45,7 +52,8 @@ const CategoryWiseList = ({
             mediaType={mediaType}
             isSeasonList={isSeasonList}
             onClick={onClick}
-            setNeedOfViewAllBtn={setNeedOfViewAllBtn}
+            makeViewAllButtonHidden={makeViewAllButtonHidden}
+            isViewAllBtnVisible={isViewAllBtnVisible}
           />
         </RenderIfVisible>
       )}
@@ -68,7 +76,6 @@ CategoryWiseList.propTypes = {
   removeFromList: PropTypes.func,
   mediaType: PropTypes.string,
   isSeasonList: PropTypes.bool,
-  style: PropTypes.object,
   onClick: PropTypes.func,
 };
 

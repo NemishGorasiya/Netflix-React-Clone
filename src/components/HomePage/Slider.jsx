@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import "./Slider.scss";
 import { Link, useSearchParams } from "react-router-dom";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
@@ -17,16 +17,18 @@ const Slider = ({
   removeFromList,
   mediaType,
   isSeasonList = false,
-  setNeedOfViewAllBtn,
+  isViewAllBtnVisible,
+  makeViewAllButtonHidden,
 }) => {
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
   const sliderRef = useRef();
 
-  const [sliderBtnsHiddenStatus, setSliderBtnsHiddenStatus] = useState({
-    prevBtn: true,
-    nextBtn: false,
+  const [sliderButtons, setSliderButtons] = useState({
+    prevBtn: false,
+    nextBtn: true,
   });
+  const { prevBtn, nextBtn } = sliderButtons;
 
   let clientWidth = 0;
   let scrollLeft = 0;
@@ -35,43 +37,25 @@ const Slider = ({
   const handleSliderBtnVisibility = useCallback((scrollLeft) => {
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
-    setSliderBtnsHiddenStatus((prevState) => ({
+
+    setSliderButtons((prevState) => ({
       ...prevState,
-      prevBtn: scrollLeft <= 0,
-      nextBtn: scrollLeft + clientWidth >= scrollWidth,
+      prevBtn: scrollLeft > 0,
+      nextBtn: scrollLeft + clientWidth < scrollWidth,
     }));
   }, []);
 
   const handlePrevBtnClick = () => {
     scrollLeft = sliderRef.current.scrollLeft - sliderRef.current.clientWidth;
-    scrollWidth = sliderRef.current.scrollWidth;
-    clientWidth = sliderRef.current.clientWidth;
-    if (scrollWidth === clientWidth) {
-      setSliderBtnsHiddenStatus((prevState) => ({
-        ...prevState,
-        prevBtn: true,
-        nextBtn: true,
-      }));
-    } else {
-      handleSliderBtnVisibility(scrollLeft);
-    }
     sliderRef.current.scrollLeft -= sliderRef.current.clientWidth;
+    handleSliderBtnVisibility(scrollLeft);
   };
   const handleNextBtnClick = () => {
     scrollLeft = sliderRef.current.scrollLeft + sliderRef.current.clientWidth;
-    scrollWidth = sliderRef.current.scrollWidth;
-    clientWidth = sliderRef.current.clientWidth;
-    if (scrollWidth === clientWidth) {
-      setSliderBtnsHiddenStatus((prevState) => ({
-        ...prevState,
-        prevBtn: true,
-        nextBtn: true,
-      }));
-    } else {
-      handleSliderBtnVisibility(scrollLeft);
-    }
     sliderRef.current.scrollLeft += sliderRef.current.clientWidth;
+    handleSliderBtnVisibility(scrollLeft);
   };
+
   let startX;
   let endX;
   const handleTouchStart = (event) => {
@@ -108,24 +92,30 @@ const Slider = ({
     scrollWidth = sliderRef.current.scrollWidth;
     clientWidth = sliderRef.current.clientWidth;
     if (scrollWidth <= clientWidth) {
-      setNeedOfViewAllBtn(false);
-      setSliderBtnsHiddenStatus((prevState) => ({
-        ...prevState,
-        nextBtn: true,
-      }));
+      makeViewAllButtonHidden();
     }
   }, [moviesData]);
+
+  useEffect(() => {
+    scrollWidth = sliderRef.current.scrollWidth;
+    clientWidth = sliderRef.current.clientWidth;
+    if (scrollWidth <= clientWidth) {
+      makeViewAllButtonHidden();
+    }
+  }, []);
+
+  console.log("called");
 
   return (
     <div className={isViewAll ? "slider viewAll" : "slider"}>
       {!isViewAll && (
         <>
-          {!sliderBtnsHiddenStatus.prevBtn && (
+          {isViewAllBtnVisible && prevBtn && (
             <button className="sliderBtn prevBtn" onClick={handlePrevBtnClick}>
               <i className="fa-solid fa-chevron-left"></i>
             </button>
           )}
-          {!sliderBtnsHiddenStatus.nextBtn && (
+          {isViewAllBtnVisible && nextBtn && (
             <button className="sliderBtn nextBtn" onClick={handleNextBtnClick}>
               <i className="fa-solid fa-chevron-right"></i>
             </button>
@@ -142,8 +132,11 @@ const Slider = ({
         ref={sliderRef}
       >
         {moviesData.map(({ id, season_number, poster_path, rating, name }) => (
-          <RenderIfVisible key={id}>
-            <div className={isDeletable ? "slide deletableSlide" : "slide"}>
+          <RenderIfVisible key={id} stayRendered={true}>
+            <div
+              key={id}
+              className={isDeletable ? "slide deletableSlide" : "slide"}
+            >
               <Link
                 to={
                   isSeasonList
@@ -198,7 +191,10 @@ Slider.propTypes = {
   removeFromList: PropTypes.func,
   mediaType: PropTypes.string,
   isSeasonList: PropTypes.bool,
-  setNeedOfViewAllBtn: PropTypes.func,
+  isViewAllBtnVisible: PropTypes.bool,
+  makeViewAllButtonHidden: PropTypes.func,
 };
 
-export default Slider;
+const SliderComponent = memo(Slider);
+
+export default SliderComponent;

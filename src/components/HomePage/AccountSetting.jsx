@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 const AccountSetting = ({ isSideBarOpen }) => {
   const [isAccountSettingVisible, setIsAccountSettingVisible] = useState(false);
   const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", {});
+  const { username } = loggedInUser;
   const navigate = useNavigate();
   const accountSettingRef = useRef(null);
   const handleAccountSettingClick = () => {
@@ -48,7 +49,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
         <div className="accountSettingOptions">
           <ul>
             <li className="username">
-              {loggedInUser.username}
+              {username}
               <Link to={"/manageAccounts"} className="viewProfile">
                 manage accounts
               </Link>

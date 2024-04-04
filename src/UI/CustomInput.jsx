@@ -11,7 +11,6 @@ const CustomInput = ({
   val,
   isPassword = false,
   errorMessage = "Please fill out this field.",
-  style,
 }) => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -46,19 +45,17 @@ const CustomInput = ({
 
   return (
     <>
-      <div
-        className={`customInputContainer ${isError ? "hasError" : ""}`}
-        style={style}
-      >
+      <div className={`customInputContainer ${isError ? "hasError" : ""}`}>
         <input
           type={isPasswordVisible ? "text" : type}
           id={id}
-          className={!isEmpty ? "customInput notEmpty" : "customInput"}
+          className={`customInput ${!isEmpty ? "notEmpty" : ""} ${
+            isPassword ? "passwordInput" : ""
+          }`}
           required={required}
           value={val}
           autoComplete="off"
           onChange={handleInputChange}
-          style={isPassword ? { paddingRight: "35px" } : {}}
         />
         <label className="floatingLabel">{floatingLabel}</label>
         {isPassword && (
@@ -89,7 +86,6 @@ CustomInput.propTypes = {
   val: PropTypes.string,
   isPassword: PropTypes.bool,
   errorMessage: PropTypes.string,
-  style: PropTypes.object,
 };
 
 export default CustomInput;
