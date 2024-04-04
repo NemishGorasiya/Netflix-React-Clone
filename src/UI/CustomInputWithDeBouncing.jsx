@@ -17,7 +17,7 @@ const CustomInputWithDeBouncing = ({
   const [isError, setIsError] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
 
-  const afterDebounce = useCallback(
+  const actionAfterDebounce = useCallback(
     (value) => {
       if (value === "") {
         setIsEmpty(true);
@@ -35,11 +35,11 @@ const CustomInputWithDeBouncing = ({
   );
   const handleDebounce = useCallback(
     debounce((value) => {
-      afterDebounce(value);
+      actionAfterDebounce(value);
     }),
-    [afterDebounce]
+    [actionAfterDebounce]
   );
-  const myFun = useCallback(
+  const handleInputChange = useCallback(
     ({ target: { value } }) => {
       handleDebounce(value);
     },
@@ -53,7 +53,7 @@ const CustomInputWithDeBouncing = ({
           id={id}
           className={!isEmpty ? "customInput notEmpty" : "customInput"}
           required={required}
-          onChange={myFun}
+          onChange={handleInputChange}
         />
         <label className="floatingLabel">{floatingLabel}</label>
       </div>
