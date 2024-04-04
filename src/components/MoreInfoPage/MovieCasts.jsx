@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const MovieCasts = ({ castsInfo }) => {
   const [isViewAllCasts, setIsViewAllCasts] = useState(false);
-  const [needOfViewAllBtn, setNeedOfViewAllBtn] = useState(true);
+  const [isViewAllBtnVisible, setIsViewAllBtnVisible] = useState(true);
   const castProfileCardWrapperRef = useRef();
 
   const handleViewAllCastsClick = () => {
@@ -13,14 +13,10 @@ const MovieCasts = ({ castsInfo }) => {
   };
 
   useEffect(() => {
-    if (
-      castProfileCardWrapperRef.current.scrollWidth <=
-      castProfileCardWrapperRef.current.offsetWidth
-    ) {
-      setNeedOfViewAllBtn(false);
-    } else {
-      setNeedOfViewAllBtn(true);
-    }
+    setIsViewAllBtnVisible(
+      castProfileCardWrapperRef.current.scrollWidth >
+        castProfileCardWrapperRef.current.offsetWidth
+    );
   }, []);
   return (
     <>
@@ -39,7 +35,7 @@ const MovieCasts = ({ castsInfo }) => {
             isViewAllCasts ? "viewAllCasts" : ""
           }`}
         >
-          {!isViewAllCasts && needOfViewAllBtn && (
+          {!isViewAllCasts && isViewAllBtnVisible && (
             <div
               className="viewAllCastsBtn"
               onClick={handleViewAllCastsClick}

@@ -1,22 +1,25 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 const CustomModal = ({
   children,
-  shouldCloseOnOutSideClick,
+  shouldCloseOnOutSideClick = false,
   handleCloseMyCustomModal,
 }) => {
   const modalRef = useRef();
   const backDropRef = useRef();
 
-  useEffect(() => {
-    const handleESCapeKey = (event) => {
+  const handleESCapeKey = useCallback(
+    (event) => {
       if (event.key === "Escape") {
         handleCloseMyCustomModal();
       }
-    };
+    },
+    [handleCloseMyCustomModal]
+  );
 
-    const handleClickToCloseModal = ({ target }) => {
+  const handleClickToCloseModal = useCallback(
+    ({ target }) => {
       if (
         modalRef.current &&
         !modalRef.current.contains(target) &&
@@ -24,8 +27,12 @@ const CustomModal = ({
       ) {
         handleCloseMyCustomModal();
       }
-    };
+    },
+    [handleCloseMyCustomModal]
+  );
+  useEffect(() => {
     document.addEventListener("keydown", (event) => handleESCapeKey(event));
+
     if (shouldCloseOnOutSideClick) {
       document.addEventListener("click", (event) =>
         handleClickToCloseModal(event)
@@ -36,11 +43,17 @@ const CustomModal = ({
       document.removeEventListener("keydown", (event) =>
         handleESCapeKey(event)
       );
+
       document.removeEventListener("click", (event) =>
         handleClickToCloseModal(event)
       );
     };
-  }, [handleCloseMyCustomModal, shouldCloseOnOutSideClick]);
+  }, [
+    handleClickToCloseModal,
+    handleCloseMyCustomModal,
+    handleESCapeKey,
+    shouldCloseOnOutSideClick,
+  ]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
