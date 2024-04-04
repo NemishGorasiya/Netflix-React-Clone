@@ -11,7 +11,7 @@ const CarouselSliderSkeleton = () => {
         <Skeleton height={15} width={450} count={3} />
       </p>
       <div className="playBtnsWrapper">
-        <span style={{ marginRight: "8px" }}>
+        <span>
           <Skeleton height={60} width={100} />
         </span>
         <Skeleton height={60} width={100} />

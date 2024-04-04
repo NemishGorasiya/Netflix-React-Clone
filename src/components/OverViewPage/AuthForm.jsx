@@ -87,17 +87,14 @@ const AuthForm = () => {
 
   return (
     <div className="authenticationFormContainer">
-      <h1 style={{ color: "white" }}>
-        {`${isLoginPage ? "Login" : "Sign Up"}`}
-      </h1>
+      <h1 className="authenticationFormTitle">{`${
+        isLoginPage ? "Login" : "Sign Up"
+      }`}</h1>
       <form className="authenticationForm" onSubmit={handleLogin}>
         {!isLoginPage && (
           <>
             <Button
               onClick={redirectToTMDBPage}
-              style={{
-                background: "#01B4E4",
-              }}
               className={"tmdbSignUpBtn"}
               text={`TMDB Sign Up`}
             />

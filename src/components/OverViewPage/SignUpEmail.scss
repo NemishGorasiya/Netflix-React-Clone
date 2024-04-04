@@ -16,7 +16,9 @@
     align-items: center;
     justify-content: center;
     font-weight: 500;
-    width: 210px;
+    min-width: fit-content;
+    padding: 0 10px;
+    flex-wrap: nowrap;
     transition: background 0.2s ease;
     font-family: "Netflix Sans Medium";
 

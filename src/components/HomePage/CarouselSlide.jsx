@@ -26,7 +26,6 @@ const CarouselSlide = ({ count, displayMovie, mediaType }) => {
           className={"btn playBtn"}
           iconClassName={"fa-solid fa-play"}
           text={"Play"}
-          style={{ marginRight: "10px" }}
         />
         <Link to={`/${mediaType}/moreInfo?id=${id}`}>
           <Button

@@ -16,7 +16,7 @@ const SignUpEmail = () => {
         type="email"
         val={email}
         updateState={handleEmailChange}
-        style={{ flex: "1" }}
+        className="signUpCustomInput"
         errorMessage="Email is required."
       />
       <button>

@@ -62,24 +62,13 @@ const ManageAccountsPage = () => {
                 id={"profileName"}
                 value={usernameOfProfileToEdit}
                 readOnly={true}
-                style={{
-                  width: "100%",
-                  height: "40px",
-                  paddingLeft: "10px",
-                  fontSize: "20px",
-                  borderRadius: "5px",
-                  border: "1px solid #000",
-                  cursor: "no-drop",
-                  margin: "5px 0 15px",
-                }}
+                className="useNameInput"
               />
             </div>
             <div className="inputWrapper">
               <label htmlFor="profileImg">Profile Image</label>
               <input
-                style={{
-                  width: "100%",
-                }}
+                className="profileImageInput"
                 type="file"
                 name=""
                 id="profileImg"
@@ -89,7 +78,7 @@ const ManageAccountsPage = () => {
               />
               {profileImage && (
                 <img
-                  style={{ height: "150px", width: "150px" }}
+                  className="profileImagePreview"
                   src={profileImage}
                   alt="profileImagePreview"
                   onError={(event) => {
@@ -98,24 +87,8 @@ const ManageAccountsPage = () => {
                 />
               )}
             </div>
-            <div
-              className="editBtnWrapper"
-              style={{
-                textAlign: "center",
-              }}
-            >
-              <Button
-                style={{
-                  padding: "8px 15px",
-                  background: "grey",
-                  border: "none",
-                  color: "#fff",
-                  borderRadius: "5px",
-                  fontSize: "18px",
-                  marginTop: "10px",
-                }}
-                text="Edit Profile"
-              />
+            <div className="editBtnWrapper">
+              <Button text="Edit Profile" />
             </div>
           </form>
         </CustomModal>

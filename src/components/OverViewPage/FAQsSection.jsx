@@ -5,11 +5,6 @@ const FAQsSection = () => {
   const [openedQuestionIndex, setOpenedQuestionIndex] = useState(-1);
   const handleRevealAnswer = (idx) => {
     setOpenedQuestionIndex((prevOpenedQuestionIndex) => {
-      // if (idx === prevOpenedQuestionIndex) {
-      //   return -1;
-      // } else {
-      //   return idx;
-      // }
       return idx === prevOpenedQuestionIndex ? -1 : idx;
     });
   };
@@ -40,7 +35,7 @@ const FAQsSection = () => {
                 idx === openedQuestionIndex ? "answer opened" : "answer"
               }
               dangerouslySetInnerHTML={{ __html: answer }}
-            />
+            ></div>
           </div>
         ))}
       </div>

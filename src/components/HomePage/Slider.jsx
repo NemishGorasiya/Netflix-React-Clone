@@ -17,7 +17,6 @@ const Slider = ({
   removeFromList,
   mediaType,
   isSeasonList = false,
-  // style,
   setNeedOfViewAllBtn,
 }) => {
   const [searchParams] = useSearchParams();
@@ -118,11 +117,7 @@ const Slider = ({
   }, [moviesData]);
 
   return (
-    <div
-      // style={style}
-      className={isViewAll ? "slider viewAll" : "slider"}
-      // ref={tempRef}
-    >
+    <div className={isViewAll ? "slider viewAll" : "slider"}>
       {!isViewAll && (
         <>
           {!sliderBtnsHiddenStatus.prevBtn && (
@@ -203,7 +198,6 @@ Slider.propTypes = {
   removeFromList: PropTypes.func,
   mediaType: PropTypes.string,
   isSeasonList: PropTypes.bool,
-  // style: PropTypes.object,
   setNeedOfViewAllBtn: PropTypes.func,
 };
 

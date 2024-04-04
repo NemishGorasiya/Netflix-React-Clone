@@ -193,7 +193,6 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
               className={"btn playBtn"}
               iconClassName={"fa-solid fa-play"}
               text={"Play"}
-              style={{ marginRight: "10px" }}
             />
             <RoundButton
               onClick={handleAddToWatchList}
@@ -246,16 +245,8 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
               ratingCount={vote_count}
             />
             <Button
+              className="rateNowBtn"
               text={"Rate Now"}
-              style={{
-                margin: "15px 0 0",
-                padding: "10px 15px",
-                fontSize: "20px",
-                background: "grey",
-                color: "#fff",
-                border: "none",
-                borderRadius: "5px",
-              }}
               onClick={handleAddRating}
             />
           </div>
@@ -283,36 +274,20 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
           shouldCloseOnOutSideClick={false}
           handleCloseMyCustomModal={handleCloseMyCustomModal}
         >
-          <form action="" onSubmit={submitReview}>
-            <div className="inputWrapper" style={{ marginBottom: "15px" }}>
+          <form action="" className="submitReviewForm" onSubmit={submitReview}>
+            <div className="inputWrapper">
               <label htmlFor="mediaName">Media Name</label>
               <input
-                style={{
-                  width: "100%",
-                  height: "40px",
-                  border: "1px solid #000",
-                  borderRadius: "5px",
-                  paddingLeft: "5px",
-                  fontSize: "16px",
-                  cursor: "no-drop",
-                }}
+                className="readOnly"
                 type="text"
                 id="mediaName"
                 value={title ?? name}
                 readOnly
               />
             </div>
-            <div className="inputWrapper" style={{ marginBottom: "15px" }}>
+            <div className="inputWrapper">
               <label htmlFor="mediaRating">Your Rating out of 10</label>
               <input
-                style={{
-                  width: "100%",
-                  height: "40px",
-                  border: "1px solid #000",
-                  borderRadius: "5px",
-                  paddingLeft: "5px",
-                  fontSize: "16px",
-                }}
                 type="text"
                 id="mediaRating"
                 value={userRating}
@@ -322,33 +297,10 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
             </div>
             <div className="inputWrapper">
               <label htmlFor="mediaReview">Your Review</label>
-              <textarea
-                style={{
-                  width: "100%",
-                  border: "1px solid #000",
-                  borderRadius: "5px",
-                  padding: "5px",
-                  fontSize: "16px",
-                }}
-                id="mediaReview"
-                cols="30"
-                rows="5"
-              ></textarea>
+              <textarea id="mediaReview" cols="30" rows="5"></textarea>
             </div>
-            <div style={{ width: "100%", textAlign: "center" }}>
-              <Button
-                text="Submit Review"
-                style={{
-                  margin: "15px 0 0",
-                  padding: "10px 15px",
-                  fontSize: "20px",
-                  background: "grey",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "5px",
-                }}
-                type="submit"
-              />
+            <div className="submitReviewWrapper">
+              <Button text="Submit Review" type="submit" />
             </div>
           </form>
         </CustomModal>
