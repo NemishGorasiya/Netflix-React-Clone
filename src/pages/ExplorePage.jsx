@@ -2,12 +2,14 @@ import "./ExplorePage.scss";
 import { useCallback, useState } from "react";
 import { fetchDataBySearchQuery } from "../services/services.js";
 import CategoryWiseList from "../components/HomePage/CategoryWiseList.jsx";
-import CustomInputWithDeBouncing from "../UI/CustomInputWithDeBouncing.jsx";
+import CustomInput from "../UI/CustomInput.jsx";
+import { debounce } from "../utils/utilityFunctions.js";
 
 const ExplorePage = () => {
   const [movieList, setMovieList] = useState(null);
   const [selectedMediaType, setSelectedMediaType] = useState("movie");
   const [searchQuery, setSearchQuery] = useState("");
+
   const fetchData = useCallback(
     async (value, mediaType) => {
       setSearchQuery(value);
@@ -27,6 +29,21 @@ const ExplorePage = () => {
     [selectedMediaType]
   );
 
+  const handleDebounce = useCallback(
+    debounce((value) => {
+      fetchData(value);
+    }),
+    [fetchData]
+  );
+
+  const handleInputChange = useCallback(
+    ({ target: { value } }) => {
+      setSearchQuery(value);
+      handleDebounce(value);
+    },
+    [handleDebounce]
+  );
+
   const handleSelectMediaTypeChange = ({ target: { value } }) => {
     setSelectedMediaType(value);
     fetchData(searchQuery, value);
@@ -35,11 +52,12 @@ const ExplorePage = () => {
   return (
     <div className="explorePage">
       <div className="explorePageContentWrapper">
-        <CustomInputWithDeBouncing
+        <CustomInput
           type="search"
           id={"search"}
           floatingLabel="Search here.."
-          updateState={fetchData}
+          onChange={handleInputChange}
+          val={searchQuery}
         />
         <div className="mediaTypeSelectContainer">
           Search In
