@@ -8,6 +8,7 @@ import {
 const CastProfileCard = (castInfo) => {
   const { name, character, profile_path, known_for_department } =
     castInfo.castsInfo;
+
   return (
     <div className="castProfileCard">
       <img

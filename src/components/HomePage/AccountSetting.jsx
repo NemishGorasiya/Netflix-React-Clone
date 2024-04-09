@@ -11,25 +11,30 @@ const AccountSetting = ({ isSideBarOpen }) => {
   const { username } = loggedInUser;
   const navigate = useNavigate();
   const accountSettingRef = useRef(null);
+
   const handleAccountSettingClick = () => {
     setIsAccountSettingVisible((prevState) => !prevState);
   };
+
   const handleClickOutside = ({ target }) => {
     if (!accountSettingRef.current?.contains(target)) {
       setIsAccountSettingVisible(false);
     }
   };
+
   const handleLogOut = () => {
     setLoggedInUser(null);
     toast.success("User LoggedOut successfully.");
     navigate("/");
   };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <div
       className={

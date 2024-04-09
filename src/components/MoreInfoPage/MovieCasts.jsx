@@ -18,6 +18,7 @@ const MovieCasts = ({ castsInfo }) => {
         castProfileCardWrapperRef.current.offsetWidth
     );
   }, []);
+
   return (
     <>
       <div className="movieCasts">

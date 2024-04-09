@@ -81,6 +81,7 @@ const AuthForm = () => {
       return;
     }
     const sessionID = await handleTMDBLogin(username, password);
+
     if (!sessionID) {
       toast.error("Invalid credentials.");
     } else {
@@ -89,6 +90,7 @@ const AuthForm = () => {
         username: username,
       });
       toast.success("LoggedIn Successfully.");
+
       setAccounts((accountsInfo) => {
         if (!accountsInfo) {
           return [{ username: username, profileImg: "" }];
@@ -105,6 +107,7 @@ const AuthForm = () => {
         }
         return [...accountsInfo, { username: username, profileImg: "" }];
       });
+
       setUserAuthDetails((prevDetails) => ({
         ...prevDetails,
         username: { ...prevDetails.username, value: "" },
