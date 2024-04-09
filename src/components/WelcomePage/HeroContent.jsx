@@ -1,4 +1,5 @@
 import SignUpEmail from "./SignUpEmail";
+import "./HeroContent.scss";
 
 const HeroContent = () => {
   return (

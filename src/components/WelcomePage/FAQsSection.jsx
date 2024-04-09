@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FAQs } from "../../data/data.jsx";
+import "./FAQsSection.scss";
 
 const FAQsSection = () => {
   const [openedQuestionIndex, setOpenedQuestionIndex] = useState(-1);

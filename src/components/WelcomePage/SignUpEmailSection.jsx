@@ -1,4 +1,5 @@
 import SignUpEmail from "./SignUpEmail.jsx";
+import "./SignUpEmailSection.scss";
 
 const SignUpEmailSection = () => {
   return (

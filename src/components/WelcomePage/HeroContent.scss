@@ -1,0 +1,53 @@
+.heroContent {
+  margin: 50px auto;
+  text-align: center;
+  color: #fff;
+
+  h1 {
+    font-family: "Netflix Sans Blk";
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 20px;
+  }
+  h4 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 15px;
+    line-height: 30px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .heroContent {
+    margin: 50px auto;
+    text-align: center;
+    color: #fff;
+    padding: 0 50px;
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+    }
+    h4 {
+      font-size: 18px;
+      font-weight: 400;
+    }
+    p {
+      font-size: 18px;
+      font-weight: 400;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .heroContent {
+    padding: 0 30px;
+    max-width: none;
+    width: 100%;
+  }
+}

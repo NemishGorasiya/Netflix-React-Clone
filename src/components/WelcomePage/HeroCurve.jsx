@@ -1,3 +1,5 @@
+import "./HeroCurve.scss";
+
 const HeroCurve = () => {
   return (
     <div className="heroCurve">

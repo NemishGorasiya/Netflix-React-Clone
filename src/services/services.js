@@ -1,6 +1,7 @@
 const httpReq = async ({ url, options }) => {
+  const BASE_URL = "https://api.themoviedb.org/3/";
   try {
-    const res = await fetch(url, options);
+    const res = await fetch(BASE_URL + url, options);
     const resJSON = await res.json();
     return resJSON;
   } catch (error) {
@@ -24,7 +25,7 @@ const setOptions = ({ method = "GET", headers, body }) => {
 };
 
 export const fetchMediaData = async ({ mediaType, mediaCategory }) => {
-  let url = `https://api.themoviedb.org/3/${mediaType}/${mediaCategory}?language=en-US&page=1`;
+  let url = `${mediaType}/${mediaCategory}?language=en-US&page=1`;
   const options = setOptions({});
   return await httpReq({ url, options });
 };
@@ -36,9 +37,9 @@ export const fetchMoreInfoOfMedia = async ({
   seasonNumber,
   episodeNumber,
 }) => {
-  let url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}?append_to_response=credits&language=en-US&page=1`;
+  let url = `${mediaType}/${mediaId}?append_to_response=credits&language=en-US&page=1`;
   if (isEpisode) {
-    url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}?append_to_response=credits&language=en-US&page=1`;
+    url = `${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}?append_to_response=credits&language=en-US&page=1`;
   }
   const options = setOptions({});
 
@@ -53,13 +54,13 @@ export const fetchMoreInfoOfMedia = async ({
 };
 
 export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
-  let url = `https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US`;
+  let url = `${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US`;
   const options = setOptions({});
   return await httpReq({ url, options });
 };
 
 export const generateRequestToken = async () => {
-  let url = `https://api.themoviedb.org/3/authentication/token/new`;
+  let url = `authentication/token/new`;
   const options = setOptions({});
   const resJSON = await httpReq({ url, options });
   if (resJSON.success) {
@@ -75,7 +76,7 @@ export const validateRequestTokenWithLogin = async (
   reqToken
 ) => {
   let url = `
-https://api.themoviedb.org/3/authentication/token/validate_with_login`;
+authentication/token/validate_with_login`;
 
   const options = setOptions({
     method: "POST",
@@ -93,7 +94,7 @@ https://api.themoviedb.org/3/authentication/token/validate_with_login`;
 };
 
 export const generateSessionId = async (reqToken) => {
-  let url = `https://api.themoviedb.org/3/authentication/session/new?request_token=${reqToken}`;
+  let url = `authentication/session/new?request_token=${reqToken}`;
   const options = setOptions({});
   const resJSON = await httpReq({ url, options });
   if (resJSON.success) {
@@ -127,7 +128,7 @@ export const addToFavorite = async ({
   media_type,
   isAdding = true,
 }) => {
-  const url = `https://api.themoviedb.org/3/account/account_id/favorite?session_id=${sessionID}`;
+  const url = `account/account_id/favorite?session_id=${sessionID}`;
   const options = setOptions({
     method: "POST",
     headers: {
@@ -149,7 +150,7 @@ export const addToWatchList = async ({
   media_type,
   isAdding = true,
 }) => {
-  const url = `https://api.themoviedb.org/3/account/account_id/watchlist?session_id=${sessionID}`;
+  const url = `account/account_id/watchlist?session_id=${sessionID}`;
   const options = setOptions({
     method: "POST",
     headers: {
@@ -166,7 +167,7 @@ export const addToWatchList = async ({
 };
 
 export const fetchWatchList = async ({ sessionID, watchListCategory }) => {
-  let url = `https://api.themoviedb.org/3/account/account_id/watchlist/${watchListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
+  let url = `account/account_id/watchlist/${watchListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
   const options = setOptions({});
 
   return await httpReq({ url, options });
@@ -176,7 +177,7 @@ export const fetchFavoriteList = async ({
   sessionID,
   favoriteListCategory,
 }) => {
-  let url = `https://api.themoviedb.org/3/account/account_id/favorite/${favoriteListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
+  let url = `account/account_id/favorite/${favoriteListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
 
   const options = setOptions({});
   return await httpReq({ url, options });
@@ -186,7 +187,7 @@ export const fetchDataBySearchQuery = async ({
   searchQuery,
   media_type = "movie",
 }) => {
-  const url = `https://api.themoviedb.org/3/search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=1`;
+  const url = `search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=1`;
   const options = setOptions({});
   const res = await fetch(url, options);
   const resJSON = await res.json();
@@ -206,11 +207,11 @@ export const submitMediaRating = async ({
   episodeNumber,
 }) => {
   let url = `
-https://api.themoviedb.org/3/${mediaType}/${mediaId}/rating?session_id=${sessionID}`;
+${mediaType}/${mediaId}/rating?session_id=${sessionID}`;
 
   if (isEpisode) {
     url = `
-https://api.themoviedb.org/3/${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating?session_id=${sessionID}`;
+${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating?session_id=${sessionID}`;
   }
   const options = setOptions({
     method: "POST",
@@ -231,7 +232,7 @@ export const fetchRatedList = async ({ sessionID, category }) => {
   if (category === "movie") {
     category = "movies";
   }
-  const url = `https://api.themoviedb.org/3/account/account_id/rated/${category}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.asc`;
+  const url = `account/account_id/rated/${category}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.asc`;
   const options = setOptions({});
 
   return await httpReq({ url, options });

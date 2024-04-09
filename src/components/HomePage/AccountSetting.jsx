@@ -15,10 +15,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
     setIsAccountSettingVisible((prevState) => !prevState);
   };
   const handleClickOutside = ({ target }) => {
-    if (
-      accountSettingRef.current &&
-      !accountSettingRef.current.contains(target)
-    ) {
+    if (!accountSettingRef.current?.contains(target)) {
       setIsAccountSettingVisible(false);
     }
   };

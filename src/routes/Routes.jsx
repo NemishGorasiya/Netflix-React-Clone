@@ -8,7 +8,7 @@ import ExplorePage from "../pages/ExplorePage";
 import MyFavoritePage from "../pages/MyFavoritePage";
 import RatedListPage from "../pages/RatedListPage";
 import ManageAccountsPage from "../pages/ManageAccountsPage";
-import OverviewPage from "../pages/OverviewPage";
+import WelcomePage from "../pages/WelcomePage";
 import AuthenticationPage from "../pages/AuthenticationPage";
 
 export const router = createBrowserRouter([
@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <OverviewPage />,
+    element: <WelcomePage />,
   },
   {
     path: "/auth",

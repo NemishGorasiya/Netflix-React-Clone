@@ -1,0 +1,116 @@
+.FAQsSection {
+  margin-top: 60px;
+
+  .sectionHeading {
+    margin: 15px 0;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .FAQsContainer {
+    .questionContainer {
+      line-height: 30px;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 10px;
+
+      .questionWrapper {
+        background: rgb(45, 45, 45);
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgb(65, 65, 65);
+        }
+
+        .question {
+          flex: 1;
+        }
+        span.plusBtn {
+          font-size: 45px;
+          line-height: 35px;
+          font-weight: 200;
+          transition: all 0.3s ease;
+        }
+        span.plusBtn.opened {
+          transform: rotate(-45deg);
+        }
+      }
+      .answer {
+        margin-top: 1px;
+        padding: 0 25px;
+        background: rgb(45, 45, 45);
+        height: 0;
+        visibility: collapse;
+        overflow: hidden;
+        line-height: 25px;
+        transition: all 0.3s ease;
+      }
+      .answer.opened {
+        padding: 25px;
+        visibility: visible;
+        height: fit-content;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .FAQsSection {
+    .FAQsContainer {
+      .questionContainer {
+        line-height: 25px;
+        font-size: 18px;
+
+        .questionWrapper {
+          padding: 20px;
+
+          span.plusBtn {
+            font-size: 40px;
+            line-height: 30px;
+            font-weight: 200;
+          }
+        }
+        .answer {
+          padding: 0 20px;
+          line-height: 22px;
+        }
+        .answer.opened {
+          padding: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .FAQsSection {
+    .sectionHeading {
+      font-size: 22px;
+    }
+    .FAQsContainer {
+      .questionContainer {
+        line-height: 20px;
+
+        .questionWrapper {
+          padding: 15px;
+
+          span.plusBtn {
+            font-size: 30px;
+            line-height: 20px;
+          }
+        }
+        .answer {
+          padding: 0 15px;
+          line-height: 19px;
+        }
+        .answer.opened {
+          padding: 15px;
+        }
+      }
+    }
+  }
+}
