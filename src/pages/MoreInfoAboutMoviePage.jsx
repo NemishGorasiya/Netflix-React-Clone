@@ -49,7 +49,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     backdrop_path,
     id,
     runtime,
-  } = list;
+  } = list || {};
   const [isAddRatingModalOpen, setIsAddRatingModalOpen] = useState(false);
   const [userRating, setUserRating] = useState("");
   const [loggedInUser] = useLocalStorage("loggedInUser", null);
@@ -97,6 +97,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       isLoading: false,
     });
   }, [episodeNumber, mediaId, mediaType, seasonNumber]);
+
   useEffect(() => {
     fetchMovieData();
     if (seasonNumber) {
@@ -266,7 +267,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
         {isLoading ? (
           <CastProfileCardSkeleton />
         ) : (
-          credits.cast.length > 0 && <MovieCasts castsInfo={credits.cast} />
+          credits?.cast.length > 0 && <MovieCasts castsInfo={credits.cast} />
         )}
       </div>
       {isAddRatingModalOpen && (

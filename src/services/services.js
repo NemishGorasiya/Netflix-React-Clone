@@ -1,5 +1,5 @@
+const BASE_URL = "https://api.themoviedb.org/3/";
 const httpReq = async ({ url, options }) => {
-  const BASE_URL = "https://api.themoviedb.org/3/";
   try {
     const res = await fetch(BASE_URL + url, options);
     const resJSON = await res.json();
@@ -44,10 +44,7 @@ export const fetchMoreInfoOfMedia = async ({
   const options = setOptions({});
 
   try {
-    const res = await fetch(url, options);
-    const resJSON = await res.json();
-
-    return resJSON;
+    return await httpReq({ url, options });
   } catch (error) {
     console.error(error);
   }
@@ -189,7 +186,7 @@ export const fetchDataBySearchQuery = async ({
 }) => {
   const url = `search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=1`;
   const options = setOptions({});
-  const res = await fetch(url, options);
+  const res = await fetch(BASE_URL + url, options);
   const resJSON = await res.json();
   if (res.status === 200) {
     return resJSON;

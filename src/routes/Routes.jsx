@@ -1,15 +1,20 @@
+import { Suspense, lazy } from "react";
+
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import HomePage from "../pages/HomePage";
-import ErrorPage from "../pages/ErrorPage";
-import MoreInfoAboutMoviePage from "../pages/MoreInfoAboutMoviePage";
-import MyWatchList from "../pages/MyWatchList";
-import ExplorePage from "../pages/ExplorePage";
-import MyFavoritePage from "../pages/MyFavoritePage";
-import RatedListPage from "../pages/RatedListPage";
-import ManageAccountsPage from "../pages/ManageAccountsPage";
 import WelcomePage from "../pages/WelcomePage";
 import AuthenticationPage from "../pages/AuthenticationPage";
+import Loader from "../components/Loader";
+const HomePage = lazy(() => import("../pages/HomePage"));
+const ErrorPage = lazy(() => import("../pages/ErrorPage"));
+const MoreInfoAboutMoviePage = lazy(() =>
+  import("../pages/MoreInfoAboutMoviePage")
+);
+const MyWatchList = lazy(() => import("../pages/MyWatchList"));
+const ExplorePage = lazy(() => import("../pages/ExplorePage"));
+const MyFavoritePage = lazy(() => import("../pages/MyFavoritePage"));
+const RatedListPage = lazy(() => import("../pages/RatedListPage"));
+const ManageAccountsPage = lazy(() => import("../pages/ManageAccountsPage"));
 
 export const router = createBrowserRouter([
   {
@@ -17,40 +22,76 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/home",
-        element: <HomePage />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <HomePage />
+          </Suspense>
+        ),
         errorElement: <ErrorPage />,
       },
       {
         path: "/movies",
-        element: <HomePage mediaType="movie" />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <HomePage mediaType="movie" />
+          </Suspense>
+        ),
       },
       {
         path: "/tv",
-        element: <HomePage mediaType="tv" />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <HomePage mediaType="tv" />
+          </Suspense>
+        ),
       },
       {
         path: "/movie/moreInfo",
-        element: <MoreInfoAboutMoviePage mediaType="movie" />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <MoreInfoAboutMoviePage mediaType="movie" />
+          </Suspense>
+        ),
       },
       {
         path: "/tv/moreInfo",
-        element: <MoreInfoAboutMoviePage mediaType="tv" />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <MoreInfoAboutMoviePage mediaType="tv" />
+          </Suspense>
+        ),
       },
       {
         path: "/myWatchList",
-        element: <MyWatchList />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <MyWatchList />
+          </Suspense>
+        ),
       },
       {
         path: "/explore",
-        element: <ExplorePage />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <ExplorePage />
+          </Suspense>
+        ),
       },
       {
         path: "/myFavorite",
-        element: <MyFavoritePage />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <MyFavoritePage />
+          </Suspense>
+        ),
       },
       {
         path: "/rated",
-        element: <RatedListPage />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <RatedListPage />
+          </Suspense>
+        ),
       },
       {
         path: "/manageAccounts",
