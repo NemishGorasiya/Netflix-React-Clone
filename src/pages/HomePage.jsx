@@ -3,7 +3,7 @@ import CarouselSlider from "../components/HomePage/CarouselSlider";
 import MoviesCategories from "../components/HomePage/MoviesCategories";
 import { fetchMediaData } from "../services/services.js";
 import Footer from "../components/WelcomePage/Footer.jsx";
-import { footerLinks } from "../data/data.jsx";
+import { footerLinks } from "../constants/constants.js";
 import "./HomePage.scss";
 import Loader from "../components/Loader.jsx";
 const HomePage = () => {

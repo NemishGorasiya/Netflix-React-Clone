@@ -1,6 +1,6 @@
 import "./SelectLanguage.scss";
 
-import { supportedLanguages } from "../../data/data.jsx";
+import { supportedLanguages } from "../../constants/constants.js";
 
 const SelectLanguage = () => {
   return (

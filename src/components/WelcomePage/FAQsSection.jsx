@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FAQs } from "../../data/data.jsx";
+import { FAQs } from "../../constants/constants.js";
 import "./FAQsSection.scss";
 
 const FAQsSection = () => {

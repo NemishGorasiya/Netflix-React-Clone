@@ -4,7 +4,7 @@ import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSke
 import CategoryWiseList from "../components/HomePage/CategoryWiseList.jsx";
 import { fetchRatedList } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { ratedCategoriesType } from "../data/data.jsx";
+import { ratedCategoriesType } from "../constants/constants.js";
 
 const RatedListPage = () => {
   const [ratedMedia, setRatedMedia] = useState({

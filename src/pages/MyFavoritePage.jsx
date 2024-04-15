@@ -3,7 +3,7 @@ import CategoryWiseList from "../components/HomePage/CategoryWiseList";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { addToFavorite, fetchFavoriteList } from "../services/services";
 import { useCallback, useEffect, useState } from "react";
-import { favoriteListCategories } from "../data/data";
+import { favoriteListCategories } from "../constants/constants";
 import toast from "react-hot-toast";
 import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSkeleton";
 

@@ -1,4 +1,4 @@
-import { moreReasonsToJoin } from "../../data/data.jsx";
+import { moreReasonsToJoin } from "../../constants/constants.js";
 export default function MoreReasonSection() {
   return (
     <div className="heroPageSection moreReasonsToJoinSection">

@@ -1,4 +1,4 @@
-import { subscribePlans } from "../../data/data.jsx";
+import { subscribePlans } from "../../constants/constants.js";
 
 const Plans = () => {
   return (

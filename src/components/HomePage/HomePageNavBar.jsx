@@ -3,7 +3,7 @@ import "./HomePageNavBar.scss";
 import NetflixLogo from "../../assets/Netflix_logo.png";
 import AccountSetting from "./AccountSetting";
 import { Link, NavLink } from "react-router-dom";
-import { navbarLinks } from "../../data/data";
+import { navbarLinks } from "../../constants/constants";
 
 const HomePageNavBar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
