@@ -3,35 +3,81 @@ import { useCallback, useState } from "react";
 import { fetchDataBySearchQuery } from "../services/services.js";
 import CategoryWiseList from "../components/HomePage/CategoryWiseList.jsx";
 import CustomInput from "../UI/CustomInput.jsx";
-import { debounce } from "../utils/utilityFunctions.js";
+import {
+  debounce,
+  getImagePath,
+  handleFallBackImage,
+} from "../utils/utilityFunctions.js";
+import posterFallBackImage from "../assets/posterNotFound.jpg";
+import { Link } from "react-router-dom";
+import InfiniteScroll from "../components/InfiniteScroll.jsx";
+
+const renderItem = ({ id, poster_path, mediaType }) => (
+  <Link key={id} to={`/${mediaType}/moreInfo?id=${id}`}>
+    <div className="movieCard">
+      <img
+        className="posterImage"
+        src={poster_path ? getImagePath(poster_path) : posterFallBackImage}
+        alt="image"
+        loading="lazy"
+        decoding="async"
+        onError={(event) => {
+          handleFallBackImage(event, posterFallBackImage);
+        }}
+      />
+    </div>
+  </Link>
+);
 
 const ExplorePage = () => {
-  const [movieList, setMovieList] = useState(null);
+  const [movies, setMovies] = useState({
+    list: [],
+    pageNumber: 1,
+    isLoading: false,
+    hasMore: false,
+  });
+  const {
+    list: movieList,
+    pageNumber,
+    isLoading,
+    hasMore: hasMoreData,
+  } = movies;
   const [selectedMediaType, setSelectedMediaType] = useState("movie");
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchData = useCallback(
-    async (value, mediaType) => {
-      setSearchQuery(value);
-      if (value === "") {
-        return;
-      }
+    async ({ searchQuery: query, mediaType }) => {
+      setMovies((prevMovies) => ({ ...prevMovies, isLoading: true }));
+
       const res = await fetchDataBySearchQuery({
-        searchQuery: value,
-        media_type: mediaType ?? selectedMediaType,
+        searchQuery: query,
+        media_type: mediaType,
+        pageNumber: pageNumber,
       });
+
+      console.log("res :", res);
+
       if (res) {
-        setMovieList(res.results);
-      } else {
-        setMovieList([]);
+        setMovies((prevMovies) => ({
+          list: [...prevMovies.list, ...res.results],
+          hasMore: pageNumber < res.total_pages,
+          isLoading: false,
+          pageNumber: prevMovies.pageNumber + 1,
+        }));
       }
     },
-    [selectedMediaType]
+    [pageNumber]
   );
+
+  const fetchMoreData = useCallback(() => {
+    if (hasMoreData && !isLoading) {
+      fetchData({ searchQuery: searchQuery, mediaType: selectedMediaType });
+    }
+  }, [hasMoreData, isLoading, fetchData, searchQuery, selectedMediaType]);
 
   const handleDebounce = useCallback(
     debounce((value) => {
-      fetchData(value);
+      fetchData({ searchQuery: value, mediaType: selectedMediaType });
     }),
     [fetchData]
   );
@@ -40,14 +86,22 @@ const ExplorePage = () => {
     ({ target: { value } }) => {
       setSearchQuery(value);
       handleDebounce(value);
+      setMovies({
+        list: [],
+        pageNumber: 1,
+        isLoading: false,
+        hasMore: false,
+      });
     },
     [handleDebounce]
   );
 
   const handleSelectMediaTypeChange = ({ target: { value } }) => {
     setSelectedMediaType(value);
-    fetchData(searchQuery, value);
+    fetchData({ searchQuery, value });
   };
+
+  console.log("render");
 
   return (
     <div className="explorePage">
@@ -84,13 +138,21 @@ const ExplorePage = () => {
             <label htmlFor="tv">TVs</label>
           </div>
         </div>
-        {movieList && movieList.length > 0 && (
-          <CategoryWiseList
-            categoryTitle={"Search Results"}
-            moviesData={movieList}
+        <div className="moviesGalleryWrapper">
+          {/* {isLoading ? (
+            <h1>Loading...</h1>
+          ) : ( */}
+          <InfiniteScroll
+            items={movieList}
+            fetchMoreData={fetchMoreData}
+            renderItem={renderItem}
             mediaType={selectedMediaType}
+            loader={<h1>Loading...</h1>}
+            isLoading={isLoading}
           />
-        )}
+          {/* )} */}
+        </div>
+
         {movieList && movieList.length === 0 && (
           <div className="fallBackText">
             <h1>No Relevant Media Found </h1>

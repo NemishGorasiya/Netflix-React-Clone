@@ -183,8 +183,9 @@ export const fetchFavoriteList = async ({
 export const fetchDataBySearchQuery = async ({
   searchQuery,
   media_type = "movie",
+  pageNumber,
 }) => {
-  const url = `search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=1`;
+  const url = `search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=${pageNumber}`;
   const options = setOptions({});
   const res = await fetch(BASE_URL + url, options);
   const resJSON = await res.json();

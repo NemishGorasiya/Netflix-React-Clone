@@ -18,9 +18,51 @@
         }
       }
     }
+    .moviesGalleryWrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+      gap: 15px;
+      .movieCard {
+        height: 350px;
+        background: grey;
+        border-radius: 8px;
+
+        img.posterImage {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          border-radius: inherit;
+        }
+      }
+    }
     .fallBackText {
       p {
         color: red;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 870px) {
+  .explorePage {
+    .explorePageContentWrapper {
+      .moviesGalleryWrapper {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        .movieCard {
+          height: 220px;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 440px) {
+  .explorePage {
+    .explorePageContentWrapper {
+      .moviesGalleryWrapper {
+        grid-template-columns: repeat(2, 1fr);
+        .movieCard {
+          height: 150px;
+        }
       }
     }
   }
