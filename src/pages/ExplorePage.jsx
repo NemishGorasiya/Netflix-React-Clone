@@ -48,14 +48,11 @@ const ExplorePage = () => {
   const fetchData = useCallback(
     async ({ searchQuery: query, mediaType }) => {
       setMovies((prevMovies) => ({ ...prevMovies, isLoading: true }));
-
       const res = await fetchDataBySearchQuery({
         searchQuery: query,
         media_type: mediaType,
         pageNumber: pageNumber,
       });
-
-      console.log("res :", res);
 
       if (res) {
         setMovies((prevMovies) => ({
@@ -70,10 +67,10 @@ const ExplorePage = () => {
   );
 
   const fetchMoreData = useCallback(() => {
-    if (hasMoreData && !isLoading) {
+    if (hasMoreData) {
       fetchData({ searchQuery: searchQuery, mediaType: selectedMediaType });
     }
-  }, [hasMoreData, isLoading, fetchData, searchQuery, selectedMediaType]);
+  }, [hasMoreData, fetchData, searchQuery, selectedMediaType]);
 
   const handleDebounce = useCallback(
     debounce((value) => {
@@ -139,9 +136,6 @@ const ExplorePage = () => {
           </div>
         </div>
         <div className="moviesGalleryWrapper">
-          {/* {isLoading ? (
-            <h1>Loading...</h1>
-          ) : ( */}
           <InfiniteScroll
             items={movieList}
             fetchMoreData={fetchMoreData}
@@ -150,7 +144,6 @@ const ExplorePage = () => {
             loader={<h1>Loading...</h1>}
             isLoading={isLoading}
           />
-          {/* )} */}
         </div>
 
         {movieList && movieList.length === 0 && (
