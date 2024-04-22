@@ -9,20 +9,28 @@ import {
 } from "../../utils/utilityFunctions";
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
+import { fetchMediaData } from "../../services/services";
 
 const Slider = ({
-  isViewAll = false,
-  moviesData,
-  isDeletable = false,
-  removeFromList,
+  // isViewAll = false,
+  // moviesData,
+  // isDeletable = false,
+  // removeFromList,
+  categoryTitle,
   mediaType,
-  isSeasonList = false,
-  isViewAllBtnVisible,
-  makeViewAllButtonHidden,
+  // isSeasonList = false,
+  // isViewAllBtnVisible,
+  // makeViewAllButtonHidden,
 }) => {
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
   const sliderRef = useRef();
+
+  const [media, setMedia] = useState({
+    list: [],
+    isLoading: true,
+  });
+  const { list: mediaList, isLoading: isMediaLoading } = media;
 
   const [sliderButtons, setSliderButtons] = useState({
     prevBtn: false,
@@ -30,13 +38,9 @@ const Slider = ({
   });
   const { prevBtn, nextBtn } = sliderButtons;
 
-  let clientWidth = 0;
-  let scrollLeft = 0;
-  let scrollWidth = 0;
-
   const handleSliderBtnVisibility = useCallback((scrollLeft) => {
-    scrollWidth = sliderRef.current.scrollWidth;
-    clientWidth = sliderRef.current.clientWidth;
+    const scrollWidth = sliderRef.current.scrollWidth;
+    const clientWidth = sliderRef.current.clientWidth;
 
     setSliderButtons((prevState) => ({
       ...prevState,
@@ -45,142 +49,240 @@ const Slider = ({
     }));
   }, []);
 
-  const handlePrevBtnClick = () => {
-    scrollLeft = sliderRef.current.scrollLeft - sliderRef.current.clientWidth;
+  const onPrevBtnClick = () => {
+    const scrollLeft =
+      sliderRef.current.scrollLeft - sliderRef.current.clientWidth;
     sliderRef.current.scrollLeft -= sliderRef.current.clientWidth;
     handleSliderBtnVisibility(scrollLeft);
   };
-  const handleNextBtnClick = () => {
-    scrollLeft = sliderRef.current.scrollLeft + sliderRef.current.clientWidth;
+  const onNextBtnClick = () => {
+    const scrollLeft =
+      sliderRef.current.scrollLeft + sliderRef.current.clientWidth;
     sliderRef.current.scrollLeft += sliderRef.current.clientWidth;
     handleSliderBtnVisibility(scrollLeft);
   };
 
   let startX;
   let endX;
-  const handleTouchStart = (event) => {
+  const onTouchStart = (event) => {
     startX = event.changedTouches[0].clientX;
   };
-  const handleTouchEnd = (event) => {
+  const onTouchEnd = (event) => {
     endX = event.changedTouches[0].clientX;
     if (startX - endX > 50) {
-      handleNextBtnClick();
+      onNextBtnClick();
     } else if (startX - endX < -50) {
-      handlePrevBtnClick();
+      onPrevBtnClick();
     }
   };
-  const handleDragStart = (event) => {
+  const onDragStart = (event) => {
     startX = event.clientX;
   };
-  const handleDragEnd = (event) => {
+  const onDragEnd = (event) => {
     endX = event.clientX;
     if (startX - endX > 50) {
-      handleNextBtnClick();
+      onNextBtnClick();
     } else if (startX - endX < -50) {
-      handlePrevBtnClick();
+      onPrevBtnClick();
+    }
+  };
+
+  // useEffect(() => {
+  //   if (isViewAll === false) {
+  //     scrollLeft = sliderRef.current.scrollLeft;
+  //     handleSliderBtnVisibility(scrollLeft);
+  //   }
+  // }, [isViewAll]);
+
+  // useEffect(() => {
+  //   scrollWidth = sliderRef.current.scrollWidth;
+  //   clientWidth = sliderRef.current.clientWidth;
+  //   if (scrollWidth <= clientWidth) {
+  //     makeViewAllButtonHidden();
+  //   }
+  // }, [moviesData]);
+
+  // useEffect(() => {
+  //   scrollWidth = sliderRef.current.scrollWidth;
+  //   clientWidth = sliderRef.current.clientWidth;
+  //   if (scrollWidth <= clientWidth) {
+  //     makeViewAllButtonHidden();
+  //   }
+  // }, []);
+
+  // console.log("called");
+
+  const fetchMedia = async () => {
+    try {
+      const res = await fetchMediaData({
+        mediaType,
+        mediaCategory: categoryTitle,
+      });
+      const { results } = res;
+      setMedia({
+        list: results,
+        isLoading: false,
+      });
+      // console.log("res", res);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   useEffect(() => {
-    if (isViewAll === false) {
-      scrollLeft = sliderRef.current.scrollLeft;
-      handleSliderBtnVisibility(scrollLeft);
-    }
-  }, [isViewAll]);
-
-  useEffect(() => {
-    scrollWidth = sliderRef.current.scrollWidth;
-    clientWidth = sliderRef.current.clientWidth;
-    if (scrollWidth <= clientWidth) {
-      makeViewAllButtonHidden();
-    }
-  }, [moviesData]);
-
-  useEffect(() => {
-    scrollWidth = sliderRef.current.scrollWidth;
-    clientWidth = sliderRef.current.clientWidth;
-    if (scrollWidth <= clientWidth) {
-      makeViewAllButtonHidden();
-    }
+    fetchMedia();
   }, []);
 
-  console.log("called");
-
   return (
-    <div className={isViewAll ? "slider viewAll" : "slider"}>
-      {!isViewAll && (
-        <>
-          {isViewAllBtnVisible && prevBtn && (
-            <button className="sliderBtn prevBtn" onClick={handlePrevBtnClick}>
-              <i className="fa-solid fa-chevron-left"></i>
-            </button>
-          )}
-          {isViewAllBtnVisible && nextBtn && (
-            <button className="sliderBtn nextBtn" onClick={handleNextBtnClick}>
-              <i className="fa-solid fa-chevron-right"></i>
-            </button>
-          )}
-        </>
-      )}
+    // <div className={isViewAll ? "slider viewAll" : "slider"}>
+    //   {!isViewAll && (
+    //     <>
+    //       {isViewAllBtnVisible && prevBtn && (
+    // <button className="sliderBtn prevBtn" onClick={handlePrevBtnClick}>
+    //   <i className="fa-solid fa-chevron-left"></i>
+    // </button>
+    //       )}
+    //       {isViewAllBtnVisible && nextBtn && (
+    // <button className="sliderBtn nextBtn" onClick={handleNextBtnClick}>
+    //   <i className="fa-solid fa-chevron-right"></i>
+    // </button>
+    //       )}
+    //     </>
+    //   )}
 
-      <div
-        className="slideContainer"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        ref={sliderRef}
-      >
-        {moviesData.map(({ id, season_number, poster_path, rating, name }) => (
-          <RenderIfVisible key={id} stayRendered={true}>
-            <div
-              key={id}
-              className={isDeletable ? "slide deletableSlide" : "slide"}
-            >
-              <Link
-                to={
-                  isSeasonList
-                    ? `/${mediaType}/moreInfo?id=${mediaId}&season=${season_number}`
-                    : `/${mediaType}/moreInfo?id=${id}`
-                }
-              >
-                <img
-                  src={
-                    poster_path
-                      ? getImagePath(poster_path)
-                      : posterFallBackImage
-                  }
-                  alt="image"
-                  loading="lazy"
-                  decoding="async"
-                  onError={(event) => {
-                    handleFallBackImage(event, posterFallBackImage);
-                  }}
-                />
-              </Link>
+    //   <div
+    //     className="slideContainer"
+    //     onTouchStart={handleTouchStart}
+    //     onTouchEnd={handleTouchEnd}
+    //     onDragStart={handleDragStart}
+    //     onDragEnd={handleDragEnd}
+    //     ref={sliderRef}
+    //   >
+    //     {moviesData.map(({ id, season_number, poster_path, rating, name }) => (
+    //       <RenderIfVisible key={id} stayRendered={true}>
+    //         <div
+    //           key={id}
+    //           className={isDeletable ? "slide deletableSlide" : "slide"}
+    //         >
+    //           <Link
+    //             to={
+    //               isSeasonList
+    //                 ? `/${mediaType}/moreInfo?id=${mediaId}&season=${season_number}`
+    //                 : `/${mediaType}/moreInfo?id=${id}`
+    //             }
+    //           >
+    //             <img
+    //               src={
+    //                 poster_path
+    //                   ? getImagePath(poster_path)
+    //                   : posterFallBackImage
+    //               }
+    //               alt="image"
+    //               loading="lazy"
+    //               decoding="async"
+    //               onError={(event) => {
+    //                 handleFallBackImage(event, posterFallBackImage);
+    //               }}
+    //             />
+    //           </Link>
+    //           <div
+    //             className="deleteIcon"
+    //             onClick={() => {
+    //               removeFromList({
+    //                 mediaId: id,
+    //                 media_type: mediaType,
+    //               });
+    //             }}
+    //           >
+    //             <i className="fa-solid fa-xmark"></i>
+    //           </div>
+    //           {rating && <span className="rating">{rating.toFixed(1)}</span>}
+
+    //           {isSeasonList && (
+    //             <div className="slideTitle" title={name}>
+    //               {name}
+    //             </div>
+    //           )}
+    //         </div>
+    //       </RenderIfVisible>
+    //     ))}
+    //   </div>
+    // </div>
+    isMediaLoading ? (
+      <h1>Loading...</h1>
+    ) : (
+      <div className="slider">
+        {prevBtn && (
+          <button className="sliderBtn prevBtn" onClick={onPrevBtnClick}>
+            <i className="fa-solid fa-chevron-left"></i>
+          </button>
+        )}
+        {nextBtn && (
+          <button className="sliderBtn nextBtn" onClick={onNextBtnClick}>
+            <i className="fa-solid fa-chevron-right"></i>
+          </button>
+        )}
+
+        <div
+          className="slideContainer"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
+          ref={sliderRef}
+        >
+          {mediaList.map(({ id, season_number, poster_path, rating, name }) => (
+            <RenderIfVisible key={id} stayRendered={true}>
               <div
-                className="deleteIcon"
-                onClick={() => {
-                  removeFromList({
-                    mediaId: id,
-                    media_type: mediaType,
-                  });
-                }}
+                key={id}
+                className="slide"
+                // className={isDeletable ? "slide deletableSlide" : "slide"}
               >
-                <i className="fa-solid fa-xmark"></i>
-              </div>
-              {rating && <span className="rating">{rating.toFixed(1)}</span>}
+                <Link
+                // to={
+                //   isSeasonList
+                //     ? `/${mediaType}/moreInfo?id=${mediaId}&season=${season_number}`
+                //     : `/${mediaType}/moreInfo?id=${id}`
+                // }
+                >
+                  <img
+                    src={
+                      poster_path
+                        ? getImagePath(poster_path)
+                        : posterFallBackImage
+                    }
+                    alt="image"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(event) => {
+                      handleFallBackImage(event, posterFallBackImage);
+                    }}
+                  />
+                </Link>
+                <div
+                  className="deleteIcon"
+                  onClick={() => {
+                    // removeFromList({
+                    //   mediaId: id,
+                    //   media_type: mediaType,
+                    // });
+                  }}
+                >
+                  <i className="fa-solid fa-xmark"></i>
+                </div>
+                {rating && <span className="rating">{rating.toFixed(1)}</span>}
 
-              {isSeasonList && (
+                {/* {isSeasonList && (
                 <div className="slideTitle" title={name}>
                   {name}
                 </div>
-              )}
-            </div>
-          </RenderIfVisible>
-        ))}
+              )} */}
+              </div>
+            </RenderIfVisible>
+          ))}
+        </div>
       </div>
-    </div>
+    )
   );
 };
 
