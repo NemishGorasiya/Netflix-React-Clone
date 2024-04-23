@@ -1,15 +1,16 @@
 import CategoryWiseList from "../HomePage/CategoryWiseList";
 import PropTypes from "prop-types";
 
-const SeasonsList = ({ moviesData, onClick }) => {
+const SeasonsList = ({ moviesData, onClick, seriesId }) => {
   return (
     <div className="seasonsList">
       <CategoryWiseList
         isSeasonList={true}
         categoryTitle={"ALL SEASONS"}
-        moviesData={moviesData}
+        // moviesData={moviesData}
         mediaType={"tv"}
-        onClick={onClick}
+        seriesId={seriesId}
+        // onClick={onClick}
       />
     </div>
   );

@@ -145,51 +145,44 @@ const ExplorePage = () => {
     };
   }, [fetchData]);
 
-  useEffect(() => {
-    console.log("----------------------");
-  }, []);
-
   return (
     <div className="explorePage">
       <div className="explorePageContentWrapper">
-        {!search && (
-          <div className="stickyContent">
-            <CustomInput
-              type="search"
-              id={"search"}
-              floatingLabel="Search here.."
-              onChange={handleInputChange}
-              val={searchQuery}
-            />
-            <div className="mediaTypeSelectContainer">
-              Search In
-              <div className="radioInputWrapper">
-                <input
-                  type="radio"
-                  value="movie"
-                  name="mediaType"
-                  id="movie"
-                  checked={selectedMediaType === "movie"}
-                  onChange={handleSelectMediaTypeChange}
-                />
-                <label htmlFor="movie">Movies</label>
-              </div>
-              <div className="radioInputWrapper">
-                <input
-                  type="radio"
-                  value="tv"
-                  name="mediaType"
-                  id="tv"
-                  checked={selectedMediaType === "tv"}
-                  onChange={handleSelectMediaTypeChange}
-                />
-                <label htmlFor="tv">TVs</label>
-              </div>
+        <div className="stickyContent">
+          <CustomInput
+            type="search"
+            id={"search"}
+            floatingLabel="Search here.."
+            onChange={handleInputChange}
+            val={searchQuery}
+          />
+          <div className="mediaTypeSelectContainer">
+            Search In
+            <div className="radioInputWrapper">
+              <input
+                type="radio"
+                value="movie"
+                name="mediaType"
+                id="movie"
+                checked={selectedMediaType === "movie"}
+                onChange={handleSelectMediaTypeChange}
+              />
+              <label htmlFor="movie">Movies</label>
+            </div>
+            <div className="radioInputWrapper">
+              <input
+                type="radio"
+                value="tv"
+                name="mediaType"
+                id="tv"
+                checked={selectedMediaType === "tv"}
+                onChange={handleSelectMediaTypeChange}
+              />
+              <label htmlFor="tv">TVs</label>
             </div>
           </div>
-        )}
+        </div>
 
-        {/* {isLoading && <Loader />} */}
         <div className="moviesGalleryWrapper">
           <InfiniteScroll
             items={movieList}

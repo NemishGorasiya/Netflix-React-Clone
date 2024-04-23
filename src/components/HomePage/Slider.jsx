@@ -9,14 +9,15 @@ import {
 } from "../../utils/utilityFunctions";
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
-import { fetchMediaData } from "../../services/services";
+import { fetchMediaData, fetchMoreInfoOfMedia } from "../../services/services";
 
 const Slider = ({
   // isDeletable = false,
   // removeFromList,
   categoryTitle,
+  seriesId,
   mediaType,
-  // isSeasonList = false,
+  isSeasonList = false,
 }) => {
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
@@ -108,13 +109,22 @@ const Slider = ({
 
   const fetchMedia = async () => {
     try {
-      const res = await fetchMediaData({
-        mediaType,
-        mediaCategory: categoryTitle,
-      });
-      const { results } = res;
+      let res;
+      if (isSeasonList) {
+        res = await fetchMoreInfoOfMedia({
+          mediaId,
+          mediaType,
+        });
+      } else {
+        res = await fetchMediaData({
+          mediaType,
+          mediaCategory: categoryTitle,
+        });
+      }
+      console.log("res", res);
+      const { results, seasons } = res;
       setMedia({
-        list: results,
+        list: results || seasons,
         isLoading: false,
       });
     } catch (error) {
@@ -232,9 +242,9 @@ const Slider = ({
                 // className={isDeletable ? "slide deletableSlide" : "slide"}
               >
                 <Link
-                  to={`/${mediaType}/moreInfo?id=${id ?? mediaId}${
-                    season_number ? `&season=${season_number}` : ""
-                  }`}
+                  to={`/${mediaType}/moreInfo?id=${
+                    isSeasonList ? seriesId : id ?? mediaId
+                  }${season_number ? `&season=${season_number}` : ""}`}
                 >
                   <img
                     src={

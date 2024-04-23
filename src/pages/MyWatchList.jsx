@@ -66,9 +66,9 @@ const MyWatchList = () => {
           list: tempWatchList,
           isLoading: false,
         });
-        toast.success(res.status_message, {});
+        toast.success(res.status_message);
       } else {
-        toast.error(res.status_message, {});
+        toast.error(res.status_message);
       }
     } catch (error) {
       console.error(error);

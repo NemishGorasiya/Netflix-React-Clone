@@ -115,12 +115,9 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       media_type: mediaType,
     });
     if (res.success) {
-      toast.success(
-        "The item/record added into your favorite successfully.",
-        {}
-      );
+      toast.success("The item/record added into your favorite successfully.");
     } else {
-      toast.error(res.status_message, {});
+      toast.error(res.status_message);
     }
   };
   const handleAddToWatchList = async () => {
@@ -130,12 +127,9 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       media_type: mediaType,
     });
     if (res.success) {
-      toast.success(
-        "The item/record added into your watchList successfully.",
-        {}
-      );
+      toast.success("The item/record added into your watchList successfully.");
     } else {
-      toast.error(res.status_message, {});
+      toast.error(res.status_message);
     }
   };
 
@@ -253,7 +247,11 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
           </div>
         </div>
         {mediaType === "tv" && seasons && (
-          <SeasonsList moviesData={seasons} onClick={handleSeasonPosterClick} />
+          <SeasonsList
+            seriesId={mediaId}
+            moviesData={seasons}
+            onClick={handleSeasonPosterClick}
+          />
         )}
         {seasonEpisodes?.length > 0 && (
           <SeasonEpisodes
