@@ -1,11 +1,12 @@
 import { useCallback, useRef } from "react";
+import Loader from "./Loader";
+import "./InfiniteScroll.scss";
 
 const InfiniteScroll = ({
   items,
   renderItem,
   fetchMoreData,
   mediaType,
-  loader,
   isLoading,
 }) => {
   const observer = useRef();
@@ -34,7 +35,11 @@ const InfiniteScroll = ({
           <div key={index}>{renderItem({ ...item, mediaType: mediaType })}</div>
         )
       )}
-      {isLoading && loader}
+      {isLoading && (
+        <div className="loaderWrapper">
+          <Loader />
+        </div>
+      )}
     </>
   );
 };

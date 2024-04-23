@@ -46,7 +46,6 @@ const MoviesCategories = ({ mediaType }) => {
   // }, [fetchData]);
 
   const categories = mediaType === "movie" ? movieTypes : tvShowsTypes;
-  console.log(categories);
 
   return (
     <div className="moviesCategoriesWrapper">
@@ -54,7 +53,7 @@ const MoviesCategories = ({ mediaType }) => {
         {changeFormatOfTitle(mediaType)}
       </h1>
       {categories.map((category) => (
-        <RenderIfVisible key={category}>
+        <RenderIfVisible key={category} stayRendered={true}>
           <CategoryWiseList categoryTitle={category} mediaType={mediaType} />
         </RenderIfVisible>
       ))}

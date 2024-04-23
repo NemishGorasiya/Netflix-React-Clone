@@ -7,6 +7,7 @@
   width: 100%;
   z-index: 99;
   min-height: 85px;
+  position: fixed;
 
   .overLay {
     position: fixed;
@@ -138,6 +139,9 @@
       }
     }
   }
+}
+.navbar-black {
+  background: #000;
 }
 
 @media only screen and (max-width: 1140px) {

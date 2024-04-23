@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import "./HomePageNavBar.scss";
 import NetflixLogo from "../../assets/Netflix_logo.png";
 import AccountSetting from "./AccountSetting";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { navbarLinks } from "../../constants/constants";
 
 const HomePageNavBar = () => {
+  const { pathname } = useLocation();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const sideBarRef = useRef(null);
   const hamBurgerRef = useRef(null);
@@ -50,8 +51,13 @@ const HomePageNavBar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSideBarOpen]);
+
   return (
-    <div className="homePageNavBar">
+    <div
+      className={`homePageNavBar ${
+        pathname.startsWith("/explore") ? "navbar-black" : ""
+      }`}
+    >
       <div className={isSideBarOpen ? "overLay sideBarOpen" : "overLay"}></div>
       <div className="navLeft">
         <div className="logoContainer">

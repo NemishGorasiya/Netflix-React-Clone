@@ -12,15 +12,11 @@ import RenderIfVisible from "react-render-if-visible";
 import { fetchMediaData } from "../../services/services";
 
 const Slider = ({
-  // isViewAll = false,
-  // moviesData,
   // isDeletable = false,
   // removeFromList,
   categoryTitle,
   mediaType,
   // isSeasonList = false,
-  // isViewAllBtnVisible,
-  // makeViewAllButtonHidden,
 }) => {
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
@@ -110,8 +106,6 @@ const Slider = ({
   //   }
   // }, []);
 
-  // console.log("called");
-
   const fetchMedia = async () => {
     try {
       const res = await fetchMediaData({
@@ -123,7 +117,6 @@ const Slider = ({
         list: results,
         isLoading: false,
       });
-      // console.log("res", res);
     } catch (error) {
       console.error(error);
     }
@@ -164,13 +157,13 @@ const Slider = ({
     //           key={id}
     //           className={isDeletable ? "slide deletableSlide" : "slide"}
     //         >
-    //           <Link
-    //             to={
-    //               isSeasonList
-    //                 ? `/${mediaType}/moreInfo?id=${mediaId}&season=${season_number}`
-    //                 : `/${mediaType}/moreInfo?id=${id}`
-    //             }
-    //           >
+    // <Link
+    //   to={
+    //     isSeasonList
+    //       ? `/${mediaType}/moreInfo?id=${mediaId}&season=${season_number}`
+    //       : `/${mediaType}/moreInfo?id=${id}`
+    //   }
+    // >
     //             <img
     //               src={
     //                 poster_path
@@ -239,11 +232,9 @@ const Slider = ({
                 // className={isDeletable ? "slide deletableSlide" : "slide"}
               >
                 <Link
-                // to={
-                //   isSeasonList
-                //     ? `/${mediaType}/moreInfo?id=${mediaId}&season=${season_number}`
-                //     : `/${mediaType}/moreInfo?id=${id}`
-                // }
+                  to={`/${mediaType}/moreInfo?id=${id ?? mediaId}${
+                    season_number ? `&season=${season_number}` : ""
+                  }`}
                 >
                   <img
                     src={

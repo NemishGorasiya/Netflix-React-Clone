@@ -1,7 +1,9 @@
 import "./ExplorePage.scss";
-import { useCallback, useState } from "react";
-import { fetchDataBySearchQuery } from "../services/services.js";
-import CategoryWiseList from "../components/HomePage/CategoryWiseList.jsx";
+import { useCallback, useEffect, useState } from "react";
+import {
+  fetchDataBySearchQuery,
+  fetchMediaData,
+} from "../services/services.js";
 import CustomInput from "../UI/CustomInput.jsx";
 import {
   debounce,
@@ -9,8 +11,10 @@ import {
   handleFallBackImage,
 } from "../utils/utilityFunctions.js";
 import posterFallBackImage from "../assets/posterNotFound.jpg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import InfiniteScroll from "../components/InfiniteScroll.jsx";
+import No_Movie_Found from "../assets/No_Movie_Found.png";
+import Loader from "../components/Loader.jsx";
 
 const renderItem = ({ id, poster_path, mediaType }) => (
   <Link key={id} to={`/${mediaType}/moreInfo?id=${id}`}>
@@ -34,7 +38,7 @@ const ExplorePage = () => {
     list: [],
     pageNumber: 1,
     isLoading: false,
-    hasMore: false,
+    hasMore: true,
   });
   const {
     list: movieList,
@@ -45,36 +49,70 @@ const ExplorePage = () => {
   const [selectedMediaType, setSelectedMediaType] = useState("movie");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const fetchData = useCallback(
-    async ({ searchQuery: query, mediaType }) => {
-      setMovies((prevMovies) => ({ ...prevMovies, isLoading: true }));
-      const res = await fetchDataBySearchQuery({
-        searchQuery: query,
-        media_type: mediaType,
-        pageNumber: pageNumber,
-      });
+  const [searchParams] = useSearchParams();
+  const { search } = useLocation();
 
-      if (res) {
-        setMovies((prevMovies) => ({
-          list: [...prevMovies.list, ...res.results],
-          hasMore: pageNumber < res.total_pages,
-          isLoading: false,
-          pageNumber: prevMovies.pageNumber + 1,
-        }));
+  const fetchData = useCallback(
+    async ({ pageNumber, searchQuery: query, mediaType, abortController }) => {
+      try {
+        setMovies((prevMovies) => ({ ...prevMovies, isLoading: true }));
+        let res;
+        const mediaTypeParam = searchParams.get("mediaType");
+        const mediaCategoryParam = searchParams.get("category");
+
+        if (mediaTypeParam && mediaCategoryParam) {
+          res = await fetchMediaData({
+            mediaType: mediaTypeParam,
+            mediaCategory: mediaCategoryParam,
+            pageNumber,
+            abortController,
+          });
+        } else {
+          res = await fetchDataBySearchQuery({
+            searchQuery: query,
+            media_type: mediaType,
+            pageNumber: pageNumber,
+          });
+        }
+        if (res) {
+          setMovies((prevMovies) => ({
+            list: [...prevMovies.list, ...res.results],
+            hasMore: prevMovies.pageNumber < res.total_pages,
+            isLoading: false,
+            pageNumber: prevMovies.pageNumber + 1,
+          }));
+        } else {
+          setMovies((prevMovies) => ({
+            ...prevMovies,
+            isLoading: false,
+          }));
+        }
+      } catch (error) {
+        console.error(error);
       }
     },
-    [pageNumber]
+    [searchParams]
   );
 
   const fetchMoreData = useCallback(() => {
     if (hasMoreData) {
-      fetchData({ searchQuery: searchQuery, mediaType: selectedMediaType });
+      fetchData({
+        pageNumber,
+        searchQuery: searchQuery,
+      });
     }
-  }, [hasMoreData, fetchData, searchQuery, selectedMediaType]);
+  }, [hasMoreData, fetchData, searchQuery, pageNumber]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleDebounce = useCallback(
     debounce((value) => {
-      fetchData({ searchQuery: value, mediaType: selectedMediaType });
+      if (value) {
+        console.log("val", value);
+        fetchData({
+          pageNumber,
+          searchQuery: value,
+        });
+      }
     }),
     [fetchData]
   );
@@ -98,56 +136,73 @@ const ExplorePage = () => {
     fetchData({ searchQuery, value });
   };
 
-  console.log("render");
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    fetchData({ abortController: abortController });
+    return () => {
+      abortController.abort();
+    };
+  }, [fetchData]);
+
+  useEffect(() => {
+    console.log("----------------------");
+  }, []);
 
   return (
     <div className="explorePage">
       <div className="explorePageContentWrapper">
-        <CustomInput
-          type="search"
-          id={"search"}
-          floatingLabel="Search here.."
-          onChange={handleInputChange}
-          val={searchQuery}
-        />
-        <div className="mediaTypeSelectContainer">
-          Search In
-          <div className="radioInputWrapper">
-            <input
-              type="radio"
-              value="movie"
-              name="mediaType"
-              id="movie"
-              checked={selectedMediaType === "movie"}
-              onChange={handleSelectMediaTypeChange}
+        {!search && (
+          <div className="stickyContent">
+            <CustomInput
+              type="search"
+              id={"search"}
+              floatingLabel="Search here.."
+              onChange={handleInputChange}
+              val={searchQuery}
             />
-            <label htmlFor="movie">Movies</label>
+            <div className="mediaTypeSelectContainer">
+              Search In
+              <div className="radioInputWrapper">
+                <input
+                  type="radio"
+                  value="movie"
+                  name="mediaType"
+                  id="movie"
+                  checked={selectedMediaType === "movie"}
+                  onChange={handleSelectMediaTypeChange}
+                />
+                <label htmlFor="movie">Movies</label>
+              </div>
+              <div className="radioInputWrapper">
+                <input
+                  type="radio"
+                  value="tv"
+                  name="mediaType"
+                  id="tv"
+                  checked={selectedMediaType === "tv"}
+                  onChange={handleSelectMediaTypeChange}
+                />
+                <label htmlFor="tv">TVs</label>
+              </div>
+            </div>
           </div>
-          <div className="radioInputWrapper">
-            <input
-              type="radio"
-              value="tv"
-              name="mediaType"
-              id="tv"
-              checked={selectedMediaType === "tv"}
-              onChange={handleSelectMediaTypeChange}
-            />
-            <label htmlFor="tv">TVs</label>
-          </div>
-        </div>
+        )}
+
+        {/* {isLoading && <Loader />} */}
         <div className="moviesGalleryWrapper">
           <InfiniteScroll
             items={movieList}
             fetchMoreData={fetchMoreData}
             renderItem={renderItem}
             mediaType={selectedMediaType}
-            loader={<h1>Loading...</h1>}
             isLoading={isLoading}
           />
         </div>
 
-        {movieList && movieList.length === 0 && (
+        {!isLoading && movieList && movieList.length === 0 && (
           <div className="fallBackText">
+            <img src={No_Movie_Found} alt="" />
             <h1>No Relevant Media Found </h1>
             <p>Try to search something else... </p>
           </div>

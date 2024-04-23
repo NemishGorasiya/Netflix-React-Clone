@@ -42,7 +42,7 @@ const CategoryWiseList = ({
       </div>
 
       {/* {moviesData && moviesData.length > 0 && ( */}
-      <RenderIfVisible>
+      <RenderIfVisible stayRendered={true}>
         <Slider
           // isViewAll={isViewAll}
           // moviesData={moviesData}

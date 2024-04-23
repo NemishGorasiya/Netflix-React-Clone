@@ -9,7 +9,7 @@ const httpReq = async ({ url, options }) => {
   }
 };
 
-const setOptions = ({ method = "GET", headers, body }) => {
+const setOptions = ({ method = "GET", headers, body, signal }) => {
   const defaultHeaders = {
     accept: "application/json",
     Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
@@ -17,6 +17,7 @@ const setOptions = ({ method = "GET", headers, body }) => {
   const options = {
     method: method,
     headers: { ...defaultHeaders, ...headers },
+    signal: signal,
   };
   if (body) {
     options.body = JSON.stringify(body);
@@ -24,9 +25,16 @@ const setOptions = ({ method = "GET", headers, body }) => {
   return options;
 };
 
-export const fetchMediaData = async ({ mediaType, mediaCategory }) => {
-  let url = `${mediaType}/${mediaCategory}?language=en-US&page=1`;
-  const options = setOptions({});
+export const fetchMediaData = async ({
+  mediaType,
+  mediaCategory,
+  pageNumber = 1,
+  abortController,
+}) => {
+  let url = `${mediaType}/${mediaCategory}?language=en-US&page=${pageNumber}`;
+  const options = setOptions({
+    signal: abortController ? abortController.signal : null,
+  });
   return await httpReq({ url, options });
 };
 

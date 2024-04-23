@@ -5,19 +5,26 @@
   .explorePageContentWrapper {
     padding: 15px;
     padding-top: 85px;
+    .stickyContent {
+      position: sticky;
+      top: 85px;
+      padding: 10px 0;
+      background: #000;
 
-    .mediaTypeSelectContainer {
-      display: flex;
-      margin: 20px 0;
+      .mediaTypeSelectContainer {
+        display: flex;
+        margin: 20px 0;
 
-      .radioInputWrapper {
-        margin-right: 15px;
+        .radioInputWrapper {
+          margin-right: 15px;
 
-        input {
-          margin: 0 5px;
+          input {
+            margin: 0 5px;
+          }
         }
       }
     }
+
     .moviesGalleryWrapper {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
@@ -36,6 +43,9 @@
       }
     }
     .fallBackText {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
       p {
         color: red;
       }
@@ -51,6 +61,16 @@
         .movieCard {
           height: 220px;
         }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 500px) {
+  .explorePage {
+    .explorePageContentWrapper {
+      padding-top: 65px;
+      .stickyContent {
+        top: 65px;
       }
     }
   }
