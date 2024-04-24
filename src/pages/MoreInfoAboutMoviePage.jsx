@@ -20,6 +20,7 @@ import SeasonEpisodes from "../components/MoreInfoPage/SeasonEpisodes";
 import PropTypes from "prop-types";
 import CastProfileCardSkeleton from "../components/MoreInfoPage/CastProfileCardSkeleton";
 import { getImagePath } from "../utils/utilityFunctions";
+import RatingStars from "../UI/RatingStars";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const [isVolumeMuted, setIsVolumeMuted] = useState(true);
@@ -51,7 +52,10 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     runtime,
   } = list || {};
   const [isAddRatingModalOpen, setIsAddRatingModalOpen] = useState(false);
-  const [userRating, setUserRating] = useState("");
+  const [rating, setRating] = useState(8);
+  const handleRatingChange = ({ target: { value } }) => {
+    setRating(value);
+  };
   const [loggedInUser] = useLocalStorage("loggedInUser", null);
 
   const handleMuteVolumeClick = () => {
@@ -133,39 +137,27 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     }
   };
 
-  const handleRatingChange = ({ target: { value } }) => {
-    const onlyDigitsRegEx = /^\d*\.?\d*$/;
-    if (!onlyDigitsRegEx.test(value)) {
-      return false;
-    }
-    setUserRating(value);
-  };
-
   const submitReview = async (event) => {
     event.preventDefault();
-    const ratingRegEx = /^(10(\.0)?|\d(\.\d)?)$/;
-    if (ratingRegEx.test(userRating)) {
-      try {
-        const res = await submitMediaRating({
-          mediaType: mediaType,
-          rating: userRating,
-          mediaId: mediaId,
-          sessionID: loggedInUser.sessionID,
-          isEpisode: episodeNumber,
-          seasonNumber: seasonNumber,
-          episodeNumber: episodeNumber,
-        });
-        if (res.success) {
-          toast.success("Rating submitted successfully");
-          setIsAddRatingModalOpen(false);
-        } else {
-          toast.error(res.status_message);
-        }
-      } catch (error) {
-        console.error(error);
+
+    try {
+      const res = await submitMediaRating({
+        mediaType: mediaType,
+        rating: rating,
+        mediaId: mediaId,
+        sessionID: loggedInUser.sessionID,
+        isEpisode: episodeNumber,
+        seasonNumber: seasonNumber,
+        episodeNumber: episodeNumber,
+      });
+      if (res.success) {
+        toast.success("Rating submitted successfully");
+        setIsAddRatingModalOpen(false);
+      } else {
+        toast.error(res.status_message);
       }
-    } else {
-      alert("rating should between 0.0 to 10.0");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -286,17 +278,9 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
             </div>
             <div className="inputWrapper">
               <label htmlFor="mediaRating">Your Rating out of 10</label>
-              <input
-                type="text"
-                id="mediaRating"
-                value={userRating}
-                onChange={handleRatingChange}
-                required
-              />
-            </div>
-            <div className="inputWrapper">
-              <label htmlFor="mediaReview">Your Review</label>
-              <textarea id="mediaReview" cols="30" rows="5"></textarea>
+              <div className="ratingsWrapper">
+                <RatingStars value={rating} onChange={handleRatingChange} />
+              </div>
             </div>
             <div className="submitReviewWrapper">
               <Button text="Submit Review" type="submit" />
