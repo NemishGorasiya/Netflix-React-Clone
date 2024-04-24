@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import InfiniteScroll from "../InfiniteScroll.jsx";
 import { fetchEpisodes } from "../../services/services.js";
 import { useCallback, useEffect, useState } from "react";
+import Loader from "../Loader.jsx";
 
 const SeasonEpisodes = ({
   seasonEpisodes,
@@ -32,7 +33,7 @@ const SeasonEpisodes = ({
       });
       if (res) {
         setEpisodes((prevEpisodes) => ({
-          list: [...prevEpisodes.list, ...res.episodes],
+          list: res.episodes,
           isLoading: false,
         }));
       }
@@ -40,66 +41,46 @@ const SeasonEpisodes = ({
       console.error(error);
     }
   }, [currSeasonNumber, mediaId]);
-  const fetchMoreEpisodes = () => {};
+
   useEffect(() => {
     getEpisodes();
   }, [getEpisodes]);
+
   return (
     <div className="seasonEpisodes">
       <h1 className="seasonName">{currSeasonName}</h1>
-      <InfiniteScroll
-        items={episodesList}
-        renderItem={({ id, episode_number, still_path, overview, name }) => (
-          <Link
-            key={id}
-            to={`/tv/moreInfo?id=${mediaId}&season=${currSeasonNumber}&episode=${episode_number}`}
-          >
-            <div className="episodeWrapper">
-              <div className="episodePoster">
-                <img
-                  src={
-                    still_path ? getImagePath(still_path) : posterFallBackImage
-                  }
-                  alt="not found"
-                  onError={(event) => {
-                    handleFallBackImage(event, posterFallBackImage);
-                  }}
-                />
+      {isEpisodesLoading ? (
+        <div className="loaderWrapper">
+          <Loader className="loader" />
+        </div>
+      ) : (
+        seasonEpisodes.map(
+          ({ id, episode_number, still_path, overview, name }) => (
+            <Link
+              key={id}
+              to={`/tv/moreInfo?id=${mediaId}&season=${currSeasonNumber}&episode=${episode_number}`}
+            >
+              <div className="episodeWrapper">
+                <div className="episodePoster">
+                  <img
+                    src={
+                      still_path
+                        ? getImagePath(still_path)
+                        : posterFallBackImage
+                    }
+                    alt="not found"
+                    onError={(event) => {
+                      handleFallBackImage(event, posterFallBackImage);
+                    }}
+                  />
+                </div>
+                <div className="episodeDetails">
+                  <h2 className="episodeTitle">{name}</h2>
+                  <p className="episodeOverview">{overview}</p>
+                </div>
               </div>
-              <div className="episodeDetails">
-                <h2 className="episodeTitle">{name}</h2>
-                <p className="episodeOverview">{overview}</p>
-              </div>
-            </div>
-          </Link>
-        )}
-        fetchMoreData={fetchMoreEpisodes}
-        isLoading={isEpisodesLoading}
-      />
-      {seasonEpisodes.map(
-        ({ id, episode_number, still_path, overview, name }) => (
-          <Link
-            key={id}
-            to={`/tv/moreInfo?id=${mediaId}&season=${currSeasonNumber}&episode=${episode_number}`}
-          >
-            <div className="episodeWrapper">
-              <div className="episodePoster">
-                <img
-                  src={
-                    still_path ? getImagePath(still_path) : posterFallBackImage
-                  }
-                  alt="not found"
-                  onError={(event) => {
-                    handleFallBackImage(event, posterFallBackImage);
-                  }}
-                />
-              </div>
-              <div className="episodeDetails">
-                <h2 className="episodeTitle">{name}</h2>
-                <p className="episodeOverview">{overview}</p>
-              </div>
-            </div>
-          </Link>
+            </Link>
+          )
         )
       )}
     </div>
