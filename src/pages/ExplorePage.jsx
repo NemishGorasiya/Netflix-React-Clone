@@ -11,7 +11,12 @@ import {
   handleFallBackImage,
 } from "../utils/utilityFunctions.js";
 import posterFallBackImage from "../assets/posterNotFound.jpg";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import InfiniteScroll from "../components/InfiniteScroll.jsx";
 import No_Movie_Found from "../assets/No_Movie_Found.png";
 import Loader from "../components/Loader.jsx";
@@ -49,8 +54,9 @@ const ExplorePage = () => {
   const [selectedMediaType, setSelectedMediaType] = useState("movie");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { search } = useLocation();
+  const navigate = useNavigate();
 
   const fetchData = useCallback(
     async ({ pageNumber, searchQuery: query, mediaType, abortController }) => {
@@ -67,14 +73,14 @@ const ExplorePage = () => {
             pageNumber,
             abortController,
           });
-        } else {
+        } else if (query !== undefined) {
           res = await fetchDataBySearchQuery({
             searchQuery: query,
-            media_type: mediaType,
+            mediaType: mediaType || selectedMediaType,
             pageNumber: pageNumber,
           });
         }
-        if (res) {
+        if (res && res.results) {
           setMovies((prevMovies) => ({
             list: [...prevMovies.list, ...res.results],
             hasMore: prevMovies.pageNumber < res.total_pages,
@@ -84,6 +90,7 @@ const ExplorePage = () => {
         } else {
           setMovies((prevMovies) => ({
             ...prevMovies,
+            list: [],
             isLoading: false,
           }));
         }
@@ -91,7 +98,7 @@ const ExplorePage = () => {
         console.error(error);
       }
     },
-    [searchParams]
+    [searchParams, selectedMediaType]
   );
 
   const fetchMoreData = useCallback(() => {
@@ -107,7 +114,6 @@ const ExplorePage = () => {
   const handleDebounce = useCallback(
     debounce((value) => {
       if (value) {
-        console.log("val", value);
         fetchData({
           pageNumber,
           searchQuery: value,
@@ -120,31 +126,47 @@ const ExplorePage = () => {
   const handleInputChange = useCallback(
     ({ target: { value } }) => {
       setSearchQuery(value);
-      handleDebounce(value);
+      navigate("/explore");
       setMovies({
         list: [],
         pageNumber: 1,
         isLoading: false,
         hasMore: false,
       });
+      if (value === "") {
+        return;
+      }
+      handleDebounce(value);
     },
-    [handleDebounce]
+    [handleDebounce, navigate]
   );
 
   const handleSelectMediaTypeChange = ({ target: { value } }) => {
     setSelectedMediaType(value);
-    fetchData({ searchQuery, value });
+
+    setSearchParams((searchParams) => {
+      searchParams.set("mediaType", value);
+      return searchParams;
+    });
+
+    setMovies({
+      list: [],
+      pageNumber: 1,
+      isLoading: false,
+      hasMore: false,
+    });
+    if (searchQuery) {
+      fetchData({ searchQuery, mediaType: value });
+    }
   };
 
   useEffect(() => {
     const abortController = new AbortController();
-
     fetchData({ abortController: abortController });
     return () => {
       abortController.abort();
     };
   }, [fetchData]);
-
   return (
     <div className="explorePage">
       <div className="explorePageContentWrapper">

@@ -59,7 +59,7 @@ export const fetchMoreInfoOfMedia = async ({
 };
 
 export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
-  let url = `${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US`;
+  let url = `${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US&page=1`;
   const options = setOptions({});
   return await httpReq({ url, options });
 };
@@ -190,10 +190,10 @@ export const fetchFavoriteList = async ({
 
 export const fetchDataBySearchQuery = async ({
   searchQuery,
-  media_type = "movie",
-  pageNumber,
+  mediaType = "movie",
+  pageNumber = 1,
 }) => {
-  const url = `search/${media_type}?query=${searchQuery}&include_adult=false&language=en-US&page=${pageNumber}`;
+  const url = `search/${mediaType}?query=${searchQuery}&include_adult=false&language=en-US&page=${pageNumber}`;
   const options = setOptions({});
   const res = await fetch(BASE_URL + url, options);
   const resJSON = await res.json();

@@ -32,7 +32,7 @@ const SeasonEpisodes = ({
       });
       if (res) {
         setEpisodes((prevEpisodes) => ({
-          list: [...prevEpisodes, ...res],
+          list: [...prevEpisodes.list, ...res.episodes],
           isLoading: false,
         }));
       }
