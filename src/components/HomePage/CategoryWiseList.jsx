@@ -14,6 +14,7 @@ const CategoryWiseList = ({
   mediaType,
   isSeasonList,
   seriesId,
+  listType,
   // onClick,
 }) => {
   // const [isViewAll, setIsViewAll] = useState(false);
@@ -53,6 +54,7 @@ const CategoryWiseList = ({
           mediaType={mediaType}
           isSeasonList={isSeasonList}
           seriesId={seriesId}
+          listType={listType}
           // onClick={onClick}
           // makeViewAllButtonHidden={makeViewAllButtonHidden}
           // isViewAllBtnVisible={isViewAllBtnVisible}

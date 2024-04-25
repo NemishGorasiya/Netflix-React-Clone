@@ -9,7 +9,12 @@ import {
 } from "../../utils/utilityFunctions";
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
-import { fetchMediaData, fetchMoreInfoOfMedia } from "../../services/services";
+import {
+  fetchMediaData,
+  fetchMoreInfoOfMedia,
+  fetchWatchList,
+} from "../../services/services";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Slider = ({
   // isDeletable = false,
@@ -18,10 +23,14 @@ const Slider = ({
   seriesId,
   mediaType,
   isSeasonList = false,
+  isWatchList = false,
+  listType,
 }) => {
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
   const sliderRef = useRef();
+  const [loggedInUser] = useLocalStorage("loggedInUser", {});
+  const { sessionID } = loggedInUser;
 
   const [media, setMedia] = useState({
     list: [],
@@ -121,6 +130,29 @@ const Slider = ({
           mediaCategory: categoryTitle,
         });
       }
+      switch (listType) {
+        case "seasonList":
+          res = await fetchMoreInfoOfMedia({
+            mediaId,
+            mediaType,
+          });
+          break;
+        case "watchlist":
+          res = await fetchWatchList({
+            sessionID,
+            mediaType,
+          });
+          break;
+        case "favoriteList":
+          res = await fetchMoreInfoOfMedia({
+            mediaId,
+            mediaType,
+          });
+          break;
+        default:
+          break;
+      }
+
       console.log("res", res);
       const { results, seasons } = res;
       setMedia({

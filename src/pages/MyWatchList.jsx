@@ -6,6 +6,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { watchListCategories } from "../constants/constants";
 import toast from "react-hot-toast";
 import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSkeleton";
+import RenderIfVisible from "react-render-if-visible";
 
 const MyWatchList = () => {
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
@@ -96,6 +97,18 @@ const MyWatchList = () => {
                 mediaType={categoryTitle}
               />
             ))}
+        {watchListCategories.map((category) => (
+          <RenderIfVisible key={category} stayRendered={true}>
+            <CategoryWiseList
+              categoryTitle={category}
+              // moviesData={moviesData}
+              // isDeletable={true}
+              // removeFromList={removeFromWatchList}
+              mediaType={category}
+              listType="watchlist"
+            />
+          </RenderIfVisible>
+        ))}
       </div>
     </div>
   );

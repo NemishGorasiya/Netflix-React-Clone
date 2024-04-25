@@ -171,8 +171,8 @@ export const addToWatchList = async ({
   return await httpReq({ url, options });
 };
 
-export const fetchWatchList = async ({ sessionID, watchListCategory }) => {
-  let url = `account/account_id/watchlist/${watchListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
+export const fetchWatchList = async ({ sessionID, mediaType }) => {
+  let url = `account/account_id/watchlist/${mediaType}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
   const options = setOptions({});
 
   return await httpReq({ url, options });
@@ -185,6 +185,22 @@ export const fetchFavoriteList = async ({
   let url = `account/account_id/favorite/${favoriteListCategory}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
 
   const options = setOptions({});
+  return await httpReq({ url, options });
+};
+
+export const fetchUserPreferenceList = async ({
+  sessionID,
+  listType,
+  mediaType = "movie",
+  pageNumber = 1,
+  abortController,
+}) => {
+  let url = `account/account_id/${listType}/${
+    mediaType === "movie" ? "movies" : mediaType
+  }?language=en-US&page=${pageNumber}&session_id=${sessionID}&sort_by=created_at.desc`;
+  const options = setOptions({
+    signal: abortController ? abortController.signal : null,
+  });
   return await httpReq({ url, options });
 };
 

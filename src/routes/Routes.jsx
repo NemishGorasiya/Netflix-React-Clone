@@ -16,6 +16,11 @@ const MyFavoritePage = lazy(() => import("../pages/MyFavoritePage"));
 const RatedListPage = lazy(() => import("../pages/RatedListPage"));
 const ManageAccountsPage = lazy(() => import("../pages/ManageAccountsPage"));
 
+import { watchListMediaTypes } from "../constants/constants";
+import { favoriteListMediaTypes } from "../constants/constants";
+import { ratedListMediaTypes } from "../constants/constants";
+import UserPreferences from "../pages/UserPreferences";
+
 export const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
@@ -61,14 +66,14 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
-      {
-        path: "/myWatchList",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <MyWatchList />
-          </Suspense>
-        ),
-      },
+      // {
+      //   path: "/myWatchList",
+      //   element: (
+      //     <Suspense fallback={<Loader />}>
+      //       <MyWatchList />
+      //     </Suspense>
+      //   ),
+      // },
       {
         path: "/explore",
         element: (
@@ -77,19 +82,52 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      // {
+      //   path: "/myFavorite",
+      //   element: (
+      //     <Suspense fallback={<Loader />}>
+      //       <MyFavoritePage />
+      //     </Suspense>
+      //   ),
+      // },
+      // {
+      //   path: "/rated",
+      //   element: (
+      //     <Suspense fallback={<Loader />}>
+      //       <RatedListPage />
+      //     </Suspense>
+      //   ),
+      // },
       {
-        path: "/myFavorite",
+        path: "/watchlist/:mediaType",
         element: (
           <Suspense fallback={<Loader />}>
-            <MyFavoritePage />
+            <UserPreferences
+              listType="watchlist"
+              mediaTypes={watchListMediaTypes}
+            />
           </Suspense>
         ),
       },
       {
-        path: "/rated",
+        path: "/favorite/:mediaType",
         element: (
           <Suspense fallback={<Loader />}>
-            <RatedListPage />
+            <UserPreferences
+              listType="favorite"
+              mediaTypes={favoriteListMediaTypes}
+            />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/rated/:mediaType",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <UserPreferences
+              listType="rated"
+              mediaTypes={ratedListMediaTypes}
+            />
           </Suspense>
         ),
       },

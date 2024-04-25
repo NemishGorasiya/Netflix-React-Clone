@@ -185,6 +185,12 @@ export const favoriteListCategories = ["movie", "tv"];
 
 export const ratedCategoriesType = ["movie", "tv", "episodes"];
 
+export const watchListMediaTypes = ["movie", "tv"];
+
+export const favoriteListMediaTypes = ["movie", "tv"];
+
+export const ratedListMediaTypes = ["movie", "tv", "episodes"];
+
 export const navbarLinks = [
   {
     link: "home",
@@ -199,15 +205,15 @@ export const navbarLinks = [
     label: "Movies",
   },
   {
-    link: "myWatchList",
+    link: "watchlist/movie",
     label: "My WatchList",
   },
   {
-    link: "myFavorite",
+    link: "favorite/movie",
     label: "My Favorite",
   },
   {
-    link: "rated",
+    link: "rated/movie",
     label: "My Rated",
   },
 ];
