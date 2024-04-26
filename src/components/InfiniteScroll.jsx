@@ -8,6 +8,8 @@ const InfiniteScroll = ({
   fetchMoreData,
   mediaType,
   isLoading,
+  removeFromList,
+  listType,
 }) => {
   const observer = useRef();
   const lastUserRef = useCallback(
@@ -29,10 +31,22 @@ const InfiniteScroll = ({
       {items.map((item, index) =>
         items.length === index + 1 ? (
           <div ref={lastUserRef} key={index}>
-            {renderItem({ ...item, mediaType: mediaType })}
+            {renderItem({
+              ...item,
+              mediaType: mediaType,
+              removeFromList: removeFromList,
+              listType: listType,
+            })}
           </div>
         ) : (
-          <div key={index}>{renderItem({ ...item, mediaType: mediaType })}</div>
+          <div key={index}>
+            {renderItem({
+              ...item,
+              mediaType: mediaType,
+              removeFromList: removeFromList,
+              listType: listType,
+            })}
+          </div>
         )
       )}
       {isLoading && (

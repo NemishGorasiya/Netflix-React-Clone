@@ -2,9 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import MediaGallery from "../components/MediaGallery";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { fetchUserPreferenceList } from "../services/services";
+import {
+  fetchUserPreferenceList,
+  updateUserPreferencesList,
+} from "../services/services";
 import "./UserPreferences.scss";
 import PropTypes from "prop-types";
+import toast from "react-hot-toast";
 const UserPreferences = ({ listType, mediaTypes }) => {
   const [media, setMedia] = useState({
     list: [],
@@ -52,6 +56,22 @@ const UserPreferences = ({ listType, mediaTypes }) => {
     },
     [listType, mediaType, sessionID]
   );
+
+  const removeFromList = async ({ mediaId }) => {
+    try {
+      const res = await updateUserPreferencesList({
+        sessionID,
+        mediaId,
+        mediaType,
+        listType,
+      });
+      if (res) {
+        toast.success(`The item removed from your ${listType} successfully.`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const fetchMoreMedia = () => {
     if (hasMoreData) {
@@ -106,6 +126,9 @@ const UserPreferences = ({ listType, mediaTypes }) => {
         list={mediaList}
         isLoading={isLoading}
         fetchMoreData={fetchMoreMedia}
+        removeFromList={removeFromList}
+        listType={listType}
+        mediaType={mediaType}
       />
     </div>
   );

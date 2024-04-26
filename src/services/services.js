@@ -171,6 +171,29 @@ export const addToWatchList = async ({
   return await httpReq({ url, options });
 };
 
+export const updateUserPreferencesList = async ({
+  sessionID,
+  mediaId,
+  mediaType,
+  isAdding = false,
+  listType,
+}) => {
+  const url = `account/account_id/${listType}?session_id=${sessionID}`;
+  const options = setOptions({
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: {
+      media_type: mediaType,
+      media_id: mediaId,
+      [listType]: isAdding,
+    },
+  });
+
+  return await httpReq({ url, options });
+};
+
 export const fetchWatchList = async ({ sessionID, mediaType }) => {
   let url = `account/account_id/watchlist/${mediaType}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
   const options = setOptions({});
@@ -193,6 +216,7 @@ export const fetchUserPreferenceList = async ({
   listType,
   mediaType = "movie",
   pageNumber = 1,
+  isDeleting = false,
   abortController,
 }) => {
   let modifiedMediaType = "";
