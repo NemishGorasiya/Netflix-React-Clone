@@ -195,9 +195,19 @@ export const fetchUserPreferenceList = async ({
   pageNumber = 1,
   abortController,
 }) => {
-  let url = `account/account_id/${listType}/${
-    mediaType === "movie" ? "movies" : mediaType
-  }?language=en-US&page=${pageNumber}&session_id=${sessionID}&sort_by=created_at.desc`;
+  let modifiedMediaType = "";
+  switch (mediaType) {
+    case "movie":
+      modifiedMediaType = "movies";
+      break;
+    case "episodes":
+      modifiedMediaType = "tv/episodes";
+      break;
+    default:
+      modifiedMediaType = mediaType;
+      break;
+  }
+  let url = `account/account_id/${listType}/${modifiedMediaType}?language=en-US&page=${pageNumber}&session_id=${sessionID}&sort_by=created_at.desc`;
   const options = setOptions({
     signal: abortController ? abortController.signal : null,
   });

@@ -3,6 +3,20 @@ import InfiniteScroll from "./InfiniteScroll";
 import posterFallBackImage from "../assets/posterNotFound.jpg";
 import { getImagePath, handleFallBackImage } from "../utils/utilityFunctions";
 import "./MediaGallery.scss";
+import { memo } from "react";
+
+const MediaGallery = ({ list, fetchMoreData, isLoading }) => {
+  return (
+    <div className="moviesGalleryWrapper">
+      <InfiniteScroll
+        items={list}
+        fetchMoreData={fetchMoreData}
+        renderItem={renderItem}
+        isLoading={isLoading}
+      />
+    </div>
+  );
+};
 
 const renderItem = ({ poster_path }) => (
   <Link to={"/home"}>
@@ -20,18 +34,5 @@ const renderItem = ({ poster_path }) => (
     </div>
   </Link>
 );
-
-const MediaGallery = ({ list, fetchMoreData, isLoading }) => {
-  return (
-    <div className="moviesGalleryWrapper">
-      <InfiniteScroll
-        items={list}
-        fetchMoreData={fetchMoreData}
-        renderItem={renderItem}
-        isLoading={isLoading}
-      />
-    </div>
-  );
-};
 
 export default MediaGallery;

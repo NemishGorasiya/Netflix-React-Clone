@@ -99,7 +99,7 @@ export const router = createBrowserRouter([
       //   ),
       // },
       {
-        path: "/watchlist/:mediaType",
+        path: "/watchlist",
         element: (
           <Suspense fallback={<Loader />}>
             <UserPreferences
@@ -108,9 +108,22 @@ export const router = createBrowserRouter([
             />
           </Suspense>
         ),
+        children: [
+          {
+            path: ":mediaType",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <UserPreferences
+                  listType="watchlist"
+                  mediaTypes={watchListMediaTypes}
+                />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
-        path: "/favorite/:mediaType",
+        path: "/favorite",
         element: (
           <Suspense fallback={<Loader />}>
             <UserPreferences
@@ -119,9 +132,22 @@ export const router = createBrowserRouter([
             />
           </Suspense>
         ),
+        children: [
+          {
+            path: ":mediaType",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <UserPreferences
+                  listType="favorite"
+                  mediaTypes={favoriteListMediaTypes}
+                />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
-        path: "/rated/:mediaType",
+        path: "/rated",
         element: (
           <Suspense fallback={<Loader />}>
             <UserPreferences
@@ -130,6 +156,19 @@ export const router = createBrowserRouter([
             />
           </Suspense>
         ),
+        children: [
+          {
+            path: ":mediaType",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <UserPreferences
+                  listType="rated"
+                  mediaTypes={ratedListMediaTypes}
+                />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "/manageAccounts",

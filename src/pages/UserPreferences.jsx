@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Navigate,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import MediaGallery from "../components/MediaGallery";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { fetchUserPreferenceList } from "../services/services";
@@ -20,6 +26,8 @@ const UserPreferences = ({ listType, mediaTypes }) => {
 
   const { mediaType } = useParams();
   console.log("mediaType", mediaType);
+  const navigate = useNavigate();
+
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
   const { sessionID } = loggedInUser;
 
@@ -34,8 +42,8 @@ const UserPreferences = ({ listType, mediaTypes }) => {
           pageNumber,
           abortController,
         });
-        const { results, total_pages } = res;
         if (res) {
+          const { results, total_pages } = res;
           setMedia((prevMedia) => ({
             list: [...prevMedia.list, ...results],
             isLoading: false,
@@ -59,15 +67,45 @@ const UserPreferences = ({ listType, mediaTypes }) => {
   };
 
   useEffect(() => {
+    if (!mediaType) {
+      navigate("movie");
+    } else {
+      const isAllowedMediaType = mediaTypes.some(
+        (allowedMediaType) => allowedMediaType === mediaType
+      );
+      if (!isAllowedMediaType) {
+        navigate("movie");
+      }
+    }
     const abortController = new AbortController();
     getMedia({ abortController: abortController });
+    setMedia((prevMedia) => ({
+      ...prevMedia,
+      list: [],
+      isLoading: true,
+      pageNumber: 1,
+      hasMore: true,
+    }));
     return () => {
       abortController.abort();
     };
-  }, [getMedia]);
+  }, [getMedia, mediaType, navigate]);
 
   return (
     <div className="userPreferences">
+      <ul className="tabsWrapper">
+        {mediaTypes.map((mediaType) => (
+          <NavLink
+            key={mediaType}
+            to={`/${listType}/${mediaType}`}
+            className={({ isActive }) => {
+              return isActive ? "tab activeTab" : "tab";
+            }}
+          >
+            {mediaType}
+          </NavLink>
+        ))}
+      </ul>
       <MediaGallery
         list={mediaList}
         isLoading={isLoading}

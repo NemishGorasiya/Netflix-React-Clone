@@ -205,15 +205,15 @@ export const navbarLinks = [
     label: "Movies",
   },
   {
-    link: "watchlist/movie",
+    link: "watchlist",
     label: "My WatchList",
   },
   {
-    link: "favorite/movie",
+    link: "favorite",
     label: "My Favorite",
   },
   {
-    link: "rated/movie",
+    link: "rated",
     label: "My Rated",
   },
 ];
