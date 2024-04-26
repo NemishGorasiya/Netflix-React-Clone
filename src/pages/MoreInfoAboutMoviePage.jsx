@@ -13,6 +13,7 @@ import {
   fetchEpisodes,
   fetchMoreInfoOfMedia,
   submitMediaRating,
+  updateUserPreferencesList,
 } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
 import SeasonsList from "../components/MoreInfoPage/SeasonsList";
@@ -57,6 +58,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     setRating(value);
   };
   const [loggedInUser] = useLocalStorage("loggedInUser", null);
+  const { sessionID } = loggedInUser;
 
   const handleMuteVolumeClick = () => {
     setIsVolumeMuted((prevState) => !prevState);
@@ -112,26 +114,16 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const runTimeHours = parseInt(runtime / 60);
   const runTimeMinutes = runtime - runTimeHours * 60;
 
-  const handleAddToFavorite = async () => {
-    const res = await addToFavorite({
-      sessionID: loggedInUser.sessionID,
-      media_id: id,
-      media_type: mediaType,
+  const addToUserPreferencesList = async ({ listType }) => {
+    const res = await updateUserPreferencesList({
+      sessionID,
+      mediaId: id,
+      isAdding: true,
+      mediaType,
+      listType,
     });
     if (res.success) {
       toast.success("The item/record added into your favorite successfully.");
-    } else {
-      toast.error(res.status_message);
-    }
-  };
-  const handleAddToWatchList = async () => {
-    const res = await addToWatchList({
-      sessionID: loggedInUser.sessionID,
-      media_id: id,
-      media_type: mediaType,
-    });
-    if (res.success) {
-      toast.success("The item/record added into your watchList successfully.");
     } else {
       toast.error(res.status_message);
     }
@@ -182,12 +174,16 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
               text={"Play"}
             />
             <RoundButton
-              onClick={handleAddToWatchList}
+              onClick={() => {
+                addToUserPreferencesList({ listType: "watchlist" });
+              }}
               iconClassName="fa-solid fa-circle-plus"
               title={"Add To WatchList"}
             />
             <RoundButton
-              onClick={handleAddToFavorite}
+              onClick={() => {
+                addToUserPreferencesList({ listType: "favorite" });
+              }}
               iconClassName="fa-solid fa-thumbs-up"
               title={"Add To Favorite"}
             />
