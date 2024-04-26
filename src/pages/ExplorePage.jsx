@@ -1,25 +1,24 @@
-import "./ExplorePage.scss";
 import { useCallback, useEffect, useState } from "react";
-import {
-  fetchDataBySearchQuery,
-  fetchMediaData,
-} from "../services/services.js";
-import CustomInput from "../UI/CustomInput.jsx";
-import {
-  debounce,
-  getImagePath,
-  handleFallBackImage,
-} from "../utils/utilityFunctions.js";
-import posterFallBackImage from "../assets/posterNotFound.jpg";
 import {
   Link,
   useLocation,
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import InfiniteScroll from "../components/InfiniteScroll.jsx";
+import CustomInput from "../UI/CustomInput.jsx";
 import No_Movie_Found from "../assets/No_Movie_Found.png";
-import Loader from "../components/Loader.jsx";
+import posterFallBackImage from "../assets/posterNotFound.jpg";
+import InfiniteScroll from "../components/InfiniteScroll.jsx";
+import {
+  fetchDataBySearchQuery,
+  fetchMediaData,
+} from "../services/services.js";
+import {
+  debounce,
+  getImagePath,
+  handleFallBackImage,
+} from "../utils/utilityFunctions.js";
+import "./ExplorePage.scss";
 
 const renderItem = ({ id, poster_path, mediaType }) => (
   <Link key={id} to={`/${mediaType}/moreInfo?id=${id}`}>
@@ -55,29 +54,31 @@ const ExplorePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const { search } = useLocation();
-  const navigate = useNavigate();
 
   const fetchData = useCallback(
-    async ({ pageNumber, searchQuery: query, mediaType, abortController }) => {
+    async ({ pageNumber, abortController }) => {
       try {
         setMovies((prevMovies) => ({ ...prevMovies, isLoading: true }));
         let res;
         const mediaTypeParam = searchParams.get("mediaType");
         const mediaCategoryParam = searchParams.get("category");
+        const searchParam = searchParams.get("search");
 
-        if (mediaTypeParam && mediaCategoryParam) {
+        if (searchParam !== undefined && searchParam !== null) {
+          res = await fetchDataBySearchQuery({
+            searchQuery: searchParam,
+            mediaType: mediaTypeParam,
+            pageNumber: pageNumber,
+          });
+        } else if (
+          mediaCategoryParam !== undefined &&
+          mediaCategoryParam !== null
+        ) {
           res = await fetchMediaData({
             mediaType: mediaTypeParam,
             mediaCategory: mediaCategoryParam,
             pageNumber,
             abortController,
-          });
-        } else if (query !== undefined) {
-          res = await fetchDataBySearchQuery({
-            searchQuery: query,
-            mediaType: mediaType || selectedMediaType,
-            pageNumber: pageNumber,
           });
         }
         if (res && res.results) {
@@ -98,27 +99,26 @@ const ExplorePage = () => {
         console.error(error);
       }
     },
-    [searchParams, selectedMediaType]
+    [searchParams]
   );
 
   const fetchMoreData = useCallback(() => {
     if (hasMoreData) {
       fetchData({
         pageNumber,
-        searchQuery: searchQuery,
       });
     }
-  }, [hasMoreData, fetchData, searchQuery, pageNumber]);
+  }, [hasMoreData, fetchData, pageNumber]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleDebounce = useCallback(
     debounce((value) => {
-      if (value) {
-        fetchData({
-          pageNumber,
-          searchQuery: value,
-        });
-      }
+      // navigate(`/explore?search=${value}&mediaType=${selectedMediaType}`);
+      setSearchParams((searchParams) => {
+        searchParams.set("search", value);
+        searchParams.set("mediaType", selectedMediaType);
+        return searchParams;
+      });
     }),
     [fetchData]
   );
@@ -126,47 +126,36 @@ const ExplorePage = () => {
   const handleInputChange = useCallback(
     ({ target: { value } }) => {
       setSearchQuery(value);
-      navigate("/explore");
-      setMovies({
-        list: [],
-        pageNumber: 1,
-        isLoading: false,
-        hasMore: false,
-      });
       if (value === "") {
         return;
       }
       handleDebounce(value);
     },
-    [handleDebounce, navigate]
+    [handleDebounce]
   );
 
   const handleSelectMediaTypeChange = ({ target: { value } }) => {
     setSelectedMediaType(value);
-
     setSearchParams((searchParams) => {
       searchParams.set("mediaType", value);
       return searchParams;
     });
-
-    setMovies({
-      list: [],
-      pageNumber: 1,
-      isLoading: false,
-      hasMore: false,
-    });
-    if (searchQuery) {
-      fetchData({ searchQuery, mediaType: value });
-    }
   };
 
   useEffect(() => {
     const abortController = new AbortController();
     fetchData({ abortController: abortController });
+    setMovies({
+      list: [],
+      pageNumber: 1,
+      isLoading: false,
+      hasMore: true,
+    });
     return () => {
       abortController.abort();
     };
   }, [fetchData]);
+
   return (
     <div className="explorePage">
       <div className="explorePageContentWrapper">
