@@ -1,25 +1,22 @@
 import { Suspense, lazy } from "react";
-
 import { createBrowserRouter } from "react-router-dom";
-import ProtectedRoute from "./ProtectedRoute";
-import WelcomePage from "../pages/WelcomePage";
-import AuthenticationPage from "../pages/AuthenticationPage";
 import Loader from "../components/Loader";
+import {
+  favoriteListMediaTypes,
+  ratedListMediaTypes,
+  watchListMediaTypes,
+} from "../constants/constants";
+import AuthenticationPage from "../pages/AuthenticationPage";
+import UserPreferences from "../pages/UserPreferences";
+import WelcomePage from "../pages/WelcomePage";
+import ProtectedRoute from "./ProtectedRoute";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const ErrorPage = lazy(() => import("../pages/ErrorPage"));
 const MoreInfoAboutMoviePage = lazy(() =>
   import("../pages/MoreInfoAboutMoviePage")
 );
-const MyWatchList = lazy(() => import("../pages/MyWatchList"));
 const ExplorePage = lazy(() => import("../pages/ExplorePage"));
-const MyFavoritePage = lazy(() => import("../pages/MyFavoritePage"));
-const RatedListPage = lazy(() => import("../pages/RatedListPage"));
 const ManageAccountsPage = lazy(() => import("../pages/ManageAccountsPage"));
-
-import { watchListMediaTypes } from "../constants/constants";
-import { favoriteListMediaTypes } from "../constants/constants";
-import { ratedListMediaTypes } from "../constants/constants";
-import UserPreferences from "../pages/UserPreferences";
 
 export const router = createBrowserRouter([
   {
@@ -66,14 +63,6 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
-      // {
-      //   path: "/myWatchList",
-      //   element: (
-      //     <Suspense fallback={<Loader />}>
-      //       <MyWatchList />
-      //     </Suspense>
-      //   ),
-      // },
       {
         path: "/explore",
         element: (
@@ -82,22 +71,6 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
-      // {
-      //   path: "/myFavorite",
-      //   element: (
-      //     <Suspense fallback={<Loader />}>
-      //       <MyFavoritePage />
-      //     </Suspense>
-      //   ),
-      // },
-      // {
-      //   path: "/rated",
-      //   element: (
-      //     <Suspense fallback={<Loader />}>
-      //       <RatedListPage />
-      //     </Suspense>
-      //   ),
-      // },
       {
         path: "/watchlist",
         element: (
@@ -172,7 +145,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/manageAccounts",
-        element: <ManageAccountsPage />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <ManageAccountsPage />
+          </Suspense>
+        ),
       },
     ],
   },

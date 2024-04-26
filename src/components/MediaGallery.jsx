@@ -3,17 +3,29 @@ import InfiniteScroll from "./InfiniteScroll";
 import posterFallBackImage from "../assets/posterNotFound.jpg";
 import { getImagePath, handleFallBackImage } from "../utils/utilityFunctions";
 import "./MediaGallery.scss";
-import { memo } from "react";
+import NoMediaFound from "../assets/No_Movie_Found.png";
+import PropTypes from "prop-types";
 
 const MediaGallery = ({ list, fetchMoreData, isLoading }) => {
   return (
     <div className="moviesGalleryWrapper">
-      <InfiniteScroll
-        items={list}
-        fetchMoreData={fetchMoreData}
-        renderItem={renderItem}
-        isLoading={isLoading}
-      />
+      {!isLoading && list.length === 0 ? (
+        <div className="fallbackImageWrapper">
+          <img
+            src={NoMediaFound}
+            alt="No media found"
+            className="fallbackImage"
+          />
+          <h1 className="fallbackText">No Media found</h1>
+        </div>
+      ) : (
+        <InfiniteScroll
+          items={list}
+          fetchMoreData={fetchMoreData}
+          renderItem={renderItem}
+          isLoading={isLoading}
+        />
+      )}
     </div>
   );
 };
@@ -34,5 +46,11 @@ const renderItem = ({ poster_path }) => (
     </div>
   </Link>
 );
+
+MediaGallery.propTypes = {
+  list: PropTypes.array,
+  fetchMoreData: PropTypes.func,
+  isLoading: PropTypes.bool,
+};
 
 export default MediaGallery;

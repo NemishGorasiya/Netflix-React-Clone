@@ -1,15 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  Link,
-  NavLink,
-  Navigate,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import MediaGallery from "../components/MediaGallery";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { fetchUserPreferenceList } from "../services/services";
 import "./UserPreferences.scss";
+import PropTypes from "prop-types";
 const UserPreferences = ({ listType, mediaTypes }) => {
   const [media, setMedia] = useState({
     list: [],
@@ -89,7 +84,7 @@ const UserPreferences = ({ listType, mediaTypes }) => {
     return () => {
       abortController.abort();
     };
-  }, [getMedia, mediaType, navigate]);
+  }, [getMedia, mediaType, mediaTypes, navigate]);
 
   return (
     <div className="userPreferences">
@@ -106,6 +101,7 @@ const UserPreferences = ({ listType, mediaTypes }) => {
           </NavLink>
         ))}
       </ul>
+
       <MediaGallery
         list={mediaList}
         isLoading={isLoading}
@@ -113,6 +109,11 @@ const UserPreferences = ({ listType, mediaTypes }) => {
       />
     </div>
   );
+};
+
+UserPreferences.propTypes = {
+  listType: PropTypes.string,
+  mediaTypes: PropTypes.array,
 };
 
 export default UserPreferences;
