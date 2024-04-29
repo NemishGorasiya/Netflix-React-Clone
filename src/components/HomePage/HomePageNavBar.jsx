@@ -88,13 +88,6 @@ const HomePageNavBar = () => {
             <i className="fa-solid fa-magnifying-glass searchIcon"></i>
           </Link>
         </button>
-        <button
-          className={
-            isSideBarOpen ? "notificationBtn sideBarOpen" : "notificationBtn"
-          }
-        >
-          <i className="fa-solid fa-bell notificationIcon"></i>
-        </button>
         <AccountSetting isSideBarOpen={isSideBarOpen} />
         <button
           ref={hamBurgerRef}

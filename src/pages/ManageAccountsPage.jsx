@@ -18,7 +18,11 @@ const ManageAccountsPage = () => {
     setIsEditProfileModalOpen(false);
   };
   const handleUploadImageChange = ({ target: { files } }) => {
-    setProfileImage(URL.createObjectURL(files[0]));
+    let reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      setProfileImage(reader.result);
+    };
   };
 
   const handleOpenMyCustomModal = (profileName) => {

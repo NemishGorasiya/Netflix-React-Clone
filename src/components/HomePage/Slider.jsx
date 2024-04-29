@@ -153,7 +153,6 @@ const Slider = ({
           break;
       }
 
-      console.log("res", res);
       const { results, seasons } = res;
       setMedia({
         list: results || seasons,

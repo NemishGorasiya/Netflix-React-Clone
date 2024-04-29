@@ -49,7 +49,7 @@ const Profile = ({
         ) : (
           <img
             onClick={handleProfileClick}
-            src={profileImage === "" ? profile_image : profileImage}
+            src={profileImage}
             alt={profileName}
             onError={(event) => {
               handleFallBackImage(event, fallBackProfileImage);

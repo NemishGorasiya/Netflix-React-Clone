@@ -25,9 +25,9 @@ export const router = createBrowserRouter([
       {
         path: "/home",
         element: (
-          <Suspense fallback={<Loader />}>
-            <HomePage />
-          </Suspense>
+          // <Suspense fallback={<Loader />}>
+          <HomePage />
+          // </Suspense>
         ),
         errorElement: <ErrorPage />,
       },

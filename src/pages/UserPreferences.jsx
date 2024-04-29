@@ -24,7 +24,6 @@ const UserPreferences = ({ listType, mediaTypes }) => {
   } = media;
 
   const { mediaType } = useParams();
-  console.log("mediaType", mediaType);
   const navigate = useNavigate();
 
   const [loggedInUser] = useLocalStorage("loggedInUser", {});
