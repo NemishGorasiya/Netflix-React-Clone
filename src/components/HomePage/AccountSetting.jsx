@@ -66,12 +66,12 @@ const AccountSetting = ({ isSideBarOpen }) => {
       {isAccountSettingVisible && (
         <div className="accountSettingOptions">
           <ul>
-            <li className="username">
-              {username}
-              <Link to={"/manageAccounts"} className="viewProfile">
-                manage accounts
-              </Link>
-            </li>
+            <Link to={"/manageAccounts"}>
+              <li className="username">
+                {username}
+                <span className="viewProfile">manage accounts</span>
+              </li>
+            </Link>
             <li className="logOut" onClick={handleLogOut}>
               Logout
             </li>

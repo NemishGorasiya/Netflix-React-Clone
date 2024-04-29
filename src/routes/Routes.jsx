@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
       {
         path: "/tv",
         element: (
-          <Suspense fallback={<Loader atCenter={true} />}>
+          <Suspense fallback={<Loader atCenter />}>
             <HomePage mediaType="tv" />
           </Suspense>
         ),

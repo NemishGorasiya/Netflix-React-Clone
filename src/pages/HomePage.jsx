@@ -1,17 +1,10 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import CarouselSlider from "../components/HomePage/CarouselSlider";
 import MoviesCategories from "../components/HomePage/MoviesCategories";
-import { fetchMediaData } from "../services/services.js";
 import Footer from "../components/WelcomePage/Footer.jsx";
 import { footerLinks } from "../constants/constants.js";
 import "./HomePage.scss";
-import Loader from "../components/Loader.jsx";
 const HomePage = () => {
-  const [displayMedia, setDisplayMedia] = useState({
-    list: [],
-    isLoading: true,
-  });
-  const { list, isLoading } = displayMedia;
   const path = window.location.pathname;
 
   const mediaTypeDetails = useMemo(() => {
@@ -35,28 +28,9 @@ const HomePage = () => {
   }, [path]);
   const { mediaType, isHomePage } = mediaTypeDetails;
 
-  const fetchData = useCallback(async () => {
-    const response = await fetchMediaData({
-      mediaType: mediaType,
-      mediaCategory: "popular",
-    });
-    setDisplayMedia({
-      list: response.results,
-      isLoading: false,
-    });
-  }, [mediaType]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
   return (
     <div className="homePage">
-      <CarouselSlider
-        displayMoviesData={list}
-        mediaType={mediaType}
-        isLoading={isLoading}
-      />
+      <CarouselSlider mediaType={mediaType} />
       {isHomePage ? (
         <>
           <MoviesCategories mediaType={"movie"} />

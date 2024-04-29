@@ -216,7 +216,6 @@ export const fetchUserPreferenceList = async ({
   listType,
   mediaType = "movie",
   pageNumber = 1,
-  isDeleting = false,
   abortController,
 }) => {
   let modifiedMediaType = "";

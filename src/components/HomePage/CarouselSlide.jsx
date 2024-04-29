@@ -22,11 +22,13 @@ const CarouselSlide = ({ count, displayMovie, mediaType }) => {
         {overview}
       </p>
       <div className="functionButtonsWrapper">
-        <Button
-          className={"btn playBtn"}
-          iconClassName={"fa-solid fa-play"}
-          text={"Play"}
-        />
+        <Link to={`/${mediaType}/moreInfo?id=${id}`}>
+          <Button
+            className={"btn playBtn"}
+            iconClassName={"fa-solid fa-play"}
+            text={"Play"}
+          />
+        </Link>
         <Link to={`/${mediaType}/moreInfo?id=${id}`}>
           <Button
             className={"btn moreInfoBtn"}

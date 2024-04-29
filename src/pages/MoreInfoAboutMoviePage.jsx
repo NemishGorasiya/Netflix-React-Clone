@@ -8,8 +8,6 @@ import CustomModal from "../UI/CustomModal";
 import { useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
-  addToFavorite,
-  addToWatchList,
   fetchEpisodes,
   fetchMoreInfoOfMedia,
   submitMediaRating,
