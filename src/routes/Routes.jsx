@@ -25,16 +25,16 @@ export const router = createBrowserRouter([
       {
         path: "/home",
         element: (
-          // <Suspense fallback={<Loader />}>
-          <HomePage />
-          // </Suspense>
+          <Suspense fallback={<Loader atCenter />}>
+            <HomePage />
+          </Suspense>
         ),
         errorElement: <ErrorPage />,
       },
       {
         path: "/movies",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter />}>
             <HomePage mediaType="movie" />
           </Suspense>
         ),
@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
       {
         path: "/tv",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter={true} />}>
             <HomePage mediaType="tv" />
           </Suspense>
         ),
@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
       {
         path: "/movie/moreInfo",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter />}>
             <MoreInfoAboutMoviePage mediaType="movie" />
           </Suspense>
         ),
@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
       {
         path: "/tv/moreInfo",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter />}>
             <MoreInfoAboutMoviePage mediaType="tv" />
           </Suspense>
         ),
@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
       {
         path: "/explore",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter />}>
             <ExplorePage />
           </Suspense>
         ),
@@ -74,7 +74,7 @@ export const router = createBrowserRouter([
       {
         path: "/watchlist",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter />}>
             <UserPreferences
               listType="watchlist"
               mediaTypes={watchListMediaTypes}
@@ -85,7 +85,7 @@ export const router = createBrowserRouter([
           {
             path: ":mediaType",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader atCenter />}>
                 <UserPreferences
                   listType="watchlist"
                   mediaTypes={watchListMediaTypes}
@@ -98,7 +98,7 @@ export const router = createBrowserRouter([
       {
         path: "/favorite",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter />}>
             <UserPreferences
               listType="favorite"
               mediaTypes={favoriteListMediaTypes}
@@ -109,7 +109,7 @@ export const router = createBrowserRouter([
           {
             path: ":mediaType",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader atCenter />}>
                 <UserPreferences
                   listType="favorite"
                   mediaTypes={favoriteListMediaTypes}
@@ -122,7 +122,7 @@ export const router = createBrowserRouter([
       {
         path: "/rated",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter />}>
             <UserPreferences
               listType="rated"
               mediaTypes={ratedListMediaTypes}
@@ -133,7 +133,7 @@ export const router = createBrowserRouter([
           {
             path: ":mediaType",
             element: (
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader atCenter />}>
                 <UserPreferences
                   listType="rated"
                   mediaTypes={ratedListMediaTypes}
@@ -146,7 +146,7 @@ export const router = createBrowserRouter([
       {
         path: "/manageAccounts",
         element: (
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader atCenter />}>
             <ManageAccountsPage />
           </Suspense>
         ),
@@ -155,14 +155,14 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <WelcomePage />,
+    element: <WelcomePage atCenter />,
   },
   {
     path: "/auth",
-    element: <AuthenticationPage />,
+    element: <AuthenticationPage atCenter />,
   },
   {
     path: "*",
-    element: <ErrorPage />,
+    element: <ErrorPage atCenter />,
   },
 ]);

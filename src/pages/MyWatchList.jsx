@@ -9,7 +9,7 @@ import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSke
 import RenderIfVisible from "react-render-if-visible";
 
 const MyWatchList = () => {
-  const [loggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", null);
   const [watchList, setWatchList] = useState({
     list: [],
     isLoading: true,

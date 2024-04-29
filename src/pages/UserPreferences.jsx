@@ -26,7 +26,7 @@ const UserPreferences = ({ listType, mediaTypes }) => {
   const { mediaType } = useParams();
   const navigate = useNavigate();
 
-  const [loggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", null);
   const { sessionID } = loggedInUser;
 
   const getMedia = useCallback(

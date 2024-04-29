@@ -29,7 +29,7 @@ const Slider = ({
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
   const sliderRef = useRef();
-  const [loggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", null);
   const { sessionID } = loggedInUser;
 
   const [media, setMedia] = useState({

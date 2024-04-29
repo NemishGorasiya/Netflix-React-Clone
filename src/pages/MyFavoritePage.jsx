@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import CategoryWiseListSkeleton from "../components/HomePage/CategoryWiseListSkeleton";
 
 const MyFavoritePage = () => {
-  const [loggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", null);
   const [favoriteMedia, setFavoriteMedia] = useState({
     list: [],
     isLoading: true,

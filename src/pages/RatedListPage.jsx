@@ -12,7 +12,7 @@ const RatedListPage = () => {
     isLoading: true,
   });
   const { list, isLoading } = ratedMedia;
-  const [loggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", null);
 
   const fetchRatedCategoryData = useCallback(
     async (category) => {
