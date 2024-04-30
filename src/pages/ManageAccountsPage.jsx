@@ -17,6 +17,7 @@ const ManageAccountsPage = () => {
   const handleCloseMyCustomModal = () => {
     setIsEditProfileModalOpen(false);
   };
+
   const handleUploadImageChange = ({ target: { files } }) => {
     let reader = new FileReader();
     reader.readAsDataURL(files[0]);
