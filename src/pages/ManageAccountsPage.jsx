@@ -54,7 +54,7 @@ const ManageAccountsPage = () => {
     <div className="manageAccountsPage">
       {isEditProfileModalOpen && (
         <CustomModal
-          shouldCloseOnOutSideClick={false}
+          shouldCloseOnOutSideClick={true}
           handleCloseMyCustomModal={handleCloseMyCustomModal}
         >
           <form

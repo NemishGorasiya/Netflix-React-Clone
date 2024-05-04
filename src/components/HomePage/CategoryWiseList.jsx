@@ -28,9 +28,11 @@ const CategoryWiseList = ({
     <div className="categoryWiseList">
       <div className="categoryHeader">
         <h3 className="categoryHeading">{categoryHeading}</h3>
-        <p className="viewAll" onClick={handleViewAllClick}>
-          View More
-        </p>
+        {!isSeasonList && (
+          <p className="viewAll" onClick={handleViewAllClick}>
+            View More
+          </p>
+        )}
       </div>
 
       <RenderIfVisible stayRendered={true}>

@@ -54,6 +54,7 @@ const ExplorePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamMediaType = searchParams.get("mediaType");
 
   const fetchData = useCallback(
     async ({ pageNumber, abortController }) => {
@@ -175,7 +176,7 @@ const ExplorePage = () => {
                 value="movie"
                 name="mediaType"
                 id="movie"
-                checked={selectedMediaType === "movie"}
+                checked={searchParamMediaType === "movie"}
                 onChange={handleSelectMediaTypeChange}
               />
               <label htmlFor="movie">Movies</label>
@@ -186,7 +187,7 @@ const ExplorePage = () => {
                 value="tv"
                 name="mediaType"
                 id="tv"
-                checked={selectedMediaType === "tv"}
+                checked={searchParamMediaType === "tv"}
                 onChange={handleSelectMediaTypeChange}
               />
               <label htmlFor="tv">TVs</label>
@@ -199,7 +200,7 @@ const ExplorePage = () => {
             items={movieList}
             fetchMoreData={fetchMoreData}
             renderItem={renderItem}
-            mediaType={selectedMediaType}
+            mediaType={searchParamMediaType}
             isLoading={isLoading}
           />
         </div>

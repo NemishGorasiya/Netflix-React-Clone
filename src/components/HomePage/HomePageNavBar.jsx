@@ -10,9 +10,19 @@ const HomePageNavBar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const sideBarRef = useRef(null);
   const hamBurgerRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
 
   const handleHamBurgerClick = () => {
     setIsSideBarOpen((prevState) => !prevState);
+  };
+
+  const handleScroll = () => {
+    if (window.scrollY > 200) {
+      // Change 200 to the desired scroll height
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
   };
 
   useEffect(() => {
@@ -23,8 +33,10 @@ const HomePageNavBar = () => {
       }
     }
     mediaWatcher.addEventListener("change", updateSideBarStatus);
+    window.addEventListener("scroll", handleScroll);
     return function cleanup() {
       mediaWatcher.removeEventListener("change", updateSideBarStatus);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -36,15 +48,17 @@ const HomePageNavBar = () => {
       !hamBurgerRef.current.contains(target)
     ) {
       setIsSideBarOpen(false);
-      document.body.style.overflow = "auto";
+      document.body.classList.remove("modal-open");
     }
   };
 
   useEffect(() => {
-    if (!isSideBarOpen) {
-      document.body.style.overflow = "auto";
+    if (isSideBarOpen) {
+      document.body.classList.add("modal-open");
+      // document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "hidden";
+      document.body.classList.remove("modal-open");
+      // document.body.style.overflow = "auto";
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -56,7 +70,7 @@ const HomePageNavBar = () => {
     <div
       className={`homePageNavBar ${
         pathname.startsWith("/explore") ? "navbar-black" : ""
-      }`}
+      } ${scrolled ? "semiTransparent" : ""}`}
     >
       <div className={isSideBarOpen ? "overLay sideBarOpen" : "overLay"}></div>
       <div className="navLeft">

@@ -44,12 +44,15 @@ export const fetchMoreInfoOfMedia = async ({
   isEpisode = false,
   seasonNumber,
   episodeNumber,
+  abortController,
 }) => {
   let url = `${mediaType}/${mediaId}?append_to_response=credits&language=en-US&page=1`;
   if (isEpisode) {
     url = `${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}?append_to_response=credits&language=en-US&page=1`;
   }
-  const options = setOptions({});
+  const options = setOptions({
+    signal: abortController ? abortController.signal : null,
+  });
 
   try {
     return await httpReq({ url, options });
