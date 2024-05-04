@@ -9,7 +9,7 @@ import fallBackProfileImage from "../assets/profile_image.png";
 import { handleFallBackImage } from "../utils/utilityFunctions.js";
 
 const ManageAccountsPage = () => {
-  const [accounts, setAccounts] = useLocalStorage("accounts", null);
+  const [accounts, setAccounts] = useLocalStorage("accounts", []);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [usernameOfProfileToEdit, setUsernameOfProfileToEdit] = useState();
   const [profileImage, setProfileImage] = useState();
@@ -33,8 +33,9 @@ const ManageAccountsPage = () => {
 
   const handleEditProfileBtnClick = (event) => {
     event.preventDefault();
-    setAccounts((accountsInfo) => {
-      const tempArr = [...accountsInfo];
+    setAccounts((accounts) => {
+      console.log("acc", accounts);
+      const tempArr = [...accounts];
       const idx = tempArr.findIndex(
         (account) => account.username === usernameOfProfileToEdit
       );
@@ -42,6 +43,7 @@ const ManageAccountsPage = () => {
         tempArr[idx].profileImg = profileImage;
         toast.success("Your profile edited successfully.");
       }
+      console.log("temp", tempArr);
       return tempArr;
     });
     setIsEditProfileModalOpen(false);

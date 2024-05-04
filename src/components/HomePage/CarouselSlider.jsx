@@ -33,7 +33,7 @@ const CarouselSlider = ({ mediaType }) => {
           abortController,
         });
         const { results } = res;
-        console.log(results);
+
         if (results) {
           setMedia({
             list: results,

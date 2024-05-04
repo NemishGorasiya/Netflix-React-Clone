@@ -1,17 +1,41 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const useLocalStorage = (key, initialValue) => {
-  const storedValue =
-    typeof window !== "undefined" ? localStorage.getItem(key) : null;
-  const initial = storedValue ? JSON.parse(storedValue) : initialValue;
+const useLocalStorage = (key, defaultValue) => {
+  // Create state variable to store
+  // localStorage value in state
+  const [localStorageValue, setLocalStorageValue] = useState(() => {
+    try {
+      const value = localStorage.getItem(key);
+      // If value is already present in
+      // localStorage then return it
 
-  const [localStorageValue, setLocalStorageValue] = useState(initial);
+      // Else set default value in
+      // localStorage and then return it
+      if (value) {
+        return JSON.parse(value);
+      } else {
+        localStorage.setItem(key, JSON.stringify(defaultValue));
+        return defaultValue;
+      }
+    } catch (error) {
+      localStorage.setItem(key, JSON.stringify(defaultValue));
+      return defaultValue;
+    }
+  });
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(localStorageValue));
-  }, [key, localStorageValue]);
-
-  return [localStorageValue, setLocalStorageValue];
+  // this method update our localStorage and our state
+  const setLocalStorageStateValue = (valueOrFn) => {
+    let newValue;
+    if (typeof valueOrFn === "function") {
+      const fn = valueOrFn;
+      newValue = fn(localStorageValue);
+    } else {
+      newValue = valueOrFn;
+    }
+    localStorage.setItem(key, JSON.stringify(newValue));
+    setLocalStorageValue(newValue);
+  };
+  return [localStorageValue, setLocalStorageStateValue];
 };
 
 export default useLocalStorage;

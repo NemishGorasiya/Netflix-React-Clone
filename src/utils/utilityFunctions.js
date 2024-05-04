@@ -19,3 +19,10 @@ export const changeFormatOfTitle = (title) => {
 export const getImagePath = (relativePath) => {
   return `https://image.tmdb.org/t/p/original/${relativePath}`;
 };
+
+export const localStorage = {
+  set: (key, value) =>
+    localStorage.setItem(key, value ? JSON.stringify(value) : null),
+  get: (key) => JSON.parse(localStorage.getItem(key)) ?? null,
+  remove: (key) => localStorage.removeItem(key),
+};

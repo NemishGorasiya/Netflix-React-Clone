@@ -13,7 +13,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
   const { username } = loggedInUser;
   const navigate = useNavigate();
   const accountSettingRef = useRef(null);
-  const [accounts] = useLocalStorage("accounts", null);
+  const [accounts] = useLocalStorage("accounts", []);
 
   const handleAccountSettingClick = () => {
     setIsAccountSettingVisible((prevState) => !prevState);

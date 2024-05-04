@@ -64,10 +64,18 @@ const UserPreferences = ({ listType, mediaTypes }) => {
         mediaType,
         listType,
       });
+
       if (res) {
         toast.success(`The item removed from your ${listType} successfully.`);
+        setMedia((prevMedia) => ({
+          ...prevMedia,
+          list: prevMedia.list.filter((media) => media.id !== mediaId),
+        }));
       }
     } catch (error) {
+      toast.error(
+        `Something went wrong while removing the item from ${listType}.`
+      );
       console.error(error);
     }
   };
