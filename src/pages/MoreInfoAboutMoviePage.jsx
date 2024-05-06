@@ -8,8 +8,6 @@ import CustomModal from "../UI/CustomModal";
 import { useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
-  addToFavorite,
-  addToWatchList,
   fetchEpisodes,
   fetchMoreInfoOfMedia,
   submitMediaRating,
@@ -20,11 +18,10 @@ import SeasonsList from "../components/MoreInfoPage/SeasonsList";
 import SeasonEpisodes from "../components/MoreInfoPage/SeasonEpisodes";
 import PropTypes from "prop-types";
 import CastProfileCardSkeleton from "../components/MoreInfoPage/CastProfileCardSkeleton";
-import { getImagePath } from "../utils/utilityFunctions";
+import { formatDate, getImagePath, getYear } from "../utils/utilityFunctions";
 import RatingStars from "../UI/RatingStars";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
-  const [isVolumeMuted, setIsVolumeMuted] = useState(true);
   const [seasonDetails, setSeasonDetails] = useState({
     seasonEpisodes: [],
     currSeasonName: "",
@@ -44,6 +41,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     overview,
     genres,
     release_date,
+    first_air_date,
     name,
     title,
     still_path,
@@ -51,6 +49,9 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     backdrop_path,
     id,
     runtime,
+    number_of_episodes,
+    number_of_seasons,
+    air_date,
   } = list || {};
   const [isAddRatingModalOpen, setIsAddRatingModalOpen] = useState(false);
   const [rating, setRating] = useState(8);
@@ -60,9 +61,6 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const [loggedInUser] = useLocalStorage("loggedInUser", null);
   const { sessionID } = loggedInUser;
 
-  const handleMuteVolumeClick = () => {
-    setIsVolumeMuted((prevState) => !prevState);
-  };
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
   const seasonNumber = searchParams.get("season");
@@ -82,33 +80,41 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     });
   }, [mediaId, mediaType, seasonNumber]);
 
-  const handleCloseMyCustomModal = () => {
+  const handleCloseMyCustomModal = useCallback(() => {
     setIsAddRatingModalOpen(false);
-  };
+  }, []);
 
   const handleAddRating = () => {
     setIsAddRatingModalOpen(true);
   };
 
-  const fetchMovieData = useCallback(async () => {
-    const response = await fetchMoreInfoOfMedia({
-      mediaId: mediaId,
-      mediaType: mediaType,
-      isEpisode: episodeNumber,
-      seasonNumber: seasonNumber,
-      episodeNumber: episodeNumber,
-    });
-    setMoreInfoOfMedia({
-      list: response,
-      isLoading: false,
-    });
-  }, [episodeNumber, mediaId, mediaType, seasonNumber]);
+  const fetchMovieData = useCallback(
+    async ({ abortController }) => {
+      const response = await fetchMoreInfoOfMedia({
+        mediaId: mediaId,
+        mediaType: mediaType,
+        isEpisode: episodeNumber,
+        seasonNumber: seasonNumber,
+        episodeNumber: episodeNumber,
+        abortController,
+      });
+      setMoreInfoOfMedia({
+        list: response,
+        isLoading: false,
+      });
+    },
+    [episodeNumber, mediaId, mediaType, seasonNumber]
+  );
 
   useEffect(() => {
-    fetchMovieData();
+    const abortController = new AbortController();
+    fetchMovieData({ abortController: abortController });
     if (seasonNumber) {
       handleSeasonPosterClick();
     }
+    return () => {
+      abortController.abort();
+    };
   }, [fetchMovieData, handleSeasonPosterClick, seasonNumber]);
 
   const runTimeHours = parseInt(runtime / 60);
@@ -173,43 +179,53 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
               iconClassName={"fa-solid fa-play"}
               text={"Play"}
             />
-            <RoundButton
-              onClick={() => {
-                addToUserPreferencesList({ listType: "watchlist" });
-              }}
-              iconClassName="fa-solid fa-circle-plus"
-              title={"Add To WatchList"}
-            />
-            <RoundButton
-              onClick={() => {
-                addToUserPreferencesList({ listType: "favorite" });
-              }}
-              iconClassName="fa-solid fa-thumbs-up"
-              title={"Add To Favorite"}
-            />
-          </div>
-          <div className="rightBtns">
-            <RoundButton
-              onClick={handleMuteVolumeClick}
-              iconClassName={`fa-solid ${
-                isVolumeMuted ? "fa-volume-xmark" : "fa-volume-high"
-              } `}
-            />
+            {!episodeNumber && (
+              <>
+                <RoundButton
+                  onClick={() => {
+                    addToUserPreferencesList({ listType: "watchlist" });
+                  }}
+                  iconClassName="fa-solid fa-circle-plus"
+                  title={"Add To WatchList"}
+                />
+                <RoundButton
+                  onClick={() => {
+                    addToUserPreferencesList({ listType: "favorite" });
+                  }}
+                  iconClassName="fa-solid fa-thumbs-up"
+                  title={"Add To Favorite"}
+                />
+              </>
+            )}
           </div>
         </div>
         <div className="aboutMovie">
-          {mediaType === "movie" && (
-            <p className="movieDetails">
-              <span className="releaseYear">
-                {release_date ? release_date.slice(0, 4) : ""}
-              </span>
+          <p className="movieDetails">
+            <span className="releaseYear">
+              {release_date || first_air_date || air_date
+                ? formatDate(release_date || first_air_date || air_date)
+                : ""}
+            </span>
+            {runtime && (
               <span className="movieLength">
                 {"| "}
                 {runTimeHours}h {runTimeMinutes}m
               </span>
-              <span className="movieVideoQuality">HD</span>
-            </p>
-          )}
+            )}
+            <span className="movieVideoQuality">HD</span>
+          </p>
+          <p className="movieDetails">
+            {number_of_seasons && (
+              <span className="movieLength">
+                {number_of_seasons} Seasons &nbsp;{" "}
+                {number_of_seasons && number_of_episodes && "•"}
+              </span>
+            )}
+            {number_of_episodes && (
+              <span className="releaseYear">{number_of_episodes} Episodes</span>
+            )}
+          </p>
+
           {genres && (
             <p className="movieGenres">
               {genres.map((genre, idx) => (
@@ -258,7 +274,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       </div>
       {isAddRatingModalOpen && (
         <CustomModal
-          shouldCloseOnOutSideClick={false}
+          shouldCloseOnOutSideClick={true}
           handleCloseMyCustomModal={handleCloseMyCustomModal}
         >
           <form action="" className="submitReviewForm" onSubmit={submitReview}>

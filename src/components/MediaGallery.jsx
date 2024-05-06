@@ -43,17 +43,32 @@ const MediaGallery = ({
 const renderItem = ({
   id,
   poster_path,
+  still_path,
+  backdrop_path,
   rating,
   removeFromList,
   listType,
   mediaType,
+  episode_number,
+  season_number,
+  show_id,
 }) => {
   return (
     <div className="mediaPosterWrapper">
-      <Link to={`/${mediaType}/moreInfo?id=${id}`}>
+      <Link
+        to={`${
+          mediaType === "episodes"
+            ? `/tv/moreInfo?id=${show_id}&season=${season_number}&episode=${episode_number}`
+            : `/${mediaType}/moreInfo?id=${id}`
+        }`}
+      >
         <img
           className="mediaImagePoster"
-          src={poster_path ? getImagePath(poster_path) : posterFallBackImage}
+          src={
+            poster_path || still_path || backdrop_path
+              ? getImagePath(poster_path || still_path || backdrop_path)
+              : posterFallBackImage
+          }
           alt="image"
           loading="lazy"
           decoding="async"

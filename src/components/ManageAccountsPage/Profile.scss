@@ -30,12 +30,13 @@
       border: none;
       border-radius: inherit;
       background: #fff;
-      object-fit: contain;
+      object-fit: cover;
     }
   }
   .profileName {
     text-overflow: ellipsis;
     overflow: hidden;
+    font-weight: 500;
     width: 100%;
   }
 }

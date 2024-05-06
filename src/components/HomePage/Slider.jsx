@@ -15,21 +15,20 @@ import {
   fetchWatchList,
 } from "../../services/services";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import Loader from "../Loader";
+import Skeleton from "react-loading-skeleton";
 
 const Slider = ({
-  // isDeletable = false,
-  // removeFromList,
   categoryTitle,
   seriesId,
   mediaType,
   isSeasonList = false,
-  isWatchList = false,
   listType,
 }) => {
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
   const sliderRef = useRef();
-  const [loggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", null);
   const { sessionID } = loggedInUser;
 
   const [media, setMedia] = useState({
@@ -100,22 +99,6 @@ const Slider = ({
   //   }
   // }, [isViewAll]);
 
-  // useEffect(() => {
-  //   scrollWidth = sliderRef.current.scrollWidth;
-  //   clientWidth = sliderRef.current.clientWidth;
-  //   if (scrollWidth <= clientWidth) {
-  //     makeViewAllButtonHidden();
-  //   }
-  // }, [moviesData]);
-
-  // useEffect(() => {
-  //   scrollWidth = sliderRef.current.scrollWidth;
-  //   clientWidth = sliderRef.current.clientWidth;
-  //   if (scrollWidth <= clientWidth) {
-  //     makeViewAllButtonHidden();
-  //   }
-  // }, []);
-
   const fetchMedia = async () => {
     try {
       let res;
@@ -153,7 +136,6 @@ const Slider = ({
           break;
       }
 
-      console.log("res", res);
       const { results, seasons } = res;
       setMedia({
         list: results || seasons,
@@ -168,166 +150,87 @@ const Slider = ({
     fetchMedia();
   }, []);
 
-  return (
-    // <div className={isViewAll ? "slider viewAll" : "slider"}>
-    //   {!isViewAll && (
-    //     <>
-    //       {isViewAllBtnVisible && prevBtn && (
-    // <button className="sliderBtn prevBtn" onClick={handlePrevBtnClick}>
-    //   <i className="fa-solid fa-chevron-left"></i>
-    // </button>
-    //       )}
-    //       {isViewAllBtnVisible && nextBtn && (
-    // <button className="sliderBtn nextBtn" onClick={handleNextBtnClick}>
-    //   <i className="fa-solid fa-chevron-right"></i>
-    // </button>
-    //       )}
-    //     </>
-    //   )}
-
-    //   <div
-    //     className="slideContainer"
-    //     onTouchStart={handleTouchStart}
-    //     onTouchEnd={handleTouchEnd}
-    //     onDragStart={handleDragStart}
-    //     onDragEnd={handleDragEnd}
-    //     ref={sliderRef}
-    //   >
-    //     {moviesData.map(({ id, season_number, poster_path, rating, name }) => (
-    //       <RenderIfVisible key={id} stayRendered={true}>
-    //         <div
-    //           key={id}
-    //           className={isDeletable ? "slide deletableSlide" : "slide"}
-    //         >
-    // <Link
-    //   to={
-    //     isSeasonList
-    //       ? `/${mediaType}/moreInfo?id=${mediaId}&season=${season_number}`
-    //       : `/${mediaType}/moreInfo?id=${id}`
-    //   }
-    // >
-    //             <img
-    //               src={
-    //                 poster_path
-    //                   ? getImagePath(poster_path)
-    //                   : posterFallBackImage
-    //               }
-    //               alt="image"
-    //               loading="lazy"
-    //               decoding="async"
-    //               onError={(event) => {
-    //                 handleFallBackImage(event, posterFallBackImage);
-    //               }}
-    //             />
-    //           </Link>
-    //           <div
-    //             className="deleteIcon"
-    //             onClick={() => {
-    //               removeFromList({
-    //                 mediaId: id,
-    //                 media_type: mediaType,
-    //               });
-    //             }}
-    //           >
-    //             <i className="fa-solid fa-xmark"></i>
-    //           </div>
-    //           {rating && <span className="rating">{rating.toFixed(1)}</span>}
-
-    //           {isSeasonList && (
-    //             <div className="slideTitle" title={name}>
-    //               {name}
-    //             </div>
-    //           )}
-    //         </div>
-    //       </RenderIfVisible>
-    //     ))}
-    //   </div>
-    // </div>
-    isMediaLoading ? (
-      <h1>Loading...</h1>
-    ) : (
-      <div className="slider">
-        {prevBtn && (
-          <button className="sliderBtn prevBtn" onClick={onPrevBtnClick}>
-            <i className="fa-solid fa-chevron-left"></i>
-          </button>
-        )}
-        {nextBtn && (
-          <button className="sliderBtn nextBtn" onClick={onNextBtnClick}>
-            <i className="fa-solid fa-chevron-right"></i>
-          </button>
-        )}
-
-        <div
-          className="slideContainer"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
-          ref={sliderRef}
-        >
-          {mediaList.map(({ id, season_number, poster_path, rating, name }) => (
-            <RenderIfVisible key={id} stayRendered={true}>
-              <div
-                key={id}
-                className="slide"
-                // className={isDeletable ? "slide deletableSlide" : "slide"}
-              >
-                <Link
-                  to={`/${mediaType}/moreInfo?id=${
-                    isSeasonList ? seriesId : id ?? mediaId
-                  }${season_number ? `&season=${season_number}` : ""}`}
-                >
-                  <img
-                    src={
-                      poster_path
-                        ? getImagePath(poster_path)
-                        : posterFallBackImage
-                    }
-                    alt="image"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(event) => {
-                      handleFallBackImage(event, posterFallBackImage);
-                    }}
-                  />
-                </Link>
-                <div
-                  className="deleteIcon"
-                  onClick={() => {
-                    // removeFromList({
-                    //   mediaId: id,
-                    //   media_type: mediaType,
-                    // });
+  return isMediaLoading ? (
+    <div className="slider">
+      <div className="slideContainer">
+        {Array(9)
+          .fill()
+          .map((_item, index) => (
+            <div
+              key={index}
+              className="renderIfVisible"
+              style={{ display: "flex" }}
+            >
+              <div className="slide">
+                <Skeleton
+                  style={{
+                    position: "absolute",
+                    height: "100%",
+                    width: "100%",
                   }}
-                >
-                  <i className="fa-solid fa-xmark"></i>
-                </div>
-                {rating && <span className="rating">{rating.toFixed(1)}</span>}
-
-                {/* {isSeasonList && (
-                <div className="slideTitle" title={name}>
-                  {name}
-                </div>
-              )} */}
+                />
               </div>
-            </RenderIfVisible>
+            </div>
           ))}
-        </div>
       </div>
-    )
+    </div>
+  ) : (
+    <div className="slider">
+      {prevBtn && (
+        <button className="sliderBtn prevBtn" onClick={onPrevBtnClick}>
+          <i className="fa-solid fa-chevron-left"></i>
+        </button>
+      )}
+      {nextBtn && (
+        <button className="sliderBtn nextBtn" onClick={onNextBtnClick}>
+          <i className="fa-solid fa-chevron-right"></i>
+        </button>
+      )}
+
+      <div
+        className="slideContainer"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        ref={sliderRef}
+      >
+        {mediaList.map(({ id, season_number, poster_path }) => (
+          <RenderIfVisible key={id} stayRendered={true}>
+            <div key={id} className="slide">
+              <Link
+                to={`/${mediaType}/moreInfo?id=${
+                  isSeasonList ? seriesId : id ?? mediaId
+                }${season_number ? `&season=${season_number}` : ""}`}
+              >
+                <img
+                  src={
+                    poster_path
+                      ? getImagePath(poster_path)
+                      : posterFallBackImage
+                  }
+                  alt="image"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(event) => {
+                    handleFallBackImage(event, posterFallBackImage);
+                  }}
+                />
+              </Link>
+            </div>
+          </RenderIfVisible>
+        ))}
+      </div>
+    </div>
   );
 };
 
 Slider.propTypes = {
-  isViewAll: PropTypes.bool,
-  moviesData: PropTypes.array,
-  isDeletable: PropTypes.bool,
-  removeFromList: PropTypes.func,
+  categoryTitle: PropTypes.string,
+  seriesId: PropTypes.string,
   mediaType: PropTypes.string,
   isSeasonList: PropTypes.bool,
-  isViewAllBtnVisible: PropTypes.bool,
-  makeViewAllButtonHidden: PropTypes.func,
+  listType: PropTypes.string,
 };
 
 const SliderComponent = memo(Slider);

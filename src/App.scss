@@ -6,11 +6,22 @@
 
 body {
   font-family: "Netflix Sans Regular";
+  background: #000;
   button {
     cursor: pointer;
   }
   a {
     text-decoration: none;
     color: #fff;
+  }
+}
+
+body.modal-open {
+  overflow: hidden !important;
+  padding-right: 17px !important;
+  #root {
+    .homePageNavBar {
+      padding-right: 32px !important;
+    }
   }
 }

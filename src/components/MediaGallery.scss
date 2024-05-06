@@ -62,6 +62,10 @@
       background: red;
       padding: 15px 5px;
       border-bottom: 3px solid #fff;
+
+      &::after {
+        display: none;
+      }
     }
 
     &:hover {

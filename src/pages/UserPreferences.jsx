@@ -24,10 +24,9 @@ const UserPreferences = ({ listType, mediaTypes }) => {
   } = media;
 
   const { mediaType } = useParams();
-  console.log("mediaType", mediaType);
   const navigate = useNavigate();
 
-  const [loggedInUser] = useLocalStorage("loggedInUser", {});
+  const [loggedInUser] = useLocalStorage("loggedInUser", null);
   const { sessionID } = loggedInUser;
 
   const getMedia = useCallback(
@@ -65,10 +64,18 @@ const UserPreferences = ({ listType, mediaTypes }) => {
         mediaType,
         listType,
       });
+
       if (res) {
         toast.success(`The item removed from your ${listType} successfully.`);
+        setMedia((prevMedia) => ({
+          ...prevMedia,
+          list: prevMedia.list.filter((media) => media.id !== mediaId),
+        }));
       }
     } catch (error) {
+      toast.error(
+        `Something went wrong while removing the item from ${listType}.`
+      );
       console.error(error);
     }
   };

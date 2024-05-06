@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import CustomInput from "../../UI/CustomInput";
 import "./AuthForm.scss";
@@ -13,29 +13,21 @@ const TMDB_LOGIN_PAGE_LINK = "https://www.themoviedb.org/login";
 
 const AuthForm = () => {
 	const [userAuthDetails, setUserAuthDetails] = useState({
-		username: {
-			value: "",
-			hasError: false,
-		},
-		password: {
-			value: "",
-			hasError: false,
-			isVisible: false,
-		},
+		username: { value: "", hasError: false },
+		password: { value: "", hasError: false, isVisible: false },
 	});
 
+	const { username, password } = userAuthDetails;
+	const { value: usernameValue, hasError: usernameHasError } = username;
 	const {
-		username: { value: username, hasError: usernameHasError },
-		password: {
-			value: password,
-			hasError: passwordHasError,
-			isVisible: isPasswordVisible,
-		},
-	} = userAuthDetails;
+		value: passwordValue,
+		hasError: passwordHasError,
+		isVisible: isPasswordVisible,
+	} = password;
 
 	const navigate = useNavigate();
-	const [, setLoggedInUser] = useLocalStorage("loggedInUser", null);
-	const [accounts, setAccounts] = useLocalStorage("accounts", null);
+	const [loggedInUser, setLoggedInUser] = useLocalStorage("loggedInUser", null);
+	const [accounts, setAccounts] = useLocalStorage("accounts", []);
 	const [searchParams] = useSearchParams();
 	const isLoginPage = searchParams.get("mode") === "login";
 
@@ -49,76 +41,45 @@ const AuthForm = () => {
 		}));
 	};
 
-	const updateUsername = ({ target: { value } }) => {
+	const updateField = useCallback((fieldName, value) => {
 		setUserAuthDetails((prevDetails) => ({
 			...prevDetails,
-			username: {
-				...prevDetails.username,
-				value: value,
-				hasError: value === "",
-			},
+			[fieldName]: { ...prevDetails[fieldName], value, hasError: value === "" },
 		}));
-	};
-
-	const updatePassword = ({ target: { value } }) => {
-		setUserAuthDetails((prevDetails) => ({
-			...prevDetails,
-			password: {
-				...prevDetails.password,
-				value: value,
-				hasError: value === "",
-			},
-		}));
-	};
+	}, []);
 
 	const redirectToTMDBPage = () => {
 		window.open(TMDB_LOGIN_PAGE_LINK, "_blank");
 		navigate("/auth?mode=login");
 	};
 
-	const handleSelectUser = (username) => {
+	const handleSelectUser = (selectedUsername) => {
 		setUserAuthDetails((prevDetails) => ({
 			...prevDetails,
-			username: {
-				...prevDetails.username,
-				value: username,
-			},
+			username: { ...prevDetails.username, value: selectedUsername },
 		}));
 	};
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
-		if (username === "" || password === "") {
+		if (usernameValue === "" || passwordValue === "") {
 			toast.error("Username or Password should not be empty");
 			return;
 		}
-		const sessionID = await handleTMDBLogin(username, password);
+		const sessionID = await handleTMDBLogin(usernameValue, passwordValue);
 
 		if (!sessionID) {
 			toast.error("Invalid credentials.");
 		} else {
-			setLoggedInUser({
-				sessionID: sessionID,
-				username: username,
-			});
-			toast.success("LoggedIn Successfully.");
+			setLoggedInUser({ sessionID, username: usernameValue });
+			toast.success("Logged In Successfully.");
 
-			setAccounts((accountsInfo) => {
-				if (!accountsInfo) {
-					return [{ username: username, profileImg: "" }];
-				}
-				let isAlreadyExist = false;
-				accountsInfo.forEach((account) => {
-					if (account.username === username) {
-						isAlreadyExist = true;
-						return;
-					}
-				});
-				if (isAlreadyExist) {
-					return accountsInfo;
-				}
-				return [...accountsInfo, { username: username, profileImg: "" }];
-			});
+			const isAlreadyExist = accounts.some(
+				(account) => account.username === usernameValue
+			);
+			if (!isAlreadyExist) {
+				setAccounts([...accounts, { username: usernameValue, profileImg: "" }]);
+			}
 
 			setUserAuthDetails((prevDetails) => ({
 				...prevDetails,
@@ -131,37 +92,28 @@ const AuthForm = () => {
 
 	return (
 		<div className="authenticationFormContainer">
-			<h1 className="authenticationFormTitle">{`${
-				isLoginPage ? "Login" : "Sign Up"
-			}`}</h1>
+			<h1 className="authenticationFormTitle">
+				{isLoginPage ? "Login" : "Sign Up"}
+			</h1>
 			<form className="authenticationForm" onSubmit={handleLogin}>
-				{!isLoginPage && (
-					<>
-						<Button
-							onClick={redirectToTMDBPage}
-							className={"tmdbSignUpBtn"}
-							text={`TMDB Sign Up`}
-						/>
-					</>
-				)}
-				{isLoginPage && (
+				{isLoginPage ? (
 					<>
 						<CustomInput
-							onChange={updateUsername}
+							onChange={(e) => updateField("username", e.target.value)}
 							floatingLabel="Username"
 							id="username"
 							type="text"
-							val={username}
+							val={usernameValue}
 							hasError={usernameHasError}
 						/>
 						<CustomInput
-							onChange={updatePassword}
+							onChange={(e) => updateField("password", e.target.value)}
 							floatingLabel="Password"
 							id="password"
-							type="password"
-							val={password}
-							isPassword={true}
+							type={isPasswordVisible ? "text" : "password"}
+							val={passwordValue}
 							hasError={passwordHasError}
+							isPassword={true}
 							handlePasswordVisibility={handlePasswordVisibility}
 							isPasswordVisible={isPasswordVisible}
 						/>
@@ -169,18 +121,22 @@ const AuthForm = () => {
 							Login
 						</button>
 					</>
+				) : (
+					<Button
+						onClick={redirectToTMDBPage}
+						className="tmdbSignUpBtn"
+						text="TMDB Sign Up"
+					/>
 				)}
 			</form>
 
-			{isLoginPage && accounts && (
+			{isLoginPage && accounts?.length > 0 && (
 				<div className="userListingWrapper">
-					{accounts.map(({ username, profileImg }) => (
+					{accounts.map(({ username: accountUsername, profileImg }) => (
 						<div
-							key={username}
+							key={accountUsername}
 							className="user"
-							onClick={() => {
-								handleSelectUser(username);
-							}}
+							onClick={() => handleSelectUser(accountUsername)}
 						>
 							<div className="profileImage">
 								<img
@@ -191,7 +147,7 @@ const AuthForm = () => {
 									}}
 								/>
 							</div>
-							<div className="profileDetail">{username}</div>
+							<div className="profileDetail">{accountUsername}</div>
 						</div>
 					))}
 				</div>
@@ -204,7 +160,7 @@ const AuthForm = () => {
 			</p>
 
 			<Link to={`/auth?mode=${isLoginPage ? "signUp" : "login"}`}>
-				Move to {isLoginPage ? "SignUp" : "Login"} Page&nbsp;{" "}
+				Move to {isLoginPage ? "SignUp" : "Login"} Page{" "}
 				<i className="fa-solid fa-arrow-right"></i>
 			</Link>
 		</div>
