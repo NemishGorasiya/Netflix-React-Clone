@@ -1,69 +1,68 @@
 .movieCasts {
-  margin-top: 25px;
+	margin-top: 25px;
 
-  .movieCastHeading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+	.movieCastHeading {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 25px;
 
-    .viewLessSpan {
-      cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-  .castProfileCardWrapper {
-    display: flex;
-    position: relative;
-    overflow: hidden;
-  }
-  .viewAllCastsBtn {
-    font-size: 25px;
-    font-weight: 600;
-    height: 100%;
-    width: fit-content;
-    position: absolute;
-    right: 0;
-    background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.3) 20%,
-      rgba(0, 0, 0, 1) 100%
-    );
-  }
-  .viewAllCastsBtn::after {
-    cursor: pointer;
-    font-family: "Font Awesome";
-    content: "View All \203A";
-    height: 100%;
-    color: #fff;
-    padding: 0 15px 0 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 1) 100%
-    );
-  }
-  .castProfileCardWrapper.viewAllCasts {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    row-gap: 30px;
-    justify-content: space-between;
-  }
+		.viewLessSpan {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+	.castProfileCardWrapper {
+		display: flex;
+		position: relative;
+		overflow: hidden;
+	}
+	.viewAllCastsBtn {
+		font-size: 25px;
+		font-weight: 600;
+		height: 100%;
+		width: fit-content;
+		position: absolute;
+		right: 0;
+		background: linear-gradient(
+			to right,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 0.3) 20%,
+			rgba(0, 0, 0, 1) 100%
+		);
+	}
+	.viewAllCastsBtn::after {
+		cursor: pointer;
+		content: "View All \203A";
+		height: 100%;
+		color: #fff;
+		padding: 0 15px 0 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: linear-gradient(
+			to right,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 1) 100%
+		);
+	}
+	.castProfileCardWrapper.viewAllCasts {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		row-gap: 30px;
+		justify-content: space-between;
+	}
 }
 
 @media screen and (max-width: 600px) {
-  .movieCasts {
-    .castProfileCardWrapper.viewAllCasts {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      row-gap: 30px;
-      justify-content: space-between;
-    }
-  }
+	.movieCasts {
+		.castProfileCardWrapper.viewAllCasts {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+			row-gap: 30px;
+			justify-content: space-between;
+		}
+	}
 }

@@ -1,89 +1,85 @@
 .explorePage {
-  background: #000;
-  color: #fff;
-  min-height: 100vh;
-  .explorePageContentWrapper {
-    padding: 15px;
-    padding-top: 85px;
-    .stickyContent {
-      position: sticky;
-      top: 85px;
-      padding: 10px 0;
-      background: #000;
+	background: #000;
+	color: #fff;
+	min-height: 100vh;
+	.explorePageContentWrapper {
+		padding: 15px;
+		padding-top: 85px;
+		.stickyContent {
+			position: sticky;
+			top: 85px;
+			padding: 10px 0;
+			background: #000;
 
-      .mediaTypeSelectContainer {
-        display: flex;
-        margin: 20px 0;
+			.mediaTypeSelectContainer {
+				display: flex;
+				margin: 20px 0;
 
-        .radioInputWrapper {
-          margin-right: 15px;
+				.radioInputWrapper {
+					margin-right: 15px;
 
-          input {
-            margin: 0 5px;
-          }
-        }
-      }
-    }
+					input {
+						margin: 0 5px;
+					}
+				}
+			}
+		}
 
-    .moviesGalleryWrapper {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
-      gap: 15px;
-      .movieCard {
-        height: 350px;
-        background: grey;
-        border-radius: 8px;
+		.moviesGalleryWrapper {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+			gap: 15px;
+			.movieCard {
+				width: 100%;
+				aspect-ratio: 2/3;
+				background: grey;
+				border-radius: 8px;
+				display: flex;
 
-        img.posterImage {
-          height: 100%;
-          width: 100%;
-          object-fit: cover;
-          border-radius: inherit;
-        }
-      }
-    }
-    .fallBackText {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      p {
-        color: red;
-      }
-    }
-  }
+				img.posterImage {
+					height: 100%;
+					width: 100%;
+					object-fit: cover;
+					border-radius: inherit;
+				}
+			}
+		}
+		.fallBackText {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			p {
+				color: red;
+			}
+		}
+	}
 }
 
 @media only screen and (max-width: 870px) {
-  .explorePage {
-    .explorePageContentWrapper {
-      .moviesGalleryWrapper {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        .movieCard {
-          height: 220px;
-        }
-      }
-    }
-  }
+	.explorePage {
+		.explorePageContentWrapper {
+			.moviesGalleryWrapper {
+				grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			}
+		}
+	}
 }
 @media only screen and (max-width: 500px) {
-  .explorePage {
-    .explorePageContentWrapper {
-      padding-top: 65px;
-      .stickyContent {
-        top: 65px;
-      }
-    }
-  }
+	.explorePage {
+		.explorePageContentWrapper {
+			padding-top: 65px;
+			.stickyContent {
+				top: 65px;
+			}
+		}
+	}
 }
 @media only screen and (max-width: 440px) {
-  .explorePage {
-    .explorePageContentWrapper {
-      .moviesGalleryWrapper {
-        grid-template-columns: repeat(2, 1fr);
-        .movieCard {
-          height: 150px;
-        }
-      }
-    }
-  }
+	.explorePage {
+		.explorePageContentWrapper {
+			.moviesGalleryWrapper {
+				grid-template-columns: repeat(3, 1fr);
+			}
+		}
+	}
 }
