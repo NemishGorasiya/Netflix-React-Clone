@@ -172,7 +172,7 @@ const AuthForm = () => {
 				)}
 			</form>
 
-			{isLoginPage && (
+			{isLoginPage && accounts && (
 				<div className="userListingWrapper">
 					{accounts.map(({ username, profileImg }) => (
 						<div
