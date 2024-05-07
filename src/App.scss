@@ -3,7 +3,10 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-
+*,
+html {
+	scroll-behavior: smooth;
+}
 body {
 	font-family: "Netflix Sans Regular";
 	background: #000;
@@ -13,12 +16,15 @@ body {
 	a {
 		text-decoration: none;
 		color: #fff;
+		cursor: pointer;
 	}
 }
 
 body.modal-open {
 	overflow: hidden !important;
-	padding-right: 17px !important;
+}
+
+body.scrollbar-present.modal-open {
 	#root {
 		.homePageNavBar {
 			padding-right: 32px !important;

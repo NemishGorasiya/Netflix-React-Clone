@@ -25,6 +25,8 @@ const Slider = ({
 	isSeasonList = false,
 	listType,
 	isExpanded = false,
+	setNoNeedToExpand,
+	isNeedToExpand,
 }) => {
 	const [searchParams] = useSearchParams();
 	const mediaId = searchParams.get("id");
@@ -101,6 +103,12 @@ const Slider = ({
 	//   }
 	// }, [isViewAll]);
 
+	useEffect(() => {
+		if (sliderRef.current?.scrollWidth <= sliderRef.current?.clientWidth) {
+			setNoNeedToExpand();
+		}
+	}, [isMediaLoading]);
+
 	const fetchMedia = async () => {
 		try {
 			let res;
@@ -152,8 +160,6 @@ const Slider = ({
 		fetchMedia();
 	}, []);
 
-	console.log("isExa", isExpanded);
-
 	return isMediaLoading ? (
 		<div className="slider">
 			<div className="slideContainer">
@@ -180,15 +186,19 @@ const Slider = ({
 		</div>
 	) : (
 		<div className="slider">
-			{prevBtn && (
-				<button className="sliderBtn prevBtn" onClick={onPrevBtnClick}>
-					<i className="fa-solid fa-chevron-left"></i>
-				</button>
-			)}
-			{nextBtn && (
-				<button className="sliderBtn nextBtn" onClick={onNextBtnClick}>
-					<i className="fa-solid fa-chevron-right"></i>
-				</button>
+			{isNeedToExpand && !isExpanded && (
+				<>
+					{prevBtn && (
+						<button className="sliderBtn prevBtn" onClick={onPrevBtnClick}>
+							<i className="fa-solid fa-chevron-left"></i>
+						</button>
+					)}
+					{nextBtn && (
+						<button className="sliderBtn nextBtn" onClick={onNextBtnClick}>
+							<i className="fa-solid fa-chevron-right"></i>
+						</button>
+					)}
+				</>
 			)}
 
 			<div

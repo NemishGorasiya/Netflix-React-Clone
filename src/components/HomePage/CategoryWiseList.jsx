@@ -14,7 +14,12 @@ const CategoryWiseList = ({
 	listType,
 }) => {
 	const navigate = useNavigate();
+	const [isNeedToExpand, setIsNeedToExpand] = useState(true);
 	const [isExpanded, setIsExpanded] = useState(false);
+
+	const setNoNeedToExpand = () => {
+		setIsNeedToExpand(false);
+	};
 
 	const handleViewAllClick = () => {
 		if (isSeasonList) {
@@ -32,9 +37,11 @@ const CategoryWiseList = ({
 		<div className="categoryWiseList">
 			<div className="categoryHeader">
 				<h3 className="categoryHeading">{categoryHeading}</h3>
-				<p className="viewAll" onClick={handleViewAllClick}>
-					View More
-				</p>
+				{isNeedToExpand && (
+					<p className="viewAll" onClick={handleViewAllClick}>
+						View {isExpanded ? "Less" : "All"}
+					</p>
+				)}
 			</div>
 
 			<RenderIfVisible stayRendered={true}>
@@ -45,6 +52,8 @@ const CategoryWiseList = ({
 					seriesId={seriesId}
 					listType={listType}
 					isExpanded={isExpanded}
+					setNoNeedToExpand={setNoNeedToExpand}
+					isNeedToExpand={isNeedToExpand}
 				/>
 			</RenderIfVisible>
 		</div>

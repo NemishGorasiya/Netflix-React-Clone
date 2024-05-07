@@ -2,89 +2,93 @@ import { useCallback, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 const CustomModal = ({
-  children,
-  shouldCloseOnOutSideClick = false,
-  handleCloseMyCustomModal,
+	children,
+	shouldCloseOnOutSideClick = false,
+	handleCloseMyCustomModal,
 }) => {
-  const modalRef = useRef();
-  const backDropRef = useRef();
+	const modalRef = useRef();
+	const backDropRef = useRef();
 
-  const handleESCapeKey = useCallback(
-    (event) => {
-      if (event.key === "Escape") {
-        handleCloseMyCustomModal();
-      }
-    },
-    [handleCloseMyCustomModal]
-  );
+	const handleESCapeKey = useCallback(
+		(event) => {
+			if (event.key === "Escape") {
+				handleCloseMyCustomModal();
+			}
+		},
+		[handleCloseMyCustomModal]
+	);
 
-  const handleClickToCloseModal = useCallback(
-    ({ target }) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(target) &&
-        backDropRef.current.contains(target)
-      ) {
-        handleCloseMyCustomModal();
-      }
-    },
-    [handleCloseMyCustomModal]
-  );
-  useEffect(() => {
-    document.addEventListener("keydown", (event) => handleESCapeKey(event));
+	const handleClickToCloseModal = useCallback(
+		({ target }) => {
+			if (
+				modalRef.current &&
+				!modalRef.current.contains(target) &&
+				backDropRef.current.contains(target)
+			) {
+				handleCloseMyCustomModal();
+			}
+		},
+		[handleCloseMyCustomModal]
+	);
+	useEffect(() => {
+		document.addEventListener("keydown", (event) => handleESCapeKey(event));
 
-    if (shouldCloseOnOutSideClick) {
-      document.addEventListener("click", (event) =>
-        handleClickToCloseModal(event)
-      );
-    }
+		if (shouldCloseOnOutSideClick) {
+			document.addEventListener("click", (event) =>
+				handleClickToCloseModal(event)
+			);
+		}
 
-    return () => {
-      document.removeEventListener("keydown", (event) =>
-        handleESCapeKey(event)
-      );
+		return () => {
+			document.removeEventListener("keydown", (event) =>
+				handleESCapeKey(event)
+			);
 
-      document.removeEventListener("click", (event) =>
-        handleClickToCloseModal(event)
-      );
-    };
-  }, [
-    handleClickToCloseModal,
-    handleCloseMyCustomModal,
-    handleESCapeKey,
-    shouldCloseOnOutSideClick,
-  ]);
+			document.removeEventListener("click", (event) =>
+				handleClickToCloseModal(event)
+			);
+		};
+	}, [
+		handleClickToCloseModal,
+		handleCloseMyCustomModal,
+		handleESCapeKey,
+		shouldCloseOnOutSideClick,
+	]);
 
-  useEffect(() => {
-    document.body.classList.add("modal-open");
-    return () => {
-      document.body.classList.remove("modal-open");
-    };
-  }, []);
+	useEffect(() => {
+		const scrollbarPresent =
+			window.innerWidth > document.documentElement.clientWidth;
+		document.body.classList.toggle("scrollbar-present", scrollbarPresent);
+		document.body.classList.add("modal-open");
+		return () => {
+			document.body.classList.remove("modal-open");
+			document.body.classList.remove("scrollbar-present");
+		};
+	}, []);
 
-  return createPortal(
-    <div ref={backDropRef} className="modalContainer">
-      <div className="modal" ref={modalRef}>
-        <button
-          className="closeModalBtn"
-          onClick={() => {
-            handleCloseMyCustomModal();
-          }}
-        >
-          <i className="fa-solid fa-xmark"></i>
-        </button>
-        {children}
-      </div>
-      <div className="modalBackdrop"></div>
-    </div>,
-    document.getElementById("modal")
-  );
+	return createPortal(
+		<div ref={backDropRef} className="modalContainer">
+			<div className="modal" ref={modalRef}>
+				<button
+					className="closeModalBtn"
+					onClick={() => {
+						handleCloseMyCustomModal();
+					}}
+				>
+					<i className="fa-solid fa-xmark"></i>
+				</button>
+				{children}
+			</div>
+			<div className="modalBackdrop"></div>
+		</div>,
+		document.getElementById("modal")
+	);
 };
 
 CustomModal.propTypes = {
-  children: PropTypes.any,
-  shouldCloseOnOutSideClick: PropTypes.bool.isRequired,
-  handleCloseMyCustomModal: PropTypes.func.isRequired,
+	children: PropTypes.any,
+	shouldCloseOnOutSideClick: PropTypes.bool.isRequired,
+	handleCloseMyCustomModal: PropTypes.func.isRequired,
 };
 
 export default CustomModal;
