@@ -95,12 +95,11 @@ const Slider = ({
 		}
 	};
 
-	// useEffect(() => {
-	//   if (isViewAll === false) {
-	//     scrollLeft = sliderRef.current.scrollLeft;
-	//     handleSliderBtnVisibility(scrollLeft);
-	//   }
-	// }, [isViewAll]);
+	useEffect(() => {
+		if (sliderRef.current) {
+			handleSliderBtnVisibility(sliderRef.current.scrollLeft);
+		}
+	}, [isExpanded]);
 
 	useEffect(() => {
 		if (sliderRef.current?.scrollWidth <= sliderRef.current?.clientWidth) {
