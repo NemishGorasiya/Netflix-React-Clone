@@ -137,7 +137,6 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
 
 	const submitReview = async (event) => {
 		event.preventDefault();
-
 		try {
 			const res = await submitMediaRating({
 				mediaType: mediaType,

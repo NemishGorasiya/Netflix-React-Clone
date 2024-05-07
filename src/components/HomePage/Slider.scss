@@ -20,9 +20,9 @@
 			.slide {
 				width: 100%;
 				height: 100%;
-				background: grey;
 				border-radius: inherit;
 				position: relative;
+				background: grey;
 
 				a {
 					height: 100%;
@@ -33,7 +33,8 @@
 					img {
 						height: 100%;
 						width: 100%;
-						border-radius: inherit;
+						border-radius: 7px;
+						object-fit: cover;
 						user-select: none;
 					}
 				}

@@ -59,15 +59,14 @@ const Slider = ({
 
 	const onPrevBtnClick = () => {
 		const scrollLeft =
-			sliderRef.current.scrollLeft - sliderRef.current.clientWidth;
+			sliderRef.current.scrollLeft - sliderRef.current.clientWidth - 15;
 		sliderRef.current.scrollLeft -= sliderRef.current.clientWidth + 15;
 		handleSliderBtnVisibility(scrollLeft);
 	};
 	const onNextBtnClick = () => {
 		const scrollLeft =
-			sliderRef.current.scrollLeft + sliderRef.current.clientWidth;
+			sliderRef.current.scrollLeft + sliderRef.current.clientWidth + 15;
 		sliderRef.current.scrollLeft += sliderRef.current.clientWidth + 15;
-		console.log("sl", sliderRef.current.clientWidth);
 		handleSliderBtnVisibility(scrollLeft);
 	};
 
@@ -109,41 +108,47 @@ const Slider = ({
 		}
 	}, [isMediaLoading]);
 
-	const fetchMedia = async () => {
+	const fetchMedia = async ({ abortController }) => {
 		try {
 			let res;
 			if (isSeasonList) {
 				res = await fetchMoreInfoOfMedia({
 					mediaId,
 					mediaType,
+					abortController,
 				});
+			} else if (listType) {
+				switch (listType) {
+					case "seasonList":
+						res = await fetchMoreInfoOfMedia({
+							mediaId,
+							mediaType,
+							abortController,
+						});
+						break;
+					case "watchlist":
+						res = await fetchWatchList({
+							sessionID,
+							mediaType,
+							abortController,
+						});
+						break;
+					case "favoriteList":
+						res = await fetchMoreInfoOfMedia({
+							mediaId,
+							mediaType,
+							abortController,
+						});
+						break;
+					default:
+						break;
+				}
 			} else {
 				res = await fetchMediaData({
 					mediaType,
 					mediaCategory: categoryTitle,
+					abortController,
 				});
-			}
-			switch (listType) {
-				case "seasonList":
-					res = await fetchMoreInfoOfMedia({
-						mediaId,
-						mediaType,
-					});
-					break;
-				case "watchlist":
-					res = await fetchWatchList({
-						sessionID,
-						mediaType,
-					});
-					break;
-				case "favoriteList":
-					res = await fetchMoreInfoOfMedia({
-						mediaId,
-						mediaType,
-					});
-					break;
-				default:
-					break;
 			}
 
 			const { results, seasons } = res;
@@ -157,7 +162,11 @@ const Slider = ({
 	};
 
 	useEffect(() => {
-		fetchMedia();
+		const abortController = new AbortController();
+		fetchMedia({ abortController: abortController });
+		return () => {
+			abortController.abort();
+		};
 	}, []);
 
 	return isMediaLoading ? (
