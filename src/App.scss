@@ -20,14 +20,14 @@ body {
 	}
 }
 
-body.modal-open {
-	overflow: hidden !important;
+body:has(#modal):has(.modalContainer) {
+	overflow: hidden;
 }
-
-body.scrollbar-present.modal-open {
+body.has-scroll-bar {
+	padding-right: 17px;
 	#root {
 		.homePageNavBar {
-			padding-right: 32px !important;
+			padding-right: 32px;
 		}
 	}
 }

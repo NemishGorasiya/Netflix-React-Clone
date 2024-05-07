@@ -1,15 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
-const CustomModal = ({
-	children,
-	shouldCloseOnOutSideClick = false,
-	handleCloseMyCustomModal,
-}) => {
-	const modalRef = useRef();
-	const backDropRef = useRef();
 
-	const handleESCapeKey = useCallback(
+const CustomModal = ({ children, handleCloseMyCustomModal }) => {
+	const modalRef = useRef();
+
+	const handleEscapeKey = useCallback(
 		(event) => {
 			if (event.key === "Escape") {
 				handleCloseMyCustomModal();
@@ -18,63 +14,33 @@ const CustomModal = ({
 		[handleCloseMyCustomModal]
 	);
 
-	const handleClickToCloseModal = useCallback(
-		({ target }) => {
-			if (
-				modalRef.current &&
-				!modalRef.current.contains(target) &&
-				backDropRef.current.contains(target)
-			) {
+	const handleClickOutside = useCallback(
+		(event) => {
+			if (!modalRef.current.contains(event.target)) {
 				handleCloseMyCustomModal();
 			}
 		},
-		[handleCloseMyCustomModal]
+		[handleCloseMyCustomModal, modalRef]
 	);
-	useEffect(() => {
-		document.addEventListener("keydown", (event) => handleESCapeKey(event));
 
-		if (shouldCloseOnOutSideClick) {
-			document.addEventListener("click", (event) =>
-				handleClickToCloseModal(event)
-			);
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener("keydown", handleEscapeKey);
+
+		if (document.body.scrollHeight > window.innerHeight) {
+			document.body.classList.add("has-scroll-bar");
 		}
-
 		return () => {
-			document.removeEventListener("keydown", (event) =>
-				handleESCapeKey(event)
-			);
-
-			document.removeEventListener("click", (event) =>
-				handleClickToCloseModal(event)
-			);
+			document.body.classList.remove("has-scroll-bar");
+			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("keydown", handleEscapeKey);
 		};
-	}, [
-		handleClickToCloseModal,
-		handleCloseMyCustomModal,
-		handleESCapeKey,
-		shouldCloseOnOutSideClick,
-	]);
-
-	useEffect(() => {
-		const scrollbarPresent =
-			window.innerWidth > document.documentElement.clientWidth;
-		document.body.classList.toggle("scrollbar-present", scrollbarPresent);
-		document.body.classList.add("modal-open");
-		return () => {
-			document.body.classList.remove("modal-open");
-			document.body.classList.remove("scrollbar-present");
-		};
-	}, []);
+	}, [handleClickOutside, handleEscapeKey]);
 
 	return createPortal(
-		<div ref={backDropRef} className="modalContainer">
+		<div className="modalContainer">
 			<div className="modal" ref={modalRef}>
-				<button
-					className="closeModalBtn"
-					onClick={() => {
-						handleCloseMyCustomModal();
-					}}
-				>
+				<button className="closeModalBtn" onClick={handleCloseMyCustomModal}>
 					<i className="fa-solid fa-xmark"></i>
 				</button>
 				{children}
@@ -86,8 +52,7 @@ const CustomModal = ({
 };
 
 CustomModal.propTypes = {
-	children: PropTypes.any,
-	shouldCloseOnOutSideClick: PropTypes.bool.isRequired,
+	children: PropTypes.node,
 	handleCloseMyCustomModal: PropTypes.func.isRequired,
 };
 
