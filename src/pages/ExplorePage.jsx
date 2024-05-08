@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import CustomInput from "../UI/CustomInput.jsx";
 import No_Movie_Found from "../assets/No_Movie_Found.png";
 import posterFallBackImage from "../assets/posterNotFound.jpg";

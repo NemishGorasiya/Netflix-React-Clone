@@ -1,5 +1,4 @@
 import "./Profile.scss";
-import profile_image from "../../assets/profile_image.png";
 import addAccountImage from "../../assets/plusImage.jpg";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";

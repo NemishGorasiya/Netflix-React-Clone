@@ -18,7 +18,7 @@ import SeasonsList from "../components/MoreInfoPage/SeasonsList";
 import SeasonEpisodes from "../components/MoreInfoPage/SeasonEpisodes";
 import PropTypes from "prop-types";
 import CastProfileCardSkeleton from "../components/MoreInfoPage/CastProfileCardSkeleton";
-import { formatDate, getImagePath, getYear } from "../utils/utilityFunctions";
+import { formatDate, getImagePath } from "../utils/utilityFunctions";
 import RatingStars from "../UI/RatingStars";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {

@@ -130,50 +130,6 @@ export const handleTMDBLogin = async (username, password) => {
   return false;
 };
 
-// export const addToFavorite = async ({
-// 	sessionID,
-// 	media_id,
-// 	media_type,
-// 	isAdding = true,
-// }) => {
-// 	const url = `account/account_id/favorite?session_id=${sessionID}`;
-// 	const options = setOptions({
-// 		method: "POST",
-// 		headers: {
-// 			"content-type": "application/json",
-// 		},
-// 		body: {
-// 			media_type: media_type,
-// 			media_id: media_id,
-// 			favorite: isAdding,
-// 		},
-// 	});
-
-// 	return await httpReq({ url, options });
-// };
-
-// export const addToWatchList = async ({
-// 	sessionID,
-// 	media_id,
-// 	media_type,
-// 	isAdding = true,
-// }) => {
-// 	const url = `account/account_id/watchlist?session_id=${sessionID}`;
-// 	const options = setOptions({
-// 		method: "POST",
-// 		headers: {
-// 			"content-type": "application/json",
-// 		},
-// 		body: {
-// 			media_type: media_type,
-// 			media_id: media_id,
-// 			watchlist: isAdding,
-// 		},
-// 	});
-
-// 	return await httpReq({ url, options });
-// };
-
 export const updateUserPreferencesList = async ({
   sessionID,
   mediaId,
@@ -288,16 +244,3 @@ ${
   });
   return await httpReq({ url, options });
 };
-
-// export const fetchRatedList = async ({ sessionID, category }) => {
-// 	if (category === "episodes") {
-// 		category = "tv/episodes";
-// 	}
-// 	if (category === "movie") {
-// 		category = "movies";
-// 	}
-// 	const url = `account/account_id/rated/${category}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.asc`;
-// 	const options = setOptions({});
-
-// 	return await httpReq({ url, options });
-// };

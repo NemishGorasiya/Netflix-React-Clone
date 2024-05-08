@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import InfiniteScroll from "./InfiniteScroll";
 import posterFallBackImage from "../assets/posterNotFound.jpg";
 import { getImagePath, handleFallBackImage } from "../utils/utilityFunctions";
@@ -103,6 +103,9 @@ MediaGallery.propTypes = {
   list: PropTypes.array,
   fetchMoreData: PropTypes.func,
   isLoading: PropTypes.bool,
+  removeFromList: PropTypes.func,
+  listType: PropTypes.string,
+  mediaType: PropTypes.string,
 };
 
 export default MediaGallery;

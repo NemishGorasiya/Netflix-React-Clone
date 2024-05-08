@@ -1,4 +1,5 @@
 import "./RatingStars.scss";
+import PropTypes from "prop-types";
 
 const RatingStars = ({ onChange, value }) => {
   return (
@@ -13,6 +14,11 @@ const RatingStars = ({ onChange, value }) => {
       data-value={parseFloat(value).toFixed(1)}
     />
   );
+};
+
+RatingStars.propTypes = {
+  onChange: PropTypes.func,
+  value: PropTypes.string,
 };
 
 export default RatingStars;

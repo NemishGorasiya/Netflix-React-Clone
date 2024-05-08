@@ -32,9 +32,9 @@ const CarouselSlider = ({ mediaType }) => {
           mediaCategory: "popular",
           abortController,
         });
-        const { results } = res;
 
-        if (results) {
+        if (res) {
+          const { results } = res;
           setMedia({
             list: results,
             isLoading: false,
