@@ -34,7 +34,6 @@ const ManageAccountsPage = () => {
   const handleEditProfileBtnClick = (event) => {
     event.preventDefault();
     setAccounts((accounts) => {
-      console.log("acc", accounts);
       const tempArr = [...accounts];
       const idx = tempArr.findIndex(
         (account) => account.username === usernameOfProfileToEdit
@@ -43,7 +42,6 @@ const ManageAccountsPage = () => {
         tempArr[idx].profileImg = profileImage;
         toast.success("Your profile edited successfully.");
       }
-      console.log("temp", tempArr);
       return tempArr;
     });
     setIsEditProfileModalOpen(false);

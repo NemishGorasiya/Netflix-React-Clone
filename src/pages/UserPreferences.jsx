@@ -4,6 +4,7 @@ import MediaGallery from "../components/MediaGallery";
 import useLocalStorage from "../hooks/useLocalStorage";
 import {
   fetchUserPreferenceList,
+  submitMediaRating,
   updateUserPreferencesList,
 } from "../services/services";
 import "./UserPreferences.scss";
@@ -56,14 +57,33 @@ const UserPreferences = ({ listType, mediaTypes }) => {
     [listType, mediaType, sessionID]
   );
 
-  const removeFromList = async ({ mediaId }) => {
+  const removeFromList = async ({
+    mediaId,
+    show_id,
+    episode_number,
+    season_number,
+    mediaType,
+  }) => {
     try {
-      const res = await updateUserPreferencesList({
-        sessionID,
-        mediaId,
-        mediaType,
-        listType,
-      });
+      let res;
+      if (listType === "rated") {
+        res = await submitMediaRating({
+          mediaType,
+          mediaId: mediaType === "episodes" ? show_id : mediaId,
+          sessionID,
+          isEpisode: mediaType === "episodes",
+          seasonNumber: season_number,
+          episodeNumber: episode_number,
+          method: "delete",
+        });
+      } else {
+        res = await updateUserPreferencesList({
+          sessionID,
+          mediaId,
+          mediaType,
+          listType,
+        });
+      }
 
       if (res) {
         toast.success(`The item removed from your ${listType} successfully.`);

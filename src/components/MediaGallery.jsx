@@ -77,16 +77,21 @@ const renderItem = ({
           }}
         />
       </Link>
-      {(listType === "watchlist" || listType === "favorite") && (
-        <div
-          className="removeBtn"
-          onClick={(event) => {
-            removeFromList({ event, mediaId: id });
-          }}
-        >
-          <i className="fa-solid fa-xmark" />
-        </div>
-      )}
+      <div
+        className="removeBtn"
+        onClick={(event) => {
+          removeFromList({
+            event,
+            mediaId: id,
+            show_id,
+            mediaType,
+            episode_number,
+            season_number,
+          });
+        }}
+      >
+        <i className="fa-solid fa-xmark" />
+      </div>
       {listType === "rated" && rating && (
         <div className="rating">{rating.toFixed(1)}</div>
       )}
