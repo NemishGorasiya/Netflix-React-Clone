@@ -8,31 +8,23 @@ import CustomModal from "../UI/CustomModal";
 import { useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
-  fetchEpisodes,
   fetchMoreInfoOfMedia,
   submitMediaRating,
   updateUserPreferencesList,
 } from "../services/services";
 import useLocalStorage from "../hooks/useLocalStorage";
-import SeasonsList from "../components/MoreInfoPage/SeasonsList";
-import SeasonEpisodes from "../components/MoreInfoPage/SeasonEpisodes";
 import PropTypes from "prop-types";
 import CastProfileCardSkeleton from "../components/MoreInfoPage/CastProfileCardSkeleton";
 import { formatDate, getImagePath } from "../utils/utilityFunctions";
 import RatingStars from "../UI/RatingStars";
+import TvSeasonsWrapper from "../components/MoreInfoPage/TvSeasonsWrapper";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
-  const [seasonDetails, setSeasonDetails] = useState({
-    seasonEpisodes: [],
-    currSeasonName: "",
-    currSeasonNumber: -1,
-  });
-  const { seasonEpisodes, currSeasonName, currSeasonNumber } = seasonDetails;
   const [moreInfoOfMedia, setMoreInfoOfMedia] = useState({
-    list: {},
+    data: {},
     isLoading: true,
   });
-  const { list, isLoading } = moreInfoOfMedia;
+  const { data, isLoading } = moreInfoOfMedia;
   const {
     credits,
     seasons,
@@ -52,7 +44,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     number_of_episodes,
     number_of_seasons,
     air_date,
-  } = list || {};
+  } = data || {};
   const [isAddRatingModalOpen, setIsAddRatingModalOpen] = useState(false);
   const [rating, setRating] = useState(8);
   const handleRatingChange = ({ target: { value } }) => {
@@ -65,20 +57,6 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const mediaId = searchParams.get("id");
   const seasonNumber = searchParams.get("season");
   const episodeNumber = searchParams.get("episode");
-
-  const handleSeasonPosterClick = useCallback(async () => {
-    const response = await fetchEpisodes({
-      mediaId: mediaId,
-      mediaType: mediaType,
-      seasonNumber: seasonNumber,
-    });
-    const { episodes, name, season_number } = response;
-    setSeasonDetails({
-      seasonEpisodes: episodes,
-      currSeasonName: name,
-      currSeasonNumber: season_number,
-    });
-  }, [mediaId, mediaType, seasonNumber]);
 
   const handleCloseMyCustomModal = useCallback(() => {
     setIsAddRatingModalOpen(false);
@@ -99,7 +77,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
         abortController,
       });
       setMoreInfoOfMedia({
-        list: response,
+        data: response,
         isLoading: false,
       });
     },
@@ -109,13 +87,10 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   useEffect(() => {
     const abortController = new AbortController();
     fetchMovieData({ abortController: abortController });
-    if (seasonNumber) {
-      handleSeasonPosterClick();
-    }
     return () => {
       abortController.abort();
     };
-  }, [fetchMovieData, handleSeasonPosterClick, seasonNumber]);
+  }, [fetchMovieData]);
 
   const runTimeHours = parseInt(runtime / 60);
   const runTimeMinutes = runtime - runTimeHours * 60;
@@ -249,20 +224,9 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
             />
           </div>
         </div>
+
         {mediaType === "tv" && seasons && (
-          <SeasonsList
-            seriesId={mediaId}
-            moviesData={seasons}
-            onClick={handleSeasonPosterClick}
-          />
-        )}
-        {seasonEpisodes?.length > 0 && (
-          <SeasonEpisodes
-            seasonEpisodes={seasonEpisodes}
-            currSeasonName={currSeasonName}
-            currSeasonNumber={currSeasonNumber}
-            mediaId={mediaId}
-          />
+          <TvSeasonsWrapper mediaId={mediaId} />
         )}
 
         {isLoading ? (

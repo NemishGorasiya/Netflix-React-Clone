@@ -57,7 +57,6 @@ CustomInput.propTypes = {
   onChange: PropTypes.func,
   handlePasswordVisibility: PropTypes.func,
   val: PropTypes.string,
-  isPassword: PropTypes.bool,
   errorMessage: PropTypes.string,
   hasError: PropTypes.bool,
   isPasswordVisible: PropTypes.bool,
@@ -65,5 +64,3 @@ CustomInput.propTypes = {
 
 const MemoizedCustomInput = memo(CustomInput);
 export default MemoizedCustomInput;
-
-// export default memo(CustomInput);

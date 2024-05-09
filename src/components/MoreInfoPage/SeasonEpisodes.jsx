@@ -12,47 +12,43 @@ import Loader from "../Loader.jsx";
 
 const SeasonEpisodes = ({
   seasonEpisodes,
-  currSeasonName,
   currSeasonNumber,
   mediaId,
+  seasonNumber,
 }) => {
   const [episodes, setEpisodes] = useState({
     list: [],
+    seasonName: "",
     isLoading: true,
   });
-  const { list: episodesList, isLoading: isEpisodesLoading } = episodes;
+  const { list, seasonName, isLoading } = episodes;
   const navigate = useNavigate();
 
-  const handleEpisodeClick = ({
-    mediaId,
-    currSeasonNumber,
-    episode_number,
-  }) => {
+  const handleEpisodeClick = ({ mediaId, seasonNumber, episode_number }) => {
     navigate(
-      `/tv/moreInfo?id=${mediaId}&season=${currSeasonNumber}&episode=${episode_number}`
+      `/tv/moreInfo?id=${mediaId}&season=${seasonNumber}&episode=${episode_number}`
     );
-    window.scrollTo(0, 0);
   };
 
   const getEpisodes = useCallback(async () => {
     try {
-      setEpisodes((prevEpisodes) => ({ ...prevEpisodes, isLoading: true }));
       const res = await fetchEpisodes({
         mediaId,
         mediaType: "tv",
-        seasonNumber: currSeasonNumber,
+        seasonNumber: seasonNumber,
       });
       if (res) {
-        const { episodes } = res;
+        const { episodes, name } = res;
         setEpisodes({
           list: episodes,
+          seasonName: name,
           isLoading: false,
         });
       }
     } catch (error) {
       console.error(error);
     }
-  }, [currSeasonNumber, mediaId]);
+  }, [seasonNumber, mediaId]);
 
   useEffect(() => {
     getEpisodes();
@@ -60,43 +56,41 @@ const SeasonEpisodes = ({
 
   return (
     <div className="seasonEpisodes">
-      <h1 className="seasonName">{currSeasonName}</h1>
-      {isEpisodesLoading ? (
+      <h1 className="seasonName">{seasonName}</h1>
+      {isLoading ? (
         <div className="loaderWrapper">
           <Loader className="loader" />
         </div>
       ) : (
-        episodesList.map(
-          ({ id, episode_number, still_path, overview, name }) => (
-            <div
-              key={id}
-              className="episodeWrapper"
-              onClick={() => {
-                handleEpisodeClick({
-                  mediaId,
-                  currSeasonNumber,
-                  episode_number,
-                });
-              }}
-            >
-              <div className="episodePoster">
-                <img
-                  src={
-                    still_path ? getImagePath(still_path) : posterFallBackImage
-                  }
-                  alt="not found"
-                  onError={(event) => {
-                    handleFallBackImage(event, posterFallBackImage);
-                  }}
-                />
-              </div>
-              <div className="episodeDetails">
-                <h2 className="episodeTitle">{name}</h2>
-                <p className="episodeOverview">{overview}</p>
-              </div>
+        list.map(({ id, episode_number, still_path, overview, name }) => (
+          <div
+            key={id}
+            className="episodeWrapper"
+            onClick={() => {
+              handleEpisodeClick({
+                mediaId,
+                seasonNumber,
+                episode_number,
+              });
+            }}
+          >
+            <div className="episodePoster">
+              <img
+                src={
+                  still_path ? getImagePath(still_path) : posterFallBackImage
+                }
+                alt="not found"
+                onError={(event) => {
+                  handleFallBackImage(event, posterFallBackImage);
+                }}
+              />
             </div>
-          )
-        )
+            <div className="episodeDetails">
+              <h2 className="episodeTitle">{name}</h2>
+              <p className="episodeOverview">{overview}</p>
+            </div>
+          </div>
+        ))
       )}
     </div>
   );
@@ -106,6 +100,7 @@ SeasonEpisodes.propTypes = {
   seasonEpisodes: PropTypes.array,
   currSeasonName: PropTypes.string,
   currSeasonNumber: PropTypes.number,
+  seasonNumber: PropTypes.number,
   mediaId: PropTypes.string,
 };
 

@@ -111,6 +111,7 @@ const AuthForm = () => {
               type="text"
               val={username}
               hasError={usernameHasError}
+              errorMessage="Username should not be empty"
             />
             <CustomInput
               onChange={updateField}
@@ -119,9 +120,9 @@ const AuthForm = () => {
               type="password"
               val={password}
               hasError={passwordHasError}
-              isPassword={true}
               handlePasswordVisibility={handlePasswordVisibility}
               isPasswordVisible={isPasswordVisible}
+              errorMessage="Password should not be empty"
             />
             <button
               className="authFormSubmitBtn"
