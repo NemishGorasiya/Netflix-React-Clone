@@ -1,3 +1,4 @@
+import { memo } from "react";
 import "./CustomInput.scss";
 import PropTypes from "prop-types";
 
@@ -24,7 +25,9 @@ const CustomInput = ({
         required={required}
         value={val}
         autoComplete="off"
-        onChange={onChange}
+        onChange={({ target: { value } }) => {
+          onChange(id, value);
+        }}
       />
 
       <label className="floatingLabel">{floatingLabel}</label>
@@ -60,4 +63,7 @@ CustomInput.propTypes = {
   isPasswordVisible: PropTypes.bool,
 };
 
-export default CustomInput;
+const MemoizedCustomInput = memo(CustomInput);
+export default MemoizedCustomInput;
+
+// export default memo(CustomInput);

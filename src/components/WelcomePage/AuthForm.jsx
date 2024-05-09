@@ -13,17 +13,21 @@ const TMDB_LOGIN_PAGE_LINK = "https://www.themoviedb.org/login";
 
 const AuthForm = () => {
   const [userAuthDetails, setUserAuthDetails] = useState({
-    username: { value: "", hasError: false },
-    password: { value: "", hasError: false, isVisible: false },
+    username: "",
+    password: "",
   });
 
+  const [validationStatus, setValidationStatus] = useState({
+    username: false,
+    password: false,
+  });
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isLoginBtnDisabled, setIsLoginBtnDisabled] = useState(false);
+
   const { username, password } = userAuthDetails;
-  const { value: usernameValue, hasError: usernameHasError } = username;
-  const {
-    value: passwordValue,
-    hasError: passwordHasError,
-    isVisible: isPasswordVisible,
-  } = password;
+  const { username: usernameHasError, password: passwordHasError } =
+    validationStatus;
 
   const navigate = useNavigate();
   const [, setLoggedInUser] = useLocalStorage("loggedInUser", null);
@@ -31,20 +35,18 @@ const AuthForm = () => {
   const [searchParams] = useSearchParams();
   const isLoginPage = searchParams.get("mode") === "login";
 
-  const handlePasswordVisibility = () => {
-    setUserAuthDetails((prevDetails) => ({
-      ...prevDetails,
-      password: {
-        ...prevDetails.password,
-        isVisible: !prevDetails.password.isVisible,
-      },
-    }));
-  };
+  const handlePasswordVisibility = useCallback(() => {
+    setIsPasswordVisible((prevState) => !prevState);
+  }, []);
 
   const updateField = useCallback((fieldName, value) => {
     setUserAuthDetails((prevDetails) => ({
       ...prevDetails,
-      [fieldName]: { ...prevDetails[fieldName], value, hasError: value === "" },
+      [fieldName]: value,
+    }));
+    setValidationStatus((prevState) => ({
+      ...prevState,
+      [fieldName]: value === "",
     }));
   }, []);
 
@@ -56,37 +58,41 @@ const AuthForm = () => {
   const handleSelectUser = (selectedUsername) => {
     setUserAuthDetails((prevDetails) => ({
       ...prevDetails,
-      username: { ...prevDetails.username, value: selectedUsername },
+      username: selectedUsername,
     }));
   };
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    if (usernameValue === "" || passwordValue === "") {
+    if (username === "" || password === "") {
       toast.error("Username or Password should not be empty");
       return;
     }
-    const sessionID = await handleTMDBLogin(usernameValue, passwordValue);
-
-    if (!sessionID) {
-      toast.error("Invalid credentials.");
-    } else {
-      setLoggedInUser({ sessionID, username: usernameValue });
-      toast.success("Logged In Successfully.");
-
-      const isAlreadyExist = accounts.some(
-        (account) => account.username === usernameValue
-      );
-      if (!isAlreadyExist) {
-        setAccounts([...accounts, { username: usernameValue, profileImg: "" }]);
+    setIsLoginBtnDisabled(true);
+    try {
+      const sessionID = await handleTMDBLogin(username, password);
+      if (!sessionID) {
+        toast.error("Invalid credentials.");
+      } else {
+        setLoggedInUser({ sessionID, username: username });
+        toast.success("Logged In Successfully.");
+        const isAlreadyExist = accounts.some(
+          (account) => account.username === username
+        );
+        if (!isAlreadyExist) {
+          setAccounts([...accounts, { username: username, profileImg: "" }]);
+        }
+        setUserAuthDetails((prevDetails) => ({
+          ...prevDetails,
+          username: "",
+          password: "",
+        }));
+        navigate("/home");
       }
-
-      setUserAuthDetails((prevDetails) => ({
-        ...prevDetails,
-        username: { ...prevDetails.username, value: "" },
-        password: { ...prevDetails.password, value: "" },
-      }));
-      navigate("/home");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoginBtnDisabled(false);
     }
   };
 
@@ -99,25 +105,29 @@ const AuthForm = () => {
         {isLoginPage ? (
           <>
             <CustomInput
-              onChange={(e) => updateField("username", e.target.value)}
+              onChange={updateField}
               floatingLabel="Username"
               id="username"
               type="text"
-              val={usernameValue}
+              val={username}
               hasError={usernameHasError}
             />
             <CustomInput
-              onChange={(e) => updateField("password", e.target.value)}
+              onChange={updateField}
               floatingLabel="Password"
               id="password"
-              type={isPasswordVisible ? "text" : "password"}
-              val={passwordValue}
+              type="password"
+              val={password}
               hasError={passwordHasError}
               isPassword={true}
               handlePasswordVisibility={handlePasswordVisibility}
               isPasswordVisible={isPasswordVisible}
             />
-            <button className="authFormSubmitBtn" type="submit">
+            <button
+              className="authFormSubmitBtn"
+              type="submit"
+              disabled={isLoginBtnDisabled}
+            >
               Login
             </button>
           </>
@@ -153,14 +163,10 @@ const AuthForm = () => {
         </div>
       )}
 
-      <p className="conditionToMovePage">
-        {isLoginPage
-          ? "New User ? Register Now."
-          : "Already have a TMDB Account ?"}
-      </p>
-
       <Link to={`/auth?mode=${isLoginPage ? "signUp" : "login"}`}>
-        Move to {isLoginPage ? "SignUp" : "Login"} Page{" "}
+        {isLoginPage
+          ? "New User ? Register Now. "
+          : "Already have a TMDB Account ? "}
         <i className="fa-solid fa-arrow-right"></i>
       </Link>
     </div>
