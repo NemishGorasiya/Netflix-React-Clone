@@ -17,7 +17,9 @@ Welcome to the Netflix Clone! This project is built using **ReactJS** and **SCSS
 - **Profile Management**:
   - Manage multiple user profiles (accounts)
 
-## 🎥 Preview
+## 🎥 Review
+
+- **Live link :** https://netflix-clone-byej.onrender.com/
 
 ## 🛠️ Built With
 
