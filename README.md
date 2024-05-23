@@ -19,8 +19,6 @@ Welcome to the Netflix Clone! This project is built using **ReactJS** and **SCSS
 
 ## 🎥 Preview
 
-![Netflix Clone Preview](link-to-screenshot-or-gif)
-
 ## 🛠️ Built With
 
 - **ReactJS**
@@ -41,8 +39,8 @@ Make sure you have the following installed on your machine:
 
 1. **Clone the repository**
 
-   git clone https://github.com/your-username/netflix-clone.git
-   cd netflix-clone
+   git clone https://github.com/NemishGorasiya/Netflix-React-Clone.git
+   cd Netflix-React-Clone
 
 2. **Install dependencies**
 
@@ -62,11 +60,13 @@ VITE_TMDB_API_KEY=your_tmdb_api_key
 
 To start the development server, run:
 
-Using npm: npm run dev
+Using npm:
+npm run dev
 
-    OR
+OR
 
-Using yarn: yarn dev
+Using yarn:
+yarn dev
 
 The application should now be running on http://localhost:3000.
 
