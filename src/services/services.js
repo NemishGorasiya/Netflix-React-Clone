@@ -4,7 +4,6 @@ const httpReq = async ({ url, options }) => {
 		const res = await fetch(BASE_URL + url, options);
 		if (res.status === 401) {
 			localStorage.removeItem("loggedInUser");
-			window.location.href = "/auth?mode=login";
 		}
 		const resJSON = await res.json();
 		return resJSON;
