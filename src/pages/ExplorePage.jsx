@@ -121,6 +121,7 @@ const ExplorePage = () => {
 
   const handleInputChange = useCallback(
     ({ target: { value } }) => {
+      console.log("val", value);
       setSearchQuery(value);
       if (value === "") {
         return;

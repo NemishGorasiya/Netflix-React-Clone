@@ -39,7 +39,10 @@ const AuthForm = () => {
     setIsPasswordVisible((prevState) => !prevState);
   }, []);
 
-  const updateField = useCallback((fieldName, value) => {
+  const updateField = useCallback((event, fieldName) => {
+    const {
+      target: { value },
+    } = event;
     setUserAuthDetails((prevDetails) => ({
       ...prevDetails,
       [fieldName]: value,

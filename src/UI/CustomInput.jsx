@@ -25,8 +25,8 @@ const CustomInput = ({
         required={required}
         value={val}
         autoComplete="off"
-        onChange={({ target: { value } }) => {
-          onChange(id, value);
+        onChange={(event) => {
+          onChange(event, id);
         }}
       />
 
