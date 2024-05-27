@@ -1,11 +1,12 @@
 # 🎬 Netflix Clone
 
-Welcome to the Netflix Clone! This project is built using **ReactJS** and **SCSS**, featuring a custom slider and infinite scrolling movie gallery, all implemented without any external packages. The data is fetched from the TMDB API, with authentication and session management included.
+Welcome to the Netflix Clone! This project is built using **ReactJS** and **SCSS**, featuring movies and tv.
+The data is fetched from the TMDB API, with authentication and session management included.
+
+**This clone is made for learning purposes and credits go to Netflix for design and TMDB for their data.**
 
 ## ✨ Features
 
-- **Custom Slider**: Implemented using pure JavaScript logic.
-- **Infinite Scrolling**: Seamless browsing of movies and TV shows without any external dependencies.
 - **Categories**:
   - Movies
   - TVs (Episodes)
@@ -13,13 +14,15 @@ Welcome to the Netflix Clone! This project is built using **ReactJS** and **SCSS
   - Add ratings
   - Add to watchlist
   - Add to favorites
-  - Full CRUD operations for these actions
+  - CRUD operations for these actions
 - **Profile Management**:
   - Manage multiple user profiles (accounts)
+- **Custom Slider**: Implemented using pure JavaScript logic.
+- **Infinite Scrolling**: Seamless browsing of movies and TV shows without any external dependencies.
 
 ## 🎥 Review
 
-- **Live link :** https://netflix-clone-byej.onrender.com/
+- **Live link :** https://netflix-react-clone.000webhostapp.com/
 
 ## 🛠️ Built With
 
@@ -41,14 +44,25 @@ Make sure you have the following installed on your machine:
 
 1. **Clone the repository**
 
-   git clone https://github.com/NemishGorasiya/Netflix-React-Clone.git
-   cd Netflix-React-Clone
+```
+ git clone https://github.com/NemishGorasiya/Netflix-React-Clone.git
+```
+
+```
+cd Netflix-React-Clone
+```
 
 2. **Install dependencies**
 
+```
    npm install
-   OR
-   yarn install
+```
+
+OR
+
+```
+yarn install
+```
 
 3. **Setting Up TMDB API**
 
@@ -56,19 +70,27 @@ Obtain an API key from <a href="https://www.themoviedb.org/" target="_blank">TMD
 
 Create a .env file in the root of the project and add your TMDB API key:
 
+```
 VITE_TMDB_API_KEY=your_tmdb_api_key
+```
 
 4. **Running the Project**
 
 To start the development server, run:
 
 Using npm:
+
+```
 npm run dev
+```
 
 OR
 
 Using yarn:
+
+```
 yarn dev
+```
 
 The application should now be running on http://localhost:3000.
 
@@ -76,11 +98,19 @@ The application should now be running on http://localhost:3000.
 
 To create a production build, run:
 
-Using npm: npm run build
+Using npm:
 
-    OR
+```
+npm run build
+```
 
-Using yarn: yarn build
+OR
+
+Using yarn:
+
+```
+yarn build
+```
 
 <div align="center">
 ⭐ Show your support by starring this repository! ⭐
