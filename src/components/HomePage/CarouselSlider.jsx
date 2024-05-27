@@ -25,7 +25,7 @@ const CarouselSlider = ({ mediaType }) => {
   }, [count, list]);
 
   const fetchMedia = useCallback(
-    async ({ abortController: abortController }) => {
+    async ({ abortController } = {}) => {
       try {
         const res = await fetchMediaData({
           mediaType,
@@ -39,11 +39,6 @@ const CarouselSlider = ({ mediaType }) => {
             list: results,
             isLoading: false,
           });
-        } else {
-          setMedia({
-            list: [],
-            isLoading: false,
-          });
         }
       } catch (error) {
         console.error(error);
@@ -54,7 +49,7 @@ const CarouselSlider = ({ mediaType }) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    fetchMedia({ abortController: abortController });
+    fetchMedia({ abortController });
     return () => {
       abortController.abort();
     };
@@ -65,7 +60,6 @@ const CarouselSlider = ({ mediaType }) => {
       {isLoading ? (
         <CarouselSliderSkeleton />
       ) : (
-        list &&
         list.map((displayMovie) => (
           <CarouselSlide
             key={displayMovie.id}

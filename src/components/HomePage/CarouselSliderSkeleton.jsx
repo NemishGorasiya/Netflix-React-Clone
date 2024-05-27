@@ -6,7 +6,6 @@ const CarouselSliderSkeleton = () => {
       <h1 className="movieTitle">
         <Skeleton height={60} width={350} />
       </h1>
-
       <p className="movieDescription">
         <Skeleton height={15} width={450} count={3} />
       </p>
