@@ -16,6 +16,10 @@ const useLocalStorage = (key, defaultValue) => {
     }
   });
 
+  const removeFromLocalStorage = () => {
+    localStorage.removeItem(key);
+  };
+
   const setLocalStorageStateValue = (valueOrFn) => {
     let newValue;
     if (typeof valueOrFn === "function") {
@@ -27,7 +31,7 @@ const useLocalStorage = (key, defaultValue) => {
     localStorage.setItem(key, JSON.stringify(newValue));
     setLocalStorageValue(newValue);
   };
-  return [localStorageValue, setLocalStorageStateValue];
+  return [localStorageValue, setLocalStorageStateValue, removeFromLocalStorage];
 };
 
 export default useLocalStorage;

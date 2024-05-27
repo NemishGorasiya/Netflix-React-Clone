@@ -1,15 +1,15 @@
 import "./ManageAccountsPage.scss";
 import Profile from "../components/ManageAccountsPage/Profile.jsx";
-import useLocalStorage from "../hooks/useLocalStorage.jsx";
 import CustomModal from "../UI/CustomModal.jsx";
 import Button from "../UI/Button.jsx";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import fallBackProfileImage from "../assets/profile_image.png";
 import { handleFallBackImage } from "../utils/utilityFunctions.js";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 const ManageAccountsPage = () => {
-  const [accounts, setAccounts] = useLocalStorage("accounts", []);
+  const { accounts, setAccounts } = useContext(AuthContext);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [usernameOfProfileToEdit, setUsernameOfProfileToEdit] = useState();
   const [profileImage, setProfileImage] = useState();
@@ -51,12 +51,8 @@ const ManageAccountsPage = () => {
   return (
     <div className="manageAccountsPage">
       {isEditProfileModalOpen && (
-        <CustomModal
-          shouldCloseOnOutSideClick={true}
-          handleCloseMyCustomModal={handleCloseMyCustomModal}
-        >
+        <CustomModal handleCloseMyCustomModal={handleCloseMyCustomModal}>
           <form
-            action=""
             className="editProfileForm"
             onSubmit={handleEditProfileBtnClick}
           >

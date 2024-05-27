@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { handleFallBackImage } from "../../utils/utilityFunctions";
 import fallBackProfileImage from "../../assets/profile_image.png";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const Profile = ({
   profileName,
@@ -12,7 +13,7 @@ const Profile = ({
   isAddAccount = false,
   handleOpenMyCustomModal,
 }) => {
-  const [loggedInUser] = useLocalStorage("loggedInUser", null);
+  const { loggedInUser } = useContext(AuthContext);
   const { username } = loggedInUser;
   const navigate = useNavigate();
 

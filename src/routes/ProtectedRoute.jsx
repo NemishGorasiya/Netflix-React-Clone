@@ -1,12 +1,17 @@
 import { Navigate, Outlet, ScrollRestoration } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocalStorage";
 import HomePageNavBar from "../components/HomePage/HomePageNavBar";
-import { Suspense } from "react";
+import { Suspense, useContext } from "react";
 import Loader from "../components/Loader";
+import { AuthContext } from "../context/AuthContext";
 
 const ProtectedRoute = () => {
-  const [loggedInUser] = useLocalStorage("loggedInUser", null);
-  return loggedInUser?.sessionID ? (
+  const { isLoggedIn } = useContext(AuthContext);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/" />;
+  }
+
+  return (
     <>
       <HomePageNavBar />
       <Suspense fallback={<Loader />}>
@@ -14,8 +19,6 @@ const ProtectedRoute = () => {
       </Suspense>
       <ScrollRestoration />
     </>
-  ) : (
-    <Navigate to="/" />
   );
 };
 

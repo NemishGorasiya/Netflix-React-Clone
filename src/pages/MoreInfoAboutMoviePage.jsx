@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Button from "../UI/Button";
 import RoundButton from "../UI/RoundButton";
 import "./MoreInfoAboutMoviePage.scss";
@@ -18,6 +18,7 @@ import CastProfileCardSkeleton from "../components/MoreInfoPage/CastProfileCardS
 import { formatDate, getImagePath } from "../utils/utilityFunctions";
 import RatingStars from "../UI/RatingStars";
 import TvSeasonsWrapper from "../components/MoreInfoPage/TvSeasonsWrapper";
+import { AuthContext } from "../context/AuthContext";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const [moreInfoOfMedia, setMoreInfoOfMedia] = useState({
@@ -50,7 +51,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const handleRatingChange = ({ target: { value } }) => {
     setRating(value);
   };
-  const [loggedInUser] = useLocalStorage("loggedInUser", null);
+  const { loggedInUser } = useContext(AuthContext);
   const { sessionID } = loggedInUser;
 
   const [searchParams] = useSearchParams();
@@ -236,11 +237,8 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
         )}
       </div>
       {isAddRatingModalOpen && (
-        <CustomModal
-          shouldCloseOnOutSideClick={true}
-          handleCloseMyCustomModal={handleCloseMyCustomModal}
-        >
-          <form action="" className="submitReviewForm" onSubmit={submitReview}>
+        <CustomModal handleCloseMyCustomModal={handleCloseMyCustomModal}>
+          <form className="submitReviewForm" onSubmit={submitReview}>
             <div className="inputWrapper">
               <label htmlFor="mediaName">Media Name</label>
               <input

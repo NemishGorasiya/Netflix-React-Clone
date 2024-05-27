@@ -1,5 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./Slider.scss";
 import { Link, useSearchParams } from "react-router-dom";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
@@ -14,8 +21,8 @@ import {
   fetchMoreInfoOfMedia,
   fetchWatchList,
 } from "../../services/services";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import Skeleton from "react-loading-skeleton";
+import { AuthContext } from "../../context/AuthContext";
 
 const Slider = ({
   categoryTitle,
@@ -30,7 +37,7 @@ const Slider = ({
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
   const sliderRef = useRef();
-  const [loggedInUser] = useLocalStorage("loggedInUser", null);
+  const { loggedInUser } = useContext(AuthContext);
   const { sessionID } = loggedInUser;
 
   const [media, setMedia] = useState({

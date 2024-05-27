@@ -109,7 +109,6 @@ const ExplorePage = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleDebounce = useCallback(
     debounce((value) => {
-      // navigate(`/explore?search=${value}&mediaType=${selectedMediaType}`);
       setSearchParams((searchParams) => {
         searchParams.set("search", value);
         searchParams.set("mediaType", selectedMediaType);
@@ -121,7 +120,6 @@ const ExplorePage = () => {
 
   const handleInputChange = useCallback(
     ({ target: { value } }) => {
-      console.log("val", value);
       setSearchQuery(value);
       if (value === "") {
         return;

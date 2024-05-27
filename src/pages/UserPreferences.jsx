@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import MediaGallery from "../components/MediaGallery";
-import useLocalStorage from "../hooks/useLocalStorage";
 import {
   fetchUserPreferenceList,
   submitMediaRating,
@@ -10,6 +9,7 @@ import {
 import "./UserPreferences.scss";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
+import { AuthContext } from "../context/AuthContext";
 const UserPreferences = ({ listType, mediaTypes }) => {
   const [media, setMedia] = useState({
     list: [],
@@ -27,7 +27,7 @@ const UserPreferences = ({ listType, mediaTypes }) => {
   const { mediaType } = useParams();
   const navigate = useNavigate();
 
-  const [loggedInUser] = useLocalStorage("loggedInUser", null);
+  const { loggedInUser } = useContext(AuthContext);
   const { sessionID } = loggedInUser;
 
   const getMedia = useCallback(
