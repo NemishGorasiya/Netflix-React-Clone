@@ -11,11 +11,13 @@ export const AuthContextProvider = ({ children }) => {
   );
   const [accounts, setAccounts] = useLocalStorage("accounts", []);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(!!loggedInUser?.sessionID);
+  const { sessionID } = loggedInUser || {};
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionID);
 
   useEffect(() => {
-    setIsLoggedIn(!!loggedInUser?.sessionID);
-  }, [loggedInUser]);
+    setIsLoggedIn(!!sessionID);
+  }, [loggedInUser, sessionID]);
 
   return (
     <AuthContext.Provider

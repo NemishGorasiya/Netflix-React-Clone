@@ -8,10 +8,11 @@ import fallBackProfileImage from "../../assets/profile_image.png";
 import { AuthContext } from "../../context/AuthContext";
 
 const AccountSetting = ({ isSideBarOpen }) => {
-  const [isAccountSettingVisible, setIsAccountSettingVisible] = useState(false);
-  const { accounts, loggedInUser, setLoggedInUser } = useContext(AuthContext);
-  const { username } = loggedInUser;
   const navigate = useNavigate();
+  const [isAccountSettingVisible, setIsAccountSettingVisible] = useState(false);
+  const { accounts, loggedInUser, removeLoggedInUser } =
+    useContext(AuthContext);
+  const { username } = loggedInUser;
   const accountSettingRef = useRef(null);
 
   const handleAccountSettingClick = () => {
@@ -25,7 +26,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
   };
 
   const handleLogOut = () => {
-    setLoggedInUser(null);
+    removeLoggedInUser();
     toast.success("User LoggedOut successfully.");
     navigate("/");
   };
