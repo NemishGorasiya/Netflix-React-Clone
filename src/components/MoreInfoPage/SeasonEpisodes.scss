@@ -11,6 +11,7 @@
   .seasonName {
     margin: 10px 0;
   }
+
   .episodeWrapper {
     width: 100%;
     display: flex;
@@ -42,6 +43,7 @@
         overflow: hidden;
         word-break: break-all;
       }
+
       .episodeOverview {
         text-overflow: ellipsis;
         overflow: hidden;
@@ -83,7 +85,6 @@
     .episodeWrapper {
       gap: 8px;
       padding: 10px 0;
-
       .episodeDetails {
         .episodeTitle {
           font-size: 18px;

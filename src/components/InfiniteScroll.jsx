@@ -13,6 +13,7 @@ const InfiniteScroll = ({
   listType,
 }) => {
   const observer = useRef();
+
   const lastUserRef = useCallback(
     (node) => {
       if (isLoading) return;
@@ -29,27 +30,16 @@ const InfiniteScroll = ({
 
   return (
     <>
-      {items.map((item, index) =>
-        items.length === index + 1 ? (
-          <div ref={lastUserRef} key={index}>
-            {renderItem({
-              ...item,
-              mediaType: mediaType,
-              removeFromList: removeFromList,
-              listType: listType,
-            })}
-          </div>
-        ) : (
-          <div key={index}>
-            {renderItem({
-              ...item,
-              mediaType: mediaType,
-              removeFromList: removeFromList,
-              listType: listType,
-            })}
-          </div>
-        )
-      )}
+      {items.map((item, index) => (
+        <div ref={items.length === index + 1 ? lastUserRef : null} key={index}>
+          {renderItem({
+            ...item,
+            mediaType,
+            removeFromList,
+            listType,
+          })}
+        </div>
+      ))}
       {isLoading && (
         <div className="loaderWrapper">
           <Loader />

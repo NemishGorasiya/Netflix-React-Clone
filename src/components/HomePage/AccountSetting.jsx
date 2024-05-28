@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import "./AccountSetting.scss";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../context/AuthContext";
 import { handleFallBackImage } from "../../utils/utilityFunctions";
 import fallBackProfileImage from "../../assets/profile_image.png";
-import { AuthContext } from "../../context/AuthContext";
+import "./AccountSetting.scss";
 
 const AccountSetting = ({ isSideBarOpen }) => {
   const navigate = useNavigate();
@@ -27,13 +27,9 @@ const AccountSetting = ({ isSideBarOpen }) => {
 
   const handleLogOut = () => {
     removeLoggedInUser();
-    toast.success("User LoggedOut successfully.");
+    toast.success("User logged out successfully.");
     navigate("/");
   };
-
-  const profileImage = accounts?.find(
-    (account) => account.username === username
-  )?.profileImg;
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -42,11 +38,13 @@ const AccountSetting = ({ isSideBarOpen }) => {
     };
   }, []);
 
+  const profileImage = accounts?.find(
+    (account) => account.username === username
+  )?.profileImg;
+
   return (
     <div
-      className={
-        isSideBarOpen ? "accountSetting sideBarOpen" : "accountSetting"
-      }
+      className={`accountSetting ${isSideBarOpen ? "sideBarOpen" : ""}`}
       ref={accountSettingRef}
       onClick={handleAccountSettingClick}
     >
@@ -56,9 +54,9 @@ const AccountSetting = ({ isSideBarOpen }) => {
             className="userProfileImage"
             src={profileImage}
             alt=""
-            onError={(event) => {
-              handleFallBackImage(event, fallBackProfileImage);
-            }}
+            onError={(event) =>
+              handleFallBackImage(event, fallBackProfileImage)
+            }
           />
         </div>
         <i className="fa-solid fa-chevron-down chevronDown"></i>
@@ -66,10 +64,10 @@ const AccountSetting = ({ isSideBarOpen }) => {
       {isAccountSettingVisible && (
         <div className="accountSettingOptions">
           <ul>
-            <Link to={"/manageAccounts"}>
+            <Link to="/manageAccounts">
               <li className="username">
                 {username}
-                <span className="viewProfile">manage accounts</span>
+                <span className="viewProfile">Manage accounts</span>
               </li>
             </Link>
             <li className="logOut" onClick={handleLogOut}>
@@ -83,7 +81,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
 };
 
 AccountSetting.propTypes = {
-  isSideBarOpen: PropTypes.bool,
+  isSideBarOpen: PropTypes.bool.isRequired,
 };
 
 export default AccountSetting;

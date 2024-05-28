@@ -1,8 +1,7 @@
-import React, { useState } from "react";
 import SeasonsList from "./SeasonsList";
 import SeasonEpisodes from "./SeasonEpisodes";
-import { fetchEpisodes } from "../../services/services";
 import { useSearchParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const TvSeasonsWrapper = ({ mediaId }) => {
   const [searchParams] = useSearchParams();
@@ -15,6 +14,10 @@ const TvSeasonsWrapper = ({ mediaId }) => {
       )}
     </>
   );
+};
+
+TvSeasonsWrapper.propTypes = {
+  mediaId: PropTypes.string,
 };
 
 export default TvSeasonsWrapper;

@@ -10,12 +10,7 @@ import { fetchEpisodes } from "../../services/services.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Loader from "../Loader.jsx";
 
-const SeasonEpisodes = ({
-  seasonEpisodes,
-  currSeasonNumber,
-  mediaId,
-  seasonNumber,
-}) => {
+const SeasonEpisodes = ({ mediaId, seasonNumber }) => {
   const [episodes, setEpisodes] = useState({
     list: [],
     seasonName: "",
@@ -103,11 +98,8 @@ const SeasonEpisodes = ({
 };
 
 SeasonEpisodes.propTypes = {
-  seasonEpisodes: PropTypes.array,
-  currSeasonName: PropTypes.string,
-  currSeasonNumber: PropTypes.number,
-  seasonNumber: PropTypes.number,
   mediaId: PropTypes.string,
+  seasonNumber: PropTypes.number,
 };
 
 export default SeasonEpisodes;

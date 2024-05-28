@@ -2,11 +2,13 @@
   display: inline-block;
   text-align: center;
   margin: 5px;
+
   .castImage {
     height: 100px;
     width: 100px;
     border-radius: 50%;
   }
+
   .castName {
     line-height: 20px;
     overflow: hidden;
@@ -15,6 +17,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
   .castCharacterName {
     font-size: 15px;
     line-height: 20px;
@@ -23,6 +26,7 @@
     overflow: hidden;
     white-space: nowrap;
   }
+
   .department {
     text-overflow: ellipsis;
     overflow: hidden;

@@ -40,7 +40,7 @@ const MovieCasts = ({ castsInfo }) => {
             <div
               className="viewAllCastsBtn"
               onClick={handleViewAllCastsClick}
-            ></div>
+            />
           )}
           {castsInfo.map((cast) => {
             return <CastProfileCard key={cast.id} castsInfo={cast} />;

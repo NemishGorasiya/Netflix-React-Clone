@@ -26,26 +26,27 @@ const HomePageNavBar = () => {
 
   useEffect(() => {
     const mediaWatcher = window.matchMedia("(min-width: 1140px)");
-    function updateSideBarStatus(e) {
+
+    const updateSideBarStatus = (e) => {
       if (e.matches) {
         setIsSideBarOpen(false);
       }
-    }
+    };
+
     mediaWatcher.addEventListener("change", updateSideBarStatus);
-    window.addEventListener("scroll", handleScroll);
-    return function cleanup() {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
       mediaWatcher.removeEventListener("change", updateSideBarStatus);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const handleClickOutside = ({ target }) => {
-    if (
-      sideBarRef.current &&
-      hamBurgerRef.current &&
-      !sideBarRef.current.contains(target) &&
-      !hamBurgerRef.current.contains(target)
-    ) {
+    const isOutsideSideBar = !sideBarRef.current?.contains(target);
+    const isOutsideHamburger = !hamBurgerRef.current?.contains(target);
+
+    if (isOutsideSideBar && isOutsideHamburger) {
       setIsSideBarOpen(false);
       document.body.classList.remove("modal-open");
     }
@@ -105,9 +106,7 @@ const HomePageNavBar = () => {
           className="hamburgerIcon"
           onClick={handleHamBurgerClick}
         >
-          <i
-            className={`fa-solid ${isSideBarOpen ? "fa-xmark" : "fa-bars"}`}
-          ></i>
+          <i className={`fa-solid ${isSideBarOpen ? "fa-xmark" : "fa-bars"}`} />
         </button>
       </div>
     </div>

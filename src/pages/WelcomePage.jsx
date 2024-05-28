@@ -6,10 +6,11 @@ import { AuthContext } from "../context/AuthContext";
 
 const WelcomePage = () => {
   const { isLoggedIn } = useContext(AuthContext);
-  console.log("isllll in welcome", isLoggedIn);
+
   if (isLoggedIn) {
     return <Navigate to="/home" />;
   }
+
   return (
     <div className="welcomePage">
       <Hero />

@@ -14,6 +14,7 @@
     transition: all 0.1s ease;
     color: rgba(150, 150, 150);
   }
+
   input {
     width: 100%;
     height: 100%;
@@ -27,9 +28,11 @@
     padding-top: 15px;
     padding-right: 10px;
   }
+
   input.passwordInput {
     padding-right: 35px;
   }
+
   input:focus ~ .floatingLabel,
   input:not(:focus).notEmpty ~ .floatingLabel {
     top: 12px;
@@ -58,17 +61,20 @@
     cursor: pointer;
   }
 }
+
 .customInputContainer.hasError {
   input {
     border: 1px solid red;
     outline: none;
   }
 }
+
 .customInputContainer {
   .errorMessage {
     display: none;
   }
 }
+
 .customInputContainer.hasError {
   .errorMessage {
     position: absolute;

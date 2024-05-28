@@ -8,6 +8,7 @@ const SignUpEmail = () => {
     hasError: false,
   });
   const { value, hasError } = email;
+
   const handleEmailChange = ({ target: { value } }) => {
     setEmail((prevValue) => ({
       ...prevValue,
@@ -15,6 +16,7 @@ const SignUpEmail = () => {
       hasError: value === "",
     }));
   };
+
   return (
     <div className="signUpEmailWrapper">
       <CustomInput

@@ -8,8 +8,7 @@ import { handleTMDBLogin } from "../../services/services";
 import { handleFallBackImage } from "../../utils/utilityFunctions";
 import fallBackProfileImage from "../../assets/profile_image.png";
 import { AuthContext } from "../../context/AuthContext";
-
-const TMDB_LOGIN_PAGE_LINK = "https://www.themoviedb.org/login";
+import { tmdbLoginPageLink } from "../../constants/constants";
 
 const AuthForm = () => {
   const { setLoggedInUser, accounts, setAccounts } = useContext(AuthContext);
@@ -45,7 +44,7 @@ const AuthForm = () => {
   }, []);
 
   const redirectToTMDBPage = useCallback(() => {
-    window.open(TMDB_LOGIN_PAGE_LINK, "_blank");
+    window.open(tmdbLoginPageLink, "_blank");
     navigate("/auth?mode=login");
   }, [navigate]);
 

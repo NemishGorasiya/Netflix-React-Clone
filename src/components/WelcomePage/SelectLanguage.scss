@@ -20,6 +20,7 @@
     }
   }
 }
+
 .selectLanguage::before {
   content: "\1F310";
   position: absolute;
@@ -40,7 +41,6 @@
     }
   }
   .selectLanguage::before {
-    content: "\1F310";
     font-size: 14px;
   }
 }

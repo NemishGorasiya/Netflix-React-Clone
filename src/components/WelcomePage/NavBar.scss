@@ -7,6 +7,7 @@
   .logo {
     display: flex;
     align-items: center;
+
     .logoImage {
       height: 63px;
     }
@@ -38,6 +39,7 @@
     padding: 15px 80px;
   }
 }
+
 @media screen and (max-width: 960px) {
   .navbar {
     padding: 15px 30px !important;
@@ -49,6 +51,7 @@
     }
   }
 }
+
 @media screen and (max-width: 600px) {
   .navbar {
     padding: 15px !important;
@@ -60,14 +63,9 @@
     }
   }
 }
+
 @media screen and (max-width: 380px) {
   .navbar {
     padding: 5px;
-
-    .NavBtnWrapper {
-      button {
-        padding: 0 5px;
-      }
-    }
   }
 }

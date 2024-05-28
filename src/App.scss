@@ -3,20 +3,25 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 ::selection {
   color: #f00;
   background: #0000;
 }
+
 *,
 html {
   scroll-behavior: smooth;
 }
+
 body {
   font-family: "Netflix Sans Regular";
   background: #000;
+
   button {
     cursor: pointer;
   }
+
   a {
     text-decoration: none;
     color: #fff;
@@ -28,8 +33,10 @@ body:has(#modal):has(.modalContainer),
 body.modal-open {
   overflow: hidden;
 }
+
 body.has-scroll-bar {
   padding-right: 17px;
+
   #root {
     .homePageNavBar {
       padding-right: 32px;

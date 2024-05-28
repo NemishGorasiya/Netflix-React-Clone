@@ -4,6 +4,7 @@ import "./FAQsSection.scss";
 
 const FAQsSection = () => {
   const [openedQuestionIndex, setOpenedQuestionIndex] = useState(-1);
+
   const handleRevealAnswer = (idx) => {
     setOpenedQuestionIndex((prevOpenedQuestionIndex) => {
       return idx === prevOpenedQuestionIndex ? -1 : idx;

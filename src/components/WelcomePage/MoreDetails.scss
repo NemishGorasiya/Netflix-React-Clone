@@ -1,6 +1,7 @@
 .moreDetails {
   background: #000;
   padding: 20px;
+
   .heroPageSections {
     color: #fff;
     max-width: 1200px;
@@ -12,6 +13,7 @@
         font-size: 28px;
         font-weight: 700;
       }
+
       .cardsContainer {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -44,6 +46,7 @@
             margin-top: auto;
             text-align: end;
           }
+
           .bottomDiv {
             text-align: start;
           }
@@ -52,10 +55,12 @@
     }
     .moreReasonsToJoinSection {
       margin-top: 60px;
+
       .cardsContainer {
         .card {
           background: linear-gradient(149deg, #192247 0%, #210e17 96.86%);
           padding: 30px 15px 25px;
+
           h2 {
             font-size: 22px;
           }
@@ -71,6 +76,7 @@
         .card {
           transition: transform 0.5s ease;
           cursor: pointer;
+
           &:hover {
             transform: scale(1.03);
             background: linear-gradient(180deg, #922556 0%, #210d0e 99.51%);
@@ -93,29 +99,6 @@
   }
 }
 @media screen and (max-width: 960px) {
-  .moreDetails {
-    .heroPageSections {
-      .heroPageSection {
-        .cardsContainer {
-          grid-template-columns: repeat(1, 1fr);
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 720px) {
-  .moreDetails {
-    .heroPageSections {
-      .heroPageSection {
-        .cardsContainer {
-          grid-template-columns: repeat(1, 1fr);
-        }
-      }
-    }
-  }
-}
-@media screen and (max-width: 600px) {
   .moreDetails {
     .heroPageSections {
       .heroPageSection {
