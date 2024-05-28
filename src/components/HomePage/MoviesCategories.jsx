@@ -1,9 +1,9 @@
-import CategoryWiseList from "./CategoryWiseList.jsx";
-import "./MoviesCategories.scss";
-import { movieTypes, tvShowsTypes } from "../../constants/constants.js";
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
-import { changeFormatOfTitle } from "../../utils/utilityFunctions.js";
+import CategoryWiseList from "./CategoryWiseList";
+import { movieTypes, tvShowsTypes } from "../../constants/constants";
+import { changeFormatOfTitle } from "../../utils/utilityFunctions";
+import "./MoviesCategories.scss";
 
 const MoviesCategories = ({ mediaType }) => {
 	const categories = mediaType === "movie" ? movieTypes : tvShowsTypes;
@@ -23,7 +23,7 @@ const MoviesCategories = ({ mediaType }) => {
 };
 
 MoviesCategories.propTypes = {
-	mediaType: PropTypes.string,
+	mediaType: PropTypes.string.isRequired,
 };
 
 export default MoviesCategories;

@@ -1,72 +1,63 @@
-import "./Profile.scss";
-import addAccountImage from "../../assets/plusImage.jpg";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
-import { handleFallBackImage } from "../../utils/utilityFunctions";
-import fallBackProfileImage from "../../assets/profile_image.png";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { handleFallBackImage } from "../../utils/utilityFunctions";
+import addAccountImage from "../../assets/plusImage.jpg";
+import fallBackProfileImage from "../../assets/profile_image.png";
+import "./Profile.scss";
 
 const Profile = ({
-  profileName,
-  profileImage,
-  isAddAccount = false,
-  handleOpenMyCustomModal,
+	profileName,
+	profileImage,
+	isAddAccount = false,
+	handleOpenMyCustomModal,
 }) => {
-  const { loggedInUser } = useContext(AuthContext);
-  const { username } = loggedInUser;
-  const navigate = useNavigate();
+	const { loggedInUser } = useContext(AuthContext);
+	const { username } = loggedInUser;
 
-  const handleProfileClick = () => {
-    if (username !== profileName) {
-      navigate("/auth?mode=login");
-    }
-  };
+	const profileLink = username !== profileName ? "/auth?mode=login" : "#";
 
-  const handleAddAccount = () => {
-    navigate("/auth");
-  };
-
-  return (
-    <div
-      className={`profileWrapper ${isAddAccount ? "addAccount" : ""}`}
-      onClick={isAddAccount ? handleAddAccount : null}
-    >
-      {!isAddAccount && (
-        <div
-          className="editProfileBtn"
-          onClick={() => {
-            handleOpenMyCustomModal(profileName);
-          }}
-        >
-          <i className="fa-solid fa-pen"></i>
-        </div>
-      )}
-
-      <div className="imgWrapper">
-        {isAddAccount ? (
-          <img src={addAccountImage} alt="addAccount" />
-        ) : (
-          <img
-            onClick={handleProfileClick}
-            src={profileImage}
-            alt={profileName}
-            onError={(event) => {
-              handleFallBackImage(event, fallBackProfileImage);
-            }}
-          />
-        )}
-      </div>
-      <h3 className="profileName">{isAddAccount ? "Add" : profileName}</h3>
-    </div>
-  );
+	return (
+		<div
+			className={`profileWrapper ${isAddAccount ? "addAccount" : ""}`}
+			onClick={isAddAccount ? () => {} : null}
+		>
+			{!isAddAccount && (
+				<div
+					className="editProfileBtn"
+					onClick={() => handleOpenMyCustomModal(profileName)}
+				>
+					<i className="fa-solid fa-pen"></i>
+				</div>
+			)}
+			<div className="imgWrapper">
+				{isAddAccount ? (
+					<Link to="/auth">
+						<img src={addAccountImage} alt="addAccount" />
+					</Link>
+				) : (
+					<Link to={profileLink}>
+						<img
+							src={profileImage}
+							alt={profileName}
+							onError={(event) =>
+								handleFallBackImage(event, fallBackProfileImage)
+							}
+						/>
+					</Link>
+				)}
+			</div>
+			<h3 className="profileName">{isAddAccount ? "Add" : profileName}</h3>
+		</div>
+	);
 };
 
 Profile.propTypes = {
-  profileName: PropTypes.string,
-  isAddAccount: PropTypes.bool,
-  handleOpenMyCustomModal: PropTypes.func,
-  profileImage: PropTypes.string,
+	profileName: PropTypes.string,
+	profileImage: PropTypes.string,
+	isAddAccount: PropTypes.bool,
+	handleOpenMyCustomModal: PropTypes.func,
 };
 
 export default Profile;

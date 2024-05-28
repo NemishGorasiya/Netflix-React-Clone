@@ -1,80 +1,81 @@
 import { useCallback, useEffect, useState } from "react";
-import "./CarouselSlider.scss";
 import PropTypes from "prop-types";
-import CarouselSliderSkeleton from "./CarouselSliderSkeleton";
+import "./CarouselSlider.scss";
 import CarouselSlide from "./CarouselSlide";
+import CarouselSliderSkeleton from "./CarouselSliderSkeleton";
 import { fetchMediaData } from "../../services/services";
 
 const CarouselSlider = ({ mediaType }) => {
-  const [count, setCount] = useState(0);
-  const [media, setMedia] = useState({
-    list: [],
-    isLoading: true,
-  });
-  const { list, isLoading } = media;
+	const [count, setCount] = useState(0);
+	const [media, setMedia] = useState({
+		list: [],
+		isLoading: true,
+	});
+	const { list, isLoading } = media ?? {};
 
-  useEffect(() => {
-    const myInterval = setInterval(() => {
-      setCount((prevCount) =>
-        prevCount + 1 === list.length ? 0 : prevCount + 1
-      );
-    }, 4000);
-    return () => {
-      clearInterval(myInterval);
-    };
-  }, [count, list]);
+	useEffect(() => {
+		const myInterval = setInterval(() => {
+			setCount((prevCount) =>
+				prevCount + 1 === list.length ? 0 : prevCount + 1
+			);
+		}, 4000);
 
-  const fetchMedia = useCallback(
-    async ({ abortController } = {}) => {
-      try {
-        const res = await fetchMediaData({
-          mediaType,
-          mediaCategory: "popular",
-          abortController,
-        });
+		return () => {
+			clearInterval(myInterval);
+		};
+	}, [list.length]);
 
-        if (res) {
-          const { results } = res;
-          setMedia({
-            list: results,
-            isLoading: false,
-          });
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [mediaType]
-  );
+	const fetchMedia = useCallback(
+		async ({ abortController } = {}) => {
+			try {
+				const res = await fetchMediaData({
+					mediaType,
+					mediaCategory: "popular",
+					abortController,
+				});
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    fetchMedia({ abortController });
-    return () => {
-      abortController.abort();
-    };
-  }, [fetchMedia]);
+				if (res) {
+					const { results } = res;
+					setMedia({
+						list: results,
+						isLoading: false,
+					});
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		},
+		[mediaType]
+	);
 
-  return (
-    <div className="displayMoviesContainer">
-      {isLoading ? (
-        <CarouselSliderSkeleton />
-      ) : (
-        list.map((displayMovie) => (
-          <CarouselSlide
-            key={displayMovie.id}
-            count={count}
-            displayMovie={displayMovie}
-            mediaType={mediaType}
-          />
-        ))
-      )}
-    </div>
-  );
+	useEffect(() => {
+		const abortController = new AbortController();
+		fetchMedia({ abortController });
+		return () => {
+			abortController.abort();
+		};
+	}, [fetchMedia]);
+
+	return (
+		<div className="displayMoviesContainer">
+			{isLoading ? (
+				<CarouselSliderSkeleton />
+			) : (
+				list.map((displayMovie) => (
+					<CarouselSlide
+						key={displayMovie.id}
+						count={count}
+						displayMovie={displayMovie}
+						mediaType={mediaType}
+					/>
+				))
+			)}
+		</div>
+	);
 };
 
 CarouselSlider.propTypes = {
-  mediaType: PropTypes.string,
+	mediaType: PropTypes.string.isRequired,
 };
 
 export default CarouselSlider;

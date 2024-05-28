@@ -1,25 +1,25 @@
 import { Navigate, Outlet, ScrollRestoration } from "react-router-dom";
-import HomePageNavBar from "../components/HomePage/HomePageNavBar";
 import { Suspense, useContext } from "react";
-import Loader from "../components/Loader";
 import { AuthContext } from "../context/AuthContext";
+import HomePageNavBar from "../components/HomePage/HomePageNavBar";
+import Loader from "../components/Loader";
 
 const ProtectedRoute = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+	const { isLoggedIn } = useContext(AuthContext);
 
-  if (!isLoggedIn) {
-    return <Navigate to="/" />;
-  }
+	if (!isLoggedIn) {
+		return <Navigate to="/" />;
+	}
 
-  return (
-    <>
-      <HomePageNavBar />
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
-      <ScrollRestoration getKey={(location) => location.pathname} />
-    </>
-  );
+	return (
+		<>
+			<HomePageNavBar />
+			<Suspense fallback={<Loader />}>
+				<Outlet />
+			</Suspense>
+			<ScrollRestoration getKey={(location) => location.pathname} />
+		</>
+	);
 };
 
 export default ProtectedRoute;

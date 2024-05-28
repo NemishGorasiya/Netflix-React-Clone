@@ -1,22 +1,22 @@
 import { Navigate } from "react-router-dom";
-import Hero from "../components/WelcomePage/Hero";
-import MoreDetails from "../components/WelcomePage/MoreDetails";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import Hero from "../components/WelcomePage/Hero";
+import MoreDetails from "../components/WelcomePage/MoreDetails";
 
 const WelcomePage = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+	const { isLoggedIn } = useContext(AuthContext);
 
-  if (isLoggedIn) {
-    return <Navigate to="/home" />;
-  }
+	if (isLoggedIn) {
+		return <Navigate to="/home" />;
+	}
 
-  return (
-    <div className="welcomePage">
-      <Hero />
-      <MoreDetails />
-    </div>
-  );
+	return (
+		<div className="welcomePage">
+			<Hero />
+			<MoreDetails />
+		</div>
+	);
 };
 
 export default WelcomePage;

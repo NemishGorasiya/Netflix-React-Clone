@@ -1,30 +1,34 @@
+import PropTypes from "prop-types";
 import SelectLanguage from "./SelectLanguage.jsx";
 import "./Footer.scss";
-import PropTypes from "prop-types";
 
 const Footer = ({ footerLinks }) => {
-  return (
-    <div className="footerSection">
-      <p>
-        Questions? Call{" "}
-        <a href="" className="mobileNo">
-          000-800-919-1694
-        </a>
-      </p>
-      <div className="footerLinksContainer">
-        {footerLinks.map(({ linkName }) => (
-          <a key={linkName} className="footerLink" href="">
-            {linkName}
-          </a>
-        ))}
-      </div>
-      <SelectLanguage />
-    </div>
-  );
+	return (
+		<div className="footerSection">
+			<p>
+				Questions? Call{" "}
+				<a href="tel:0008009191694" className="mobileNo">
+					000-800-919-1694
+				</a>
+			</p>
+			<div className="footerLinksContainer">
+				{footerLinks.map(({ linkName }, index) => (
+					<a key={index} className="footerLink">
+						{linkName}
+					</a>
+				))}
+			</div>
+			<SelectLanguage />
+		</div>
+	);
 };
 
 Footer.propTypes = {
-  footerLinks: PropTypes.array,
+	footerLinks: PropTypes.arrayOf(
+		PropTypes.shape({
+			linkName: PropTypes.string.isRequired,
+		})
+	).isRequired,
 };
 
 export default Footer;
