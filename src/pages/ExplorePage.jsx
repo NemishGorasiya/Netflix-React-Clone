@@ -49,7 +49,7 @@ const ExplorePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchParamMediaType = searchParams.get("mediaType");
+  const searchParamMediaType = searchParams.get("mediaType") || "movie";
 
   const fetchData = useCallback(
     async ({ pageNumber, abortController }) => {

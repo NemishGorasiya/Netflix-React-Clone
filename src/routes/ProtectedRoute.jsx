@@ -17,7 +17,7 @@ const ProtectedRoute = () => {
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
-      <ScrollRestoration />
+      <ScrollRestoration getKey={(location) => location.pathname} />
     </>
   );
 };

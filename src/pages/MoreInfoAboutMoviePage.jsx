@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import Button from "../UI/Button";
-import RoundButton from "../UI/RoundButton";
 import "./MoreInfoAboutMoviePage.scss";
 import Rating from "../UI/Rating";
 import MovieCasts from "../components/MoreInfoPage/MovieCasts";
@@ -12,7 +11,6 @@ import {
   submitMediaRating,
   updateUserPreferencesList,
 } from "../services/services";
-import useLocalStorage from "../hooks/useLocalStorage";
 import PropTypes from "prop-types";
 import CastProfileCardSkeleton from "../components/MoreInfoPage/CastProfileCardSkeleton";
 import { formatDate, getImagePath } from "../utils/utilityFunctions";
@@ -105,7 +103,9 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       listType,
     });
     if (res.success) {
-      toast.success("The item/record added into your favorite successfully.");
+      toast.success(
+        `The item/record added into your ${listType} successfully.`
+      );
     } else {
       toast.error(res.status_message);
     }
@@ -154,21 +154,25 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
               iconClassName={"fa-solid fa-play"}
               text={"Play"}
             />
+          </div>
+          <div className="rightBtns">
             {!episodeNumber && (
               <>
-                <RoundButton
+                <Button
+                  className={"btn playBtn"}
+                  iconClassName={"fa-solid fa-circle-plus"}
+                  text={"WatchList"}
                   onClick={() => {
                     addToUserPreferencesList({ listType: "watchlist" });
                   }}
-                  iconClassName="fa-solid fa-circle-plus"
-                  title={"Add To WatchList"}
                 />
-                <RoundButton
+                <Button
+                  className={"btn playBtn"}
+                  iconClassName={"fa-solid fa-thumbs-up"}
+                  text={"Favorite"}
                   onClick={() => {
                     addToUserPreferencesList({ listType: "favorite" });
                   }}
-                  iconClassName="fa-solid fa-thumbs-up"
-                  title={"Add To Favorite"}
                 />
               </>
             )}

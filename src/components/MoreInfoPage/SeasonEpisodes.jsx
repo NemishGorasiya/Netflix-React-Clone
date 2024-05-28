@@ -7,7 +7,7 @@ import {
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { fetchEpisodes } from "../../services/services.js";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Loader from "../Loader.jsx";
 
 const SeasonEpisodes = ({
@@ -21,6 +21,7 @@ const SeasonEpisodes = ({
     seasonName: "",
     isLoading: true,
   });
+  const episodeWrapperRef = useRef(null);
   const { list, seasonName, isLoading } = episodes;
   const navigate = useNavigate();
 
@@ -52,10 +53,15 @@ const SeasonEpisodes = ({
 
   useEffect(() => {
     getEpisodes();
+    episodeWrapperRef.current?.scrollIntoView();
   }, [getEpisodes]);
 
   return (
-    <div className="seasonEpisodes">
+    <div
+      className="seasonEpisodes"
+      style={{ scrollMargin: "150px" }}
+      ref={episodeWrapperRef}
+    >
       <h1 className="seasonName">{seasonName}</h1>
       {isLoading ? (
         <div className="loaderWrapper">
