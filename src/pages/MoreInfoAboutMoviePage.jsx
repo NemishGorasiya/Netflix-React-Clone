@@ -193,13 +193,13 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
         className="moviePoster"
         style={{
           background: `linear-gradient(to right,black 0% ,transparent 100%) , url(${
-            backdrop_path ?? poster_path ?? still_path
-              ? getImagePath(backdrop_path ?? poster_path ?? still_path)
+            backdrop_path || poster_path || still_path
+              ? getImagePath(backdrop_path || poster_path || still_path)
               : posterNotFound
           })`,
         }}
       >
-        <h1 className="movieTitle">{title ?? name}</h1>
+        <h1 className="movieTitle">{title || name}</h1>
       </div>
       <div className="movieDetailsWrapper">
         <div className="functionBtns">
@@ -304,7 +304,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
                 className="readOnly"
                 type="text"
                 id="mediaName"
-                value={title ?? name}
+                value={title || name}
                 readOnly
               />
             </div>

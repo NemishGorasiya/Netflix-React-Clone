@@ -6,7 +6,7 @@ import { getImagePath } from "../../utils/utilityFunctions";
 
 const CarouselSlide = ({ count, displayMovie, mediaType }) => {
   const { adult, title, name, backdrop_path, overview, id } =
-    displayMovie ?? {};
+    displayMovie || {};
 
   return (
     <div
@@ -18,7 +18,7 @@ const CarouselSlide = ({ count, displayMovie, mediaType }) => {
         )})`,
       }}
     >
-      <h1 className="movieTitle">{title ?? name}</h1>
+      <h1 className="movieTitle">{title || name}</h1>
 
       <p className="movieDescription" title={overview}>
         {overview}

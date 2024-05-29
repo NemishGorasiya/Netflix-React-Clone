@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Loader from "../components/Loader";
 import {
@@ -6,17 +6,18 @@ import {
   ratedListMediaTypes,
   watchListMediaTypes,
 } from "../constants/constants";
+import HomePage from "../pages/HomePage.jsx";
 import AuthenticationPage from "../pages/AuthenticationPage";
-import UserPreferences from "../pages/UserPreferences";
 import WelcomePage from "../pages/WelcomePage";
 import ProtectedRoute from "./ProtectedRoute";
-const HomePage = lazy(() => import("../pages/HomePage"));
-const ErrorPage = lazy(() => import("../pages/ErrorPage"));
-const MoreInfoAboutMoviePage = lazy(() =>
-  import("../pages/MoreInfoAboutMoviePage")
-);
-const ExplorePage = lazy(() => import("../pages/ExplorePage"));
-const ManageAccountsPage = lazy(() => import("../pages/ManageAccountsPage"));
+
+import {
+  LazyLoadedErrorPage,
+  LazyLoadedMoreInfoAboutMoviePage,
+  LazyLoadedExplorePage,
+  LazyLoadedManageAccountsPage,
+  LazyLoadedUserPreferences,
+} from "../index.js";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
             <HomePage />
           </Suspense>
         ),
-        errorElement: <ErrorPage />,
+        errorElement: <LazyLoadedErrorPage />,
       },
       {
         path: "/movies",
@@ -51,7 +52,7 @@ export const router = createBrowserRouter([
         path: "/movie/moreInfo",
         element: (
           <Suspense fallback={<Loader atCenter />}>
-            <MoreInfoAboutMoviePage mediaType="movie" />
+            <LazyLoadedMoreInfoAboutMoviePage mediaType="movie" />
           </Suspense>
         ),
       },
@@ -59,7 +60,7 @@ export const router = createBrowserRouter([
         path: "/tv/moreInfo",
         element: (
           <Suspense fallback={<Loader atCenter />}>
-            <MoreInfoAboutMoviePage mediaType="tv" />
+            <LazyLoadedMoreInfoAboutMoviePage mediaType="tv" />
           </Suspense>
         ),
       },
@@ -67,7 +68,7 @@ export const router = createBrowserRouter([
         path: "/explore",
         element: (
           <Suspense fallback={<Loader atCenter />}>
-            <ExplorePage />
+            <LazyLoadedExplorePage />
           </Suspense>
         ),
       },
@@ -75,7 +76,7 @@ export const router = createBrowserRouter([
         path: "/watchlist",
         element: (
           <Suspense fallback={<Loader atCenter />}>
-            <UserPreferences
+            <LazyLoadedUserPreferences
               listType="watchlist"
               mediaTypes={watchListMediaTypes}
             />
@@ -86,7 +87,7 @@ export const router = createBrowserRouter([
             path: ":mediaType",
             element: (
               <Suspense fallback={<Loader atCenter />}>
-                <UserPreferences
+                <LazyLoadedUserPreferences
                   listType="watchlist"
                   mediaTypes={watchListMediaTypes}
                 />
@@ -99,7 +100,7 @@ export const router = createBrowserRouter([
         path: "/favorite",
         element: (
           <Suspense fallback={<Loader atCenter />}>
-            <UserPreferences
+            <LazyLoadedUserPreferences
               listType="favorite"
               mediaTypes={favoriteListMediaTypes}
             />
@@ -110,7 +111,7 @@ export const router = createBrowserRouter([
             path: ":mediaType",
             element: (
               <Suspense fallback={<Loader atCenter />}>
-                <UserPreferences
+                <LazyLoadedUserPreferences
                   listType="favorite"
                   mediaTypes={favoriteListMediaTypes}
                 />
@@ -123,7 +124,7 @@ export const router = createBrowserRouter([
         path: "/rated",
         element: (
           <Suspense fallback={<Loader atCenter />}>
-            <UserPreferences
+            <LazyLoadedUserPreferences
               listType="rated"
               mediaTypes={ratedListMediaTypes}
             />
@@ -134,7 +135,7 @@ export const router = createBrowserRouter([
             path: ":mediaType",
             element: (
               <Suspense fallback={<Loader atCenter />}>
-                <UserPreferences
+                <LazyLoadedUserPreferences
                   listType="rated"
                   mediaTypes={ratedListMediaTypes}
                 />
@@ -147,7 +148,7 @@ export const router = createBrowserRouter([
         path: "/manageAccounts",
         element: (
           <Suspense fallback={<Loader atCenter />}>
-            <ManageAccountsPage />
+            <LazyLoadedManageAccountsPage />
           </Suspense>
         ),
       },
@@ -163,6 +164,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <ErrorPage atCenter />,
+    element: <LazyLoadedErrorPage atCenter />,
   },
 ]);

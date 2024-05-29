@@ -4,7 +4,7 @@
 
   .slideContainer {
     display: flex;
-    height: 100%;
+    height: 400px;
     overflow: hidden;
     scroll-behavior: smooth;
     gap: 15px;
@@ -64,11 +64,11 @@
   }
 
   .slideContainer.expanded {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    height: auto;
+    flex-wrap: wrap;
     .renderIfVisible {
-      height: 100%;
-      width: 100%;
+      width: calc((100% - 75px) / 6);
+      height: 400px;
       margin: 0;
     }
   }
@@ -126,12 +126,16 @@
 @media only screen and (max-width: 1180px) {
   .slider {
     .slideContainer {
+      height: 320px;
       .renderIfVisible {
         min-width: calc((100% - 60px) / 5);
       }
     }
     .slideContainer.expanded {
-      grid-template-columns: repeat(5, 1fr);
+      .renderIfVisible {
+        height: 320px;
+        min-width: calc((100% - 60px) / 5);
+      }
     }
   }
 }
@@ -145,7 +149,10 @@
       }
     }
     .slideContainer.expanded {
-      grid-template-columns: repeat(4, 1fr);
+      .renderIfVisible {
+        height: 270px;
+        min-width: calc((100% - 45px) / 4);
+      }
     }
   }
 }
@@ -158,7 +165,10 @@
       }
     }
     .slideContainer.expanded {
-      grid-template-columns: repeat(3, 1fr);
+      .renderIfVisible {
+        height: 230px;
+        min-width: calc((100% - 30px) / 3);
+      }
     }
   }
 }
