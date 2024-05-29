@@ -103,6 +103,7 @@ const ExplorePage = () => {
     }
   }, [hasMoreData, fetchData, pageNumber]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleDebounce = useCallback(
     debounce((value) => {
       const newSearchParams = new URLSearchParams();
