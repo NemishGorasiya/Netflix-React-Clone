@@ -11,7 +11,7 @@ const NavBar = () => {
         <img className="logoImage" src={NetflixLogo} alt="Netflix" />
       </div>
 
-      {!pathname.includes("auth") && (
+      {pathname === "/" && (
         <div className="NavBtnWrapper">
           <SelectLanguage />
           <Link to="/auth?mode=login">

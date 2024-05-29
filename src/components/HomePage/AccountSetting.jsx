@@ -53,7 +53,7 @@ const AccountSetting = ({ isSideBarOpen }) => {
           <img
             className="userProfileImage"
             src={profileImage}
-            alt=""
+            alt="profileImage"
             onError={(event) =>
               handleFallBackImage(event, fallBackProfileImage)
             }

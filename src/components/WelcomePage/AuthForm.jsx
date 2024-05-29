@@ -16,10 +16,12 @@ const AuthForm = () => {
     username: "",
     password: "",
   });
+  const { username, password } = userAuthDetails;
   const [validationStatus, setValidationStatus] = useState({
     username: false,
     password: false,
   });
+  const { username: usernameError, password: passwordError } = validationStatus;
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isLoginBtnDisabled, setIsLoginBtnDisabled] = useState(false);
 
@@ -31,8 +33,7 @@ const AuthForm = () => {
     setIsPasswordVisible((prevState) => !prevState);
   }, []);
 
-  const updateField = useCallback((event, fieldName) => {
-    const { value } = event.target;
+  const updateField = useCallback(({ target: { value } }, fieldName) => {
     setUserAuthDetails((prevDetails) => ({
       ...prevDetails,
       [fieldName]: value,
@@ -58,10 +59,9 @@ const AuthForm = () => {
   const handleLogin = useCallback(
     async (event) => {
       event.preventDefault();
-      const { username, password } = userAuthDetails;
 
       if (username === "" || password === "") {
-        toast.error("Username or Password should not be empty");
+        toast.error("Username or Password must not be empty");
         return;
       }
 
@@ -86,7 +86,7 @@ const AuthForm = () => {
         setIsLoginBtnDisabled(false);
       }
     },
-    [userAuthDetails, accounts, setLoggedInUser, setAccounts, navigate]
+    [username, password, accounts, setLoggedInUser, setAccounts, navigate]
   );
 
   return (
@@ -99,23 +99,23 @@ const AuthForm = () => {
           <>
             <CustomInput
               onChange={(e) => updateField(e, "username")}
-              floatingLabel="Username"
               id="username"
+              floatingLabel="Username"
               type="text"
-              val={userAuthDetails.username}
-              hasError={validationStatus.username}
-              errorMessage="Username should not be empty"
+              val={username}
+              hasError={usernameError}
+              errorMessage="Username must not be empty"
             />
             <CustomInput
               onChange={(e) => updateField(e, "password")}
               floatingLabel="Password"
               id="password"
               type={isPasswordVisible ? "text" : "password"}
-              val={userAuthDetails.password}
-              hasError={validationStatus.password}
+              val={password}
+              hasError={passwordError}
               handlePasswordVisibility={handlePasswordVisibility}
               isPasswordVisible={isPasswordVisible}
-              errorMessage="Password should not be empty"
+              errorMessage="Password must not be empty"
             />
             <button
               className="authFormSubmitBtn"
@@ -145,7 +145,7 @@ const AuthForm = () => {
               <div className="profileImage">
                 <img
                   src={profileImg}
-                  alt=""
+                  alt="profileImg"
                   onError={(event) =>
                     handleFallBackImage(event, fallBackProfileImage)
                   }
