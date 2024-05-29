@@ -17,6 +17,7 @@ import {
 import { AuthContext } from "../context/AuthContext";
 import { formatDate, getImagePath } from "../utils/utilityFunctions";
 import "./MoreInfoAboutMoviePage.scss";
+import posterNotFound from "../assets/posterNotFound.jpg";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const { loggedInUser } = useContext(AuthContext);
@@ -191,9 +192,11 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       <div
         className="moviePoster"
         style={{
-          background: `linear-gradient(to right,black 0% ,transparent 100%) , url(${getImagePath(
+          background: `linear-gradient(to right,black 0% ,transparent 100%) , url(${
             backdrop_path ?? poster_path ?? still_path
-          )})`,
+              ? getImagePath(backdrop_path ?? poster_path ?? still_path)
+              : posterNotFound
+          })`,
         }}
       >
         <h1 className="movieTitle">{title ?? name}</h1>
