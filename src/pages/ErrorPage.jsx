@@ -7,7 +7,7 @@ const ErrorPage = () => {
     <div className="errorPage">
       <HomePageNavBar />
       <div className="errorPageContent">
-        <img src={errorImage} alt="Page not found" />
+        <img src={errorImage} alt="Page not found image" />
       </div>
     </div>
   );

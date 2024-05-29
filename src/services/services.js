@@ -3,12 +3,19 @@ const BASE_URL = "https://api.themoviedb.org/3/";
 const httpReq = async ({ url, options }) => {
   try {
     const res = await fetch(BASE_URL + url, options);
-    if (res.status === 401) {
-      localStorage.removeItem("loggedInUser");
+
+    if (!res.ok) {
+      if (res.status === 401) {
+        localStorage.removeItem("loggedInUser");
+      }
+      const errorData = await res.json();
+      throw new Error(errorData.message || "An error occurred");
     }
-    return await res.json();
+
+    return res.json();
   } catch (error) {
-    console.error(error);
+    console.error("HTTP request failed:", error.message);
+    throw error;
   }
 };
 

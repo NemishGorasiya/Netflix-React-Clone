@@ -40,7 +40,7 @@ const Profile = ({
         <Link className="imgWrapper" to={profileLink}>
           <img
             src={profileImage}
-            alt={profileName}
+            alt="profile image"
             onError={(event) =>
               handleFallBackImage(event, fallBackProfileImage)
             }

@@ -146,7 +146,7 @@ const AuthForm = () => {
               <div className="profileImage">
                 <img
                   src={profileImg}
-                  alt="profileImg"
+                  alt="profile Image"
                   onError={(event) =>
                     handleFallBackImage(event, fallBackProfileImage)
                   }

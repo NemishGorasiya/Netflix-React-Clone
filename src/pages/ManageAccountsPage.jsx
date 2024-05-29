@@ -80,7 +80,7 @@ const ManageAccountsPage = () => {
                 <img
                   className="profileImagePreview"
                   src={profileImage}
-                  alt="profileImagePreview"
+                  alt="profile image preview"
                   onError={(event) => {
                     handleFallBackImage(event, fallBackProfileImage);
                   }}

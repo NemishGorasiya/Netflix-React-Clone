@@ -8,7 +8,7 @@ const NavBar = () => {
   return (
     <div className="navbar">
       <div className="logo">
-        <img className="logoImage" src={NetflixLogo} alt="Netflix" />
+        <img className="logoImage" src={NetflixLogo} alt="Netflix logo" />
       </div>
 
       {pathname === "/" && (

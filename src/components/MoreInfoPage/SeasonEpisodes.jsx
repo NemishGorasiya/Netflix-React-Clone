@@ -76,7 +76,7 @@ const SeasonEpisodes = ({ mediaId, seasonNumber }) => {
                 src={
                   still_path ? getImagePath(still_path) : posterFallBackImage
                 }
-                alt="not found"
+                alt="episode poster"
                 onError={(event) =>
                   handleFallBackImage(event, posterFallBackImage)
                 }

@@ -20,6 +20,7 @@ const CustomInput = memo(
         <input
           type={isPasswordVisible ? "text" : type}
           id={id}
+          aria-labelledby={id}
           className={`customInput ${value ? "notEmpty" : ""} ${
             type === "password" ? "passwordInput" : ""
           }`}

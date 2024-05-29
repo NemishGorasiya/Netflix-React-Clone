@@ -43,7 +43,7 @@ const CarouselSlide = ({ count, displayMovie, mediaType }) => {
 
       <div className="filmCertification">
         <div className="imgWrapper">
-          <img src={repeat} alt="roundImage" />
+          <img src={repeat} alt="filmCertification Image" />
         </div>
         <div className="certification">{adult ? "U/A13+" : "U"}</div>
       </div>

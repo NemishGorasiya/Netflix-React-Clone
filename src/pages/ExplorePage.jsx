@@ -21,7 +21,7 @@ const renderItem = ({ id, poster_path, mediaType }) => (
       <img
         className="posterImage"
         src={poster_path ? getImagePath(poster_path) : posterFallBackImage}
-        alt="image"
+        alt={`${mediaType} poster`}
         loading="lazy"
         decoding="async"
         onError={(event) => {
@@ -197,7 +197,7 @@ const ExplorePage = () => {
 
         {!isLoading && movieList?.length === 0 && (
           <div className="fallBackText">
-            <img src={No_Movie_Found} alt="No_Movie_Found" />
+            <img src={No_Movie_Found} alt="No movie found image" />
             <h1>No Relevant Media Found </h1>
             <p>Try to search something else... </p>
           </div>

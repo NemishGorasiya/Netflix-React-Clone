@@ -231,7 +231,7 @@ const Slider = ({
                       ? getImagePath(poster_path)
                       : posterFallBackImage
                   }
-                  alt="image"
+                  alt={`${mediaType} poster`}
                   loading="lazy"
                   decoding="async"
                   onError={(event) => {
