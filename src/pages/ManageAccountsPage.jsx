@@ -88,7 +88,7 @@ const ManageAccountsPage = () => {
               )}
             </div>
             <div className="editBtnWrapper">
-              <Button text="Edit Profile" />
+              <Button type="submit" text="Edit Profile" />
             </div>
           </form>
         </CustomModal>
