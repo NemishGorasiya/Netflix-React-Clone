@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import InfiniteScroll from "./InfiniteScroll";
-import posterFallBackImage from "../assets/posterNotFound.jpg";
-import NoMediaFound from "../assets/No_Movie_Found.png";
-import { getImagePath, handleFallBackImage } from "../utils/utilityFunctions";
+import posterFallBackImage from "../../assets/posterNotFound.jpg";
+import NoMediaFound from "../../assets/No_Movie_Found.png";
+import {
+  getImagePath,
+  handleFallBackImage,
+} from "../../utils/utilityFunctions";
 import "./MediaGallery.scss";
 
 const MediaGallery = ({

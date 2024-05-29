@@ -1,7 +1,7 @@
 import "./ManageAccountsPage.scss";
 import Profile from "../components/ManageAccountsPage/Profile.jsx";
-import CustomModal from "../UI/CustomModal.jsx";
-import Button from "../UI/Button.jsx";
+import CustomModal from "../components/common/CustomModal.jsx";
+import Button from "../components/common/Button.jsx";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import fallBackProfileImage from "../assets/profile_image.png";

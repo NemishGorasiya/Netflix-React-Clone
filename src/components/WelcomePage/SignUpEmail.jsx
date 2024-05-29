@@ -1,5 +1,5 @@
+import CustomInput from "../common/CustomInput";
 import "./SignUpEmail.scss";
-import CustomInput from "../../UI/CustomInput.jsx";
 import { useState } from "react";
 
 const SignUpEmail = () => {

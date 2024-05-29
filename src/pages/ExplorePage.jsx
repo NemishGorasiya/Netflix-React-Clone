@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import CustomInput from "../UI/CustomInput.jsx";
 import No_Movie_Found from "../assets/No_Movie_Found.png";
 import posterFallBackImage from "../assets/posterNotFound.jpg";
-import InfiniteScroll from "../components/InfiniteScroll.jsx";
+import InfiniteScroll from "../components/common/InfiniteScroll.jsx";
 import {
   fetchDataBySearchQuery,
   fetchMediaData,
@@ -14,6 +13,7 @@ import {
   handleFallBackImage,
 } from "../utils/utilityFunctions.js";
 import "./ExplorePage.scss";
+import CustomInput from "../components/common/CustomInput.jsx";
 
 const renderItem = ({ id, poster_path, mediaType }) => (
   <Link key={id} to={`/${mediaType}/moreInfo?id=${id}`}>

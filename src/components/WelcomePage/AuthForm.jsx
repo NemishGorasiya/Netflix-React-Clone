@@ -1,14 +1,15 @@
 import { useCallback, useContext, useState } from "react";
 import toast from "react-hot-toast";
-import CustomInput from "../../UI/CustomInput";
+// import CustomInput from "../../UI/CustomInput";
 import "./AuthForm.scss";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import Button from "../../UI/Button";
 import { handleTMDBLogin } from "../../services/services";
 import { handleFallBackImage } from "../../utils/utilityFunctions";
 import fallBackProfileImage from "../../assets/profile_image.png";
 import { AuthContext } from "../../context/AuthContext";
 import { tmdbLoginPageLink } from "../../constants/constants";
+import CustomInput from "../common/CustomInput";
+import Button from "../common/Button";
 
 const AuthForm = () => {
   const { setLoggedInUser, accounts, setAccounts } = useContext(AuthContext);
