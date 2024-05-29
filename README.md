@@ -20,6 +20,12 @@ The data is fetched from the TMDB API, with authentication and session managemen
 - **Custom Slider**: Implemented using pure JavaScript logic.
 - **Infinite Scrolling**: Seamless browsing of movies and TV shows without any external dependencies.
 
+## Utilized Libraries
+
+- **react-render-if-visible**: Enhanced website performance by selectively rendering components only when they are visible within the viewport.
+- **react-loading-skeleton**: Elevated user experience by incorporating loading skeletons during data fetching, providing visual feedback to users.
+- **react-hot-toast**: Streamlined user interaction by presenting informative messages and notifications, ensuring smooth communication with the user.
+
 ## 🎥 Review
 
 - **Live link :** https://netflix-react-clone.000webhostapp.com/
@@ -66,7 +72,7 @@ yarn install
 
 3. **Setting Up TMDB API**
 
-Obtain an API key from <a href="https://www.themoviedb.org/" target="_blank">TMDB</a>.
+Obtain an API key from <a href="https://www.themoviedb.org/" aria-describedby="TMDB website link" target="_blank">TMDB</a>.
 
 Create a .env file in the root of the project and add your TMDB API key:
 
