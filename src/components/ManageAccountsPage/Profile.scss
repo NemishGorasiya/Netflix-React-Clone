@@ -15,7 +15,7 @@
     right: 10px;
   }
 
-  .imgWrapper {
+  a.imgWrapper {
     height: 150px;
     width: 150px;
     border-radius: 50%;
@@ -33,6 +33,7 @@
       object-fit: cover;
     }
   }
+
   .profileName {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -41,7 +42,7 @@
   }
 }
 .profileWrapper.addAccount {
-  .imgWrapper {
+  a.imgWrapper {
     img {
       height: 60%;
       width: 60%;
@@ -51,13 +52,13 @@
 
 @media only screen and (max-width: 850px) {
   .profileWrapper {
-    .imgWrapper {
+    a.imgWrapper {
       height: 80px;
       width: 80px;
     }
   }
   .profileWrapper.addAccount {
-    .imgWrapper {
+    a.imgWrapper {
       height: 80px;
       width: 80px;
       img {

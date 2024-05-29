@@ -105,11 +105,10 @@ const ExplorePage = () => {
 
   const handleDebounce = useCallback(
     debounce((value) => {
-      setSearchParams((searchParams) => {
-        searchParams.set("search", value);
-        searchParams.set("mediaType", selectedMediaType);
-        return searchParams;
-      });
+      const newSearchParams = new URLSearchParams();
+      newSearchParams.set("search", value);
+      newSearchParams.set("mediaType", selectedMediaType);
+      setSearchParams(newSearchParams);
     }),
     [fetchData]
   );
@@ -195,7 +194,7 @@ const ExplorePage = () => {
           />
         </div>
 
-        {!isLoading && movieList && movieList.length === 0 && (
+        {!isLoading && movieList?.length === 0 && (
           <div className="fallBackText">
             <img src={No_Movie_Found} alt="No_Movie_Found" />
             <h1>No Relevant Media Found </h1>

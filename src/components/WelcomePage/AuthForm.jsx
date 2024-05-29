@@ -102,7 +102,7 @@ const AuthForm = () => {
               id="username"
               floatingLabel="Username"
               type="text"
-              val={username}
+              value={username}
               hasError={usernameError}
               errorMessage="Username must not be empty"
             />
@@ -111,7 +111,7 @@ const AuthForm = () => {
               floatingLabel="Password"
               id="password"
               type={isPasswordVisible ? "text" : "password"}
-              val={password}
+              value={password}
               hasError={passwordError}
               handlePasswordVisibility={handlePasswordVisibility}
               isPasswordVisible={isPasswordVisible}

@@ -24,7 +24,7 @@ const SignUpEmail = () => {
         required={true}
         id="email"
         type="email"
-        val={value}
+        value={value}
         onChange={handleEmailChange}
         className="signUpCustomInput"
         errorMessage="Email is required."
