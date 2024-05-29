@@ -21,7 +21,7 @@ export const getImagePath = (relativePath) => {
 };
 
 export const formatDate = (date) => {
-  if (date === "" || date === undefined) {
+  if (!date) {
     return "";
   }
   const dateToFormat = new Date(date);

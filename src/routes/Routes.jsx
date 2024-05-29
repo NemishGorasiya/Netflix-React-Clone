@@ -10,7 +10,6 @@ import HomePage from "../pages/HomePage.jsx";
 import AuthenticationPage from "../pages/AuthenticationPage";
 import WelcomePage from "../pages/WelcomePage";
 import ProtectedRoute from "./ProtectedRoute";
-
 import {
   LazyLoadedErrorPage,
   LazyLoadedMoreInfoAboutMoviePage,

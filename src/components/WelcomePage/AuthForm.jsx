@@ -1,6 +1,5 @@
 import { useCallback, useContext, useState } from "react";
 import toast from "react-hot-toast";
-// import CustomInput from "../../UI/CustomInput";
 import "./AuthForm.scss";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { handleTMDBLogin } from "../../services/services";

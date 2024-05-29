@@ -9,7 +9,6 @@ import {
 } from "../../utils/utilityFunctions.js";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
 import Loader from "../common/Loader.jsx";
-// import Loader from "../Loader.jsx";
 
 const SeasonEpisodes = ({ mediaId, seasonNumber }) => {
   const [episodes, setEpisodes] = useState({

@@ -19,7 +19,7 @@ const httpReq = async ({ url, options }) => {
   }
 };
 
-const setOptions = ({ method = "GET", headers = {}, body, signal }) => {
+const setOptions = ({ method = "GET", headers = {}, body, signal } = {}) => {
   const defaultHeaders = {
     accept: "application/json",
     Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
@@ -60,13 +60,13 @@ export const fetchMoreInfoOfMedia = async ({
 
 export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
   const url = `${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US&page=1`;
-  const options = setOptions({});
+  const options = setOptions();
   return await httpReq({ url, options });
 };
 
 const generateRequestToken = async () => {
   const url = `authentication/token/new`;
-  const options = setOptions({});
+  const options = setOptions();
   const resJSON = await httpReq({ url, options });
   return resJSON.success ? resJSON.request_token : false;
 };
@@ -84,7 +84,7 @@ const validateRequestTokenWithLogin = async (username, password, reqToken) => {
 
 const generateSessionId = async (reqToken) => {
   const url = `authentication/session/new?request_token=${reqToken}`;
-  const options = setOptions({});
+  const options = setOptions();
   const resJSON = await httpReq({ url, options });
   return resJSON.success ? resJSON.session_id : false;
 };
@@ -122,7 +122,7 @@ export const updateUserPreferencesList = async ({
 
 export const fetchWatchList = async ({ sessionID, mediaType }) => {
   const url = `account/account_id/watchlist/${mediaType}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
-  const options = setOptions({});
+  const options = setOptions();
   return await httpReq({ url, options });
 };
 
@@ -150,7 +150,7 @@ export const fetchDataBySearchQuery = async ({
   pageNumber = 1,
 }) => {
   const url = `search/${mediaType}?query=${searchQuery}&include_adult=false&language=en-US&page=${pageNumber}`;
-  const options = setOptions({});
+  const options = setOptions();
   return await httpReq({ url, options });
 };
 
@@ -171,7 +171,7 @@ export const submitMediaRating = async ({
     : `${mediaType}/${mediaId}/rating?session_id=${sessionID}`;
   const options = setOptions({
     method,
-    headers: { "Content-Type": "application/json;charset=utf-8" },
+    headers: { "Content-Type": "application/json" },
     body: method === "DELETE" ? null : { value: rating },
   });
   return await httpReq({ url, options });
