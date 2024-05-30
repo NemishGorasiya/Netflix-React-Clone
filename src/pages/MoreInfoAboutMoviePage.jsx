@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import Button from "../components/common/Button";
 import TvSeasonsWrapper from "../components/MoreInfoPage/TvSeasonsWrapper";
 import MovieCasts from "../components/MoreInfoPage/MovieCasts";
-import CastProfileCardSkeleton from "../components/MoreInfoPage/CastProfileCardSkeleton";
 import {
   fetchMoreInfoOfMedia,
   updateUserPreferencesList,
@@ -158,7 +157,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   console.log("id", mediaId);
 
   return isLoading ? (
-    <Loader />
+    <Loader atCenter />
   ) : (
     <div className="moreInfoPage">
       <div
@@ -260,11 +259,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
         {mediaType === "tv" && !!seasons && (
           <TvSeasonsWrapper mediaId={mediaId} seasons={seasons} />
         )}
-        {isLoading ? (
-          <CastProfileCardSkeleton />
-        ) : (
-          credits?.cast.length > 0 && <MovieCasts castsInfo={credits.cast} />
-        )}
+        {credits?.cast?.length && <MovieCasts castsInfo={credits.cast} />}
       </div>
     </div>
   );

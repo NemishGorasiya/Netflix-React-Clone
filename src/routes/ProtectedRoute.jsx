@@ -17,7 +17,7 @@ const ProtectedRoute = () => {
   return (
     <>
       <HomePageNavBar />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader atCenter />}>
         <Outlet />
       </Suspense>
       <ScrollRestoration getKey={(location) => location.pathname} />
