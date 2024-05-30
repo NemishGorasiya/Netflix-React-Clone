@@ -51,15 +51,21 @@ export const fetchMoreInfoOfMedia = async ({
   abortController,
 }) => {
   const url = episodeNumber
-    ? `${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}?append_to_response=credits&language=en-US&page=1`
-    : `${mediaType}/${mediaId}?append_to_response=credits&language=en-US&page=1`;
+    ? `${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}?append_to_response=credits&language=en-US`
+    : `${mediaType}/${mediaId}?append_to_response=credits&language=en-US`;
   const options = { signal: abortController?.signal };
   return await httpReq({ url, options });
 };
 
-export const fetchEpisodes = async ({ mediaId, mediaType, seasonNumber }) => {
-  const url = `${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US&page=1`;
-  return await httpReq({ url });
+export const fetchEpisodes = async ({
+  mediaId,
+  mediaType,
+  seasonNumber,
+  abortController,
+}) => {
+  const url = `${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US`;
+  const options = { signal: abortController?.signal };
+  return await httpReq({ url, options });
 };
 
 const generateRequestToken = async () => {
@@ -114,11 +120,6 @@ export const updateUserPreferencesList = async ({
     body: { media_type: mediaType, media_id: mediaId, [listType]: isAdding },
   };
   return await httpReq({ url, options });
-};
-
-export const fetchWatchList = async ({ sessionID, mediaType }) => {
-  const url = `account/account_id/watchlist/${mediaType}?language=en-US&page=1&session_id=${sessionID}&sort_by=created_at.desc`;
-  return await httpReq({ url });
 };
 
 export const fetchUserPreferenceList = async ({
