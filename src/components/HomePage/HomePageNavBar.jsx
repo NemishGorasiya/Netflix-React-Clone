@@ -8,6 +8,8 @@ import { navbarLinks } from "../../constants/constants";
 const HomePageNavBar = () => {
   const { pathname } = useLocation();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+
+  // To change navbar background from transparent to semi-transparent when scrolled 85px(can change) down
   const [scrolled, setScrolled] = useState(false);
   const sideBarRef = useRef(null);
   const hamBurgerRef = useRef(null);
@@ -21,8 +23,8 @@ const HomePageNavBar = () => {
   };
 
   useEffect(() => {
+    // It makes sure that sidebar is not visible when screen viewport greater than 1140px
     const mediaWatcher = window.matchMedia("(min-width: 1140px)");
-
     const updateSideBarStatus = (e) => {
       if (e.matches) {
         setIsSideBarOpen(false);
@@ -40,10 +42,8 @@ const HomePageNavBar = () => {
 
   const handleClickOutside = ({ target }) => {
     if (
-      sideBarRef.current &&
-      !sideBarRef.current.contains(target) &&
-      hamBurgerRef.current &&
-      !hamBurgerRef.current.contains(target)
+      !sideBarRef.current?.contains(target) &&
+      !hamBurgerRef.current?.contains(target)
     ) {
       setIsSideBarOpen(false);
       document.body.classList.remove("modal-open");

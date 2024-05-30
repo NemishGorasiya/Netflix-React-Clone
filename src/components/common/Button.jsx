@@ -1,7 +1,7 @@
 import "./Button.scss";
 import PropTypes from "prop-types";
 
-const Button = ({ iconClassName = "", text, ...props }) => {
+const Button = ({ iconClassName = "", text = "", ...props }) => {
   return (
     <button type="button" {...props}>
       {iconClassName && <i className={iconClassName} />} {text}
@@ -11,7 +11,7 @@ const Button = ({ iconClassName = "", text, ...props }) => {
 
 Button.propTypes = {
   iconClassName: PropTypes.string,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
 };
 
 export default Button;

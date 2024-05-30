@@ -1,12 +1,5 @@
-import PropTypes from "prop-types";
 import "./Loader.scss";
 
-const Loader = ({ atCenter }) => (
-  <div className={`loader ${atCenter ? "atCenter" : ""}`}></div>
-);
-
-Loader.propTypes = {
-  atCenter: PropTypes.bool,
-};
+const Loader = () => <div className="loader" />;
 
 export default Loader;

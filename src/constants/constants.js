@@ -83,90 +83,69 @@ export const FAQs = [
 export const footerLinks = [
   {
     linkName: "FAQ",
-    redirectTo: "",
   },
   {
     linkName: "Help Centre",
-    redirectTo: "",
   },
   {
     linkName: "Account",
-    redirectTo: "",
   },
   {
     linkName: "Media Centre",
-    redirectTo: "",
   },
   {
     linkName: "Investor Relations",
-    redirectTo: "",
   },
   {
     linkName: "Jobs",
-    redirectTo: "",
   },
   {
     linkName: "Ways to Watch",
-    redirectTo: "",
   },
   {
     linkName: "Terms of Use",
-    redirectTo: "",
   },
   {
     linkName: "Privacy",
-    redirectTo: "",
   },
   {
     linkName: "Cookie Preferences",
-    redirectTo: "",
   },
   {
     linkName: "Corporate Information",
-    redirectTo: "",
   },
   {
     linkName: "Contact Us",
-    redirectTo: "",
   },
   {
     linkName: "Speed Test",
-    redirectTo: "",
   },
   {
     linkName: "Legal Notices",
-    redirectTo: "",
   },
   {
     linkName: "Only on Netflix",
-    redirectTo: "",
   },
 ];
 
 export const AuthenticationPageFooterLinks = [
   {
     linkName: "FAQ",
-    redirectTo: "",
   },
   {
     linkName: "Help Centre",
-    redirectTo: "",
   },
   {
     linkName: "Terms of Use",
-    redirectTo: "",
   },
   {
     linkName: "Privacy",
-    redirectTo: "",
   },
   {
     linkName: "Cookie Preferences",
-    redirectTo: "",
   },
   {
     linkName: "Corporate Information",
-    redirectTo: "",
   },
 ];
 

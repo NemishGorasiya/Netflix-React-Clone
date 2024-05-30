@@ -16,8 +16,9 @@ const Profile = ({
   const { loggedInUser } = useContext(AuthContext);
   const { username } = loggedInUser;
 
-  const profileLink = username !== profileName ? "/auth?mode=login" : "#";
+  const profileLink = username === profileName ? "#" : "/auth?mode=login";
 
+  // isAddAccount indicates that it is not profileCard but it is last card in row that is used to add new account
   return (
     <div
       className={`profileWrapper ${isAddAccount ? "addAccount" : ""}`}
@@ -34,7 +35,7 @@ const Profile = ({
 
       {isAddAccount ? (
         <Link className="imgWrapper" to="/auth">
-          <img src={addAccountImage} alt="addAccount" />
+          <img src={addAccountImage} alt="add new Account" />
         </Link>
       ) : (
         <Link className="imgWrapper" to={profileLink}>

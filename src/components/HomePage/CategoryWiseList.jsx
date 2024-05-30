@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
-import { changeFormatOfTitle } from "../../utils/utilityFunctions";
+import { formatTitle } from "../../utils/utilityFunctions";
 import Slider from "./Slider";
 import "./CategoryWiseList.scss";
 
@@ -14,6 +14,8 @@ const CategoryWiseList = ({
   listType,
 }) => {
   const navigate = useNavigate();
+
+  // if there is less data then no need to display "show more" button
   const [isNeedToExpand, setIsNeedToExpand] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -32,9 +34,7 @@ const CategoryWiseList = ({
   return (
     <div className="categoryWiseList">
       <div className="categoryHeader">
-        <h3 className="categoryHeading">
-          {changeFormatOfTitle(categoryTitle)}
-        </h3>
+        <h3 className="categoryHeading">{formatTitle(categoryTitle)}</h3>
         {isNeedToExpand && (
           <p className="viewAll" onClick={handleViewAllClick}>
             View {isExpanded ? "Less" : "All"}
@@ -42,6 +42,8 @@ const CategoryWiseList = ({
         )}
       </div>
 
+      {/* RenderIfVisible for improving performance by selectively rendering
+      components only when they are visible within the viewport */}
       <RenderIfVisible stayRendered={true}>
         <Slider
           categoryTitle={categoryTitle}

@@ -24,7 +24,6 @@ const SeasonEpisodes = ({ mediaId, seasonNumber }) => {
     navigate(
       `/tv/moreInfo?id=${mediaId}&season=${seasonNumber}&episode=${episode_number}`
     );
-    window.scrollTo(0, 0);
   };
 
   const getEpisodes = useCallback(async () => {

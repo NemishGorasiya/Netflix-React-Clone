@@ -36,6 +36,8 @@ const FAQsSection = () => {
               className={
                 idx === openedQuestionIndex ? "answer opened" : "answer"
               }
+              // dangerouslySetInnerHTML to set innerHTML
+              // Ex ."<b>Nemish<br/><br/>Gorasiya</b>" from constants.js
               dangerouslySetInnerHTML={{ __html: answer }}
             ></div>
           </div>

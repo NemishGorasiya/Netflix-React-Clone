@@ -9,6 +9,7 @@ const Footer = ({ footerLinks }) => {
         Questions? Call{" "}
         <a
           href="tel:0008009191694"
+          // aria-describedby from accessibility purpose
           aria-describedby="telephone 0008009191694"
           className="mobileNo"
         >

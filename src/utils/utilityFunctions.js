@@ -12,7 +12,7 @@ export const handleFallBackImage = (event, fallBackImage) => {
   event.target.src = fallBackImage;
 };
 
-export const changeFormatOfTitle = (title) => {
+export const formatTitle = (title) => {
   return title.replaceAll("_", " ");
 };
 

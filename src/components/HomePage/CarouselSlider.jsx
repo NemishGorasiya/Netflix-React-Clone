@@ -13,6 +13,7 @@ const CarouselSlider = ({ mediaType }) => {
   });
   const { list, isLoading } = media || {};
 
+  // for automatic slide change at interval of 4 second
   useEffect(() => {
     const myInterval = setInterval(() => {
       setCount((prevCount) =>

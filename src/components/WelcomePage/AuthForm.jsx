@@ -49,6 +49,7 @@ const AuthForm = () => {
     navigate("/auth?mode=login");
   }, [navigate]);
 
+  // To select user from already loggedInUsers
   const handleSelectUser = useCallback((selectedUsername) => {
     setUserAuthDetails((prevDetails) => ({
       ...prevDetails,
