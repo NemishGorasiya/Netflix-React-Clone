@@ -26,29 +26,37 @@ const SeasonEpisodes = ({ mediaId, seasonNumber }) => {
     );
   };
 
-  const getEpisodes = useCallback(async () => {
-    try {
-      const res = await fetchEpisodes({
-        mediaId,
-        mediaType: "tv",
-        seasonNumber,
-      });
-      if (res) {
-        const { episodes, name } = res;
-        setEpisodes({
-          list: episodes,
-          seasonName: name,
-          isLoading: false,
+  const getEpisodes = useCallback(
+    async ({ abortController } = {}) => {
+      try {
+        const res = await fetchEpisodes({
+          mediaId,
+          mediaType: "tv",
+          seasonNumber,
+          abortController,
         });
+        if (res) {
+          const { episodes, name } = res;
+          setEpisodes({
+            list: episodes,
+            seasonName: name,
+            isLoading: false,
+          });
+          episodeWrapperRef.current?.scrollIntoView();
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [mediaId, seasonNumber]);
+    },
+    [mediaId, seasonNumber]
+  );
 
   useEffect(() => {
-    getEpisodes();
-    episodeWrapperRef.current?.scrollIntoView();
+    const abortController = new AbortController();
+    getEpisodes({ abortController });
+    return () => {
+      abortController.abort();
+    };
   }, [getEpisodes]);
 
   return (

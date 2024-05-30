@@ -13,8 +13,9 @@ import {
 import { AuthContext } from "../context/AuthContext";
 import { formatDate, getImagePath } from "../utils/utilityFunctions";
 import "./MoreInfoAboutMoviePage.scss";
-import posterNotFound from "../assets/posterNotFound.jpg";
+import fallbackPoster from "../assets/fallbackPoster.png";
 import RatingSection from "../components/MoreInfoPage/RatingSection";
+import Loader from "../components/common/Loader";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const { loggedInUser } = useContext(AuthContext);
@@ -50,29 +51,26 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const episodeNumber = searchParams.get("episode");
 
   const fetchMovieData = useCallback(
-    async ({ abortController }) => {
-      const response = await fetchMoreInfoOfMedia({
-        mediaId: mediaId,
-        mediaType: mediaType,
-        seasonNumber,
-        episodeNumber,
-        abortController,
-      });
-      setMoreInfoOfMedia({
-        data: response,
-        isLoading: false,
-      });
+    async ({ abortController } = {}) => {
+      try {
+        const response = await fetchMoreInfoOfMedia({
+          mediaId,
+          mediaType,
+          seasonNumber,
+          episodeNumber,
+          abortController,
+        });
+        setMoreInfoOfMedia({
+          data: response,
+          isLoading: false,
+        });
+      } catch (error) {
+        console.error(error);
+      }
     },
-    [episodeNumber, mediaId, mediaType, seasonNumber]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [episodeNumber, mediaId, mediaType]
   );
-
-  useEffect(() => {
-    const abortController = new AbortController();
-    fetchMovieData({ abortController: abortController });
-    return () => {
-      abortController.abort();
-    };
-  }, [fetchMovieData]);
 
   // UserPreferencesList like watchList and favoriteList
   const addToUserPreferencesList = async ({ listType }) => {
@@ -124,6 +122,14 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     }
   };
 
+  useEffect(() => {
+    const abortController = new AbortController();
+    fetchMovieData({ abortController: abortController });
+    return () => {
+      abortController.abort();
+    };
+  }, [fetchMovieData]);
+
   const {
     credits,
     seasons,
@@ -147,7 +153,13 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const runTimeHours = parseInt(runtime / 60);
   const runTimeMinutes = runtime - runTimeHours * 60;
 
-  return (
+  console.log("type", mediaType === "tv" && !!seasons);
+  console.log("seas", seasons);
+  console.log("id", mediaId);
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className="moreInfoPage">
       <div
         className="moviePoster"
@@ -155,7 +167,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
           background: `linear-gradient(to right,black 0% ,transparent 100%) , url(${
             backdrop_path || poster_path || still_path
               ? getImagePath(backdrop_path || poster_path || still_path)
-              : posterNotFound
+              : fallbackPoster
           })`,
         }}
       >
@@ -245,8 +257,8 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
             mediaId={mediaId}
           />
         </div>
-        {mediaType === "tv" && seasons && (
-          <TvSeasonsWrapper mediaId={mediaId} />
+        {mediaType === "tv" && !!seasons && (
+          <TvSeasonsWrapper mediaId={mediaId} seasons={seasons} />
         )}
         {isLoading ? (
           <CastProfileCardSkeleton />

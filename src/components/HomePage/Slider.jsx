@@ -20,6 +20,7 @@ const Slider = ({
   isExpanded = false,
   setNoNeedToExpand,
   isNeedToExpand,
+  list,
 }) => {
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
@@ -139,11 +140,18 @@ const Slider = ({
 
   useEffect(() => {
     const abortController = new AbortController();
-    fetchMedia({ abortController });
+    if (list?.length) {
+      setMedia({
+        list,
+        isLoading: false,
+      });
+    } else {
+      fetchMedia({ abortController });
+    }
     return () => {
       abortController.abort();
     };
-  }, [fetchMedia]);
+  }, [fetchMedia, list]);
 
   return isMediaLoading ? (
     <SliderSkeleton />
@@ -211,6 +219,7 @@ Slider.propTypes = {
   isExpanded: PropTypes.bool,
   setNoNeedToExpand: PropTypes.func.isRequired,
   isNeedToExpand: PropTypes.bool.isRequired,
+  list: PropTypes.array,
 };
 
 const SliderComponent = memo(Slider);

@@ -12,6 +12,7 @@ const CategoryWiseList = ({
   isSeasonList,
   seriesId,
   listType,
+  list,
 }) => {
   const navigate = useNavigate();
 
@@ -54,6 +55,7 @@ const CategoryWiseList = ({
           isExpanded={isExpanded}
           setNoNeedToExpand={setNoNeedToExpand}
           isNeedToExpand={isNeedToExpand}
+          list={list}
         />
       </RenderIfVisible>
     </div>
@@ -66,6 +68,7 @@ CategoryWiseList.propTypes = {
   isSeasonList: PropTypes.bool,
   seriesId: PropTypes.string,
   listType: PropTypes.string,
+  list: PropTypes.array,
 };
 
 export default CategoryWiseList;
