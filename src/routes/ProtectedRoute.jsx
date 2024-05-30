@@ -6,23 +6,23 @@ import Loader from "../components/common/Loader";
 import useScrollToTop from "../hooks/useScrollToTop";
 
 const ProtectedRoute = () => {
-	const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
-	useScrollToTop();
+  useScrollToTop();
 
-	if (!isLoggedIn) {
-		return <Navigate to="/" />;
-	}
+  if (!isLoggedIn) {
+    return <Navigate to="/" />;
+  }
 
-	return (
-		<>
-			<HomePageNavBar />
-			<Suspense fallback={<Loader />}>
-				<Outlet />
-			</Suspense>
-			<ScrollRestoration getKey={(location) => location.pathname} />
-		</>
-	);
+  return (
+    <>
+      <HomePageNavBar />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
+      <ScrollRestoration getKey={(location) => location.pathname} />
+    </>
+  );
 };
 
 export default ProtectedRoute;
