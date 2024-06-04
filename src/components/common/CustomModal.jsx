@@ -30,6 +30,7 @@ const CustomModal = ({ children, handleCloseMyCustomModal }) => {
 		if (document.body.scrollHeight > window.innerHeight) {
 			document.body.classList.add("has-scroll-bar");
 		}
+
 		return () => {
 			document.body.classList.remove("has-scroll-bar");
 			document.removeEventListener("mousedown", handleClickOutside);
