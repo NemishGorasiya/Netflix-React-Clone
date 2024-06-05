@@ -83,6 +83,7 @@ const AuthForm = () => {
         }
       } catch (error) {
         console.error(error);
+        toast.error("Invalid credentials.");
       } finally {
         setIsLoginBtnDisabled(false);
       }

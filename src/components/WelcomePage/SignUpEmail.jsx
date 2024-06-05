@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CustomInput from "../common/CustomInput";
 import "./SignUpEmail.scss";
 import { useState } from "react";
@@ -30,8 +31,11 @@ const SignUpEmail = () => {
         errorMessage="Email is required."
         hasError={hasError}
       />
+
       <button>
-        Get Started <i className="fa-solid fa-angle-right"></i>
+        <Link to="/auth?mode=login">
+          Get Started <i className="fa-solid fa-angle-right" />
+        </Link>
       </button>
     </div>
   );

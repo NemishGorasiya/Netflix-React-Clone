@@ -72,7 +72,7 @@ const MediaGallery = ({
 
   return (
     <div className="moviesGalleryWrapper">
-      {!isLoading && list.length === 0 ? (
+      {!isLoading && !list.length ? (
         <div className="fallbackImageWrapper">
           <img
             src={NoMediaFound}
