@@ -9,6 +9,7 @@ import {
 } from "../../utils/utilityFunctions.js";
 import posterFallBackImage from "../../assets/posterNotFound.jpg";
 import Loader from "../common/Loader.jsx";
+import { MEDIA_TYPES } from "../../constants/constants.js";
 
 const SeasonEpisodes = ({ mediaId, seasonNumber }) => {
   const [episodes, setEpisodes] = useState({
@@ -27,13 +28,13 @@ const SeasonEpisodes = ({ mediaId, seasonNumber }) => {
   };
 
   const getEpisodes = useCallback(
-    async ({ abortController } = {}) => {
+    async ({ signal } = {}) => {
       try {
         const res = await fetchEpisodes({
           mediaId,
-          mediaType: "tv",
+          mediaType: MEDIA_TYPES.TV,
           seasonNumber,
-          abortController,
+          signal,
         });
         if (res) {
           const { episodes, name } = res;
@@ -53,7 +54,7 @@ const SeasonEpisodes = ({ mediaId, seasonNumber }) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    getEpisodes({ abortController });
+    getEpisodes({ signal: abortController.signal });
     return () => {
       abortController.abort();
     };

@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
+  MEDIA_TYPES,
   favoriteListMediaTypes,
   ratedListMediaTypes,
   watchListMediaTypes,
@@ -31,20 +32,20 @@ const route = [
       },
       {
         path: "/movies",
-        element: <HomePage mediaType="movie" />,
+        element: <HomePage />,
       },
       {
         path: "/tv",
-        element: <HomePage mediaType="tv" />,
+        element: <HomePage />,
       },
       {
         path: "/movie/moreInfo",
-        element: <MoreInfoAboutMoviePage mediaType="movie" />,
+        element: <MoreInfoAboutMoviePage mediaType={MEDIA_TYPES.MOVIE} />,
       },
       {
         path: "/tv/moreInfo",
 
-        element: <MoreInfoAboutMoviePage mediaType="tv" />,
+        element: <MoreInfoAboutMoviePage mediaType={MEDIA_TYPES.TV} />,
       },
       {
         path: "/explore",

@@ -27,12 +27,12 @@ const CarouselSlider = ({ mediaType }) => {
   }, [list.length]);
 
   const fetchMedia = useCallback(
-    async ({ abortController } = {}) => {
+    async ({ signal } = {}) => {
       try {
         const res = await fetchMediaData({
           mediaType,
           mediaCategory: "popular",
-          abortController,
+          signal,
         });
 
         if (res) {
@@ -51,7 +51,7 @@ const CarouselSlider = ({ mediaType }) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    fetchMedia({ abortController });
+    fetchMedia({ signal: abortController.signal });
     return () => {
       abortController.abort();
     };

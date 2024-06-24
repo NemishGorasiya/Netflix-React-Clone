@@ -26,6 +26,9 @@ const Slider = ({
   const mediaId = searchParams.get("id");
   const sliderRef = useRef();
 
+  const startX = useRef(null);
+  const endX = useRef(null);
+
   const [media, setMedia] = useState({
     list: [],
     isLoading: true,
@@ -63,33 +66,33 @@ const Slider = ({
     handleSliderBtnVisibility(scrollLeft);
   };
 
-  let startX;
-  let endX;
+  // let startX;
+  // let endX;
+
+  const handleMouseDrag = () => {
+    if (startX.current - endX.current > 50) {
+      onNextBtnClick();
+    } else if (startX.current - endX.current < -50) {
+      onPrevBtnClick();
+    }
+  };
 
   // for touchscreen devices
   const onTouchStart = (event) => {
-    startX = event.changedTouches[0].clientX;
+    startX.current = event.changedTouches[0].clientX;
   };
   const onTouchEnd = (event) => {
-    endX = event.changedTouches[0].clientX;
-    if (startX - endX > 50) {
-      onNextBtnClick();
-    } else if (startX - endX < -50) {
-      onPrevBtnClick();
-    }
+    endX.current = event.changedTouches[0].clientX;
+    handleMouseDrag();
   };
 
   // for mouse devices
   const onDragStart = (event) => {
-    startX = event.clientX;
+    startX.current = event.clientX;
   };
   const onDragEnd = (event) => {
-    endX = event.clientX;
-    if (startX - endX > 50) {
-      onNextBtnClick();
-    } else if (startX - endX < -50) {
-      onPrevBtnClick();
-    }
+    endX.current = event.clientX;
+    handleMouseDrag();
   };
 
   // After collapsing expanded data, check the visibility of the previous and next buttons.
@@ -107,20 +110,20 @@ const Slider = ({
   }, [isMediaLoading, setNoNeedToExpand]);
 
   const fetchMedia = useCallback(
-    async ({ abortController }) => {
+    async ({ signal }) => {
       try {
         let res;
         if (isSeasonList || listType === "seasonList") {
           res = await fetchMoreInfoOfMedia({
             mediaId,
             mediaType,
-            abortController,
+            signal,
           });
         } else {
           res = await fetchMediaData({
             mediaType,
             mediaCategory: categoryTitle,
-            abortController,
+            signal,
           });
         }
 
@@ -146,7 +149,7 @@ const Slider = ({
         isLoading: false,
       });
     } else {
-      fetchMedia({ abortController });
+      fetchMedia({ signal: abortController.signal });
     }
     return () => {
       abortController.abort();

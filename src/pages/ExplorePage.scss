@@ -12,10 +12,12 @@
       top: 85px;
       padding: 10px 0;
       background: rgba(#000, 0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
 
       .mediaTypeSelectContainer {
         display: flex;
-        margin: 20px 0;
 
         .radioInputWrapper {
           margin-right: 15px;
@@ -24,6 +26,11 @@
             margin: 0 5px;
           }
         }
+      }
+
+      .selectCategory {
+        padding: 8px;
+        width: fit-content;
       }
     }
 

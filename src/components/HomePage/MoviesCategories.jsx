@@ -1,12 +1,17 @@
 import PropTypes from "prop-types";
 import RenderIfVisible from "react-render-if-visible";
 import CategoryWiseList from "./CategoryWiseList";
-import { movieTypes, tvShowsTypes } from "../../constants/constants";
+import {
+  MEDIA_TYPES,
+  movieTypes,
+  tvShowsTypes,
+} from "../../constants/constants";
 import { formatTitle } from "../../utils/utilityFunctions";
 import "./MoviesCategories.scss";
 
 const MoviesCategories = ({ mediaType }) => {
-  const categories = mediaType === "movie" ? movieTypes : tvShowsTypes;
+  const categories =
+    mediaType === MEDIA_TYPES.MOVIE ? movieTypes : tvShowsTypes;
 
   return (
     <div className="moviesCategoriesWrapper">

@@ -10,12 +10,12 @@ import { AuthContext } from "../context/AuthContext.jsx";
 
 const ManageAccountsPage = () => {
   const { accounts, setAccounts } = useContext(AuthContext);
-  const [open, setOpen] = useState(false);
-  const [usernameOfProfileToEdit, setUsernameOfProfileToEdit] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [usernameToEdit, setUsernameToEdit] = useState();
   const [profileImage, setProfileImage] = useState();
 
-  const handleClose = () => {
-    setOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleUploadImageChange = ({ target: { files } }) => {
@@ -26,9 +26,9 @@ const ManageAccountsPage = () => {
     };
   };
 
-  const handleOpen = (profileName) => {
-    setOpen(true);
-    setUsernameOfProfileToEdit(profileName);
+  const openModal = (profileName) => {
+    setIsModalOpen(true);
+    setUsernameToEdit(profileName);
   };
 
   const handleEditProfile = (event) => {
@@ -36,7 +36,7 @@ const ManageAccountsPage = () => {
     setAccounts((accounts) => {
       const tempArr = [...accounts];
       const idx = tempArr.findIndex(
-        (account) => account.username === usernameOfProfileToEdit
+        (account) => account.username === usernameToEdit
       );
       if (idx !== -1) {
         tempArr[idx].profileImg = profileImage;
@@ -44,21 +44,21 @@ const ManageAccountsPage = () => {
       }
       return tempArr;
     });
-    setOpen(false);
+    setIsModalOpen(false);
     setProfileImage(null);
   };
 
   return (
     <div className="manageAccountsPage">
-      {open && (
-        <CustomModal handleCloseMyCustomModal={handleClose}>
+      {isModalOpen && (
+        <CustomModal handleClose={closeModal}>
           <form className="editProfileForm" onSubmit={handleEditProfile}>
             <div className="inputWrapper">
               <label htmlFor="profileName">Profile Name</label>
               <input
                 type="text"
                 id="profileName"
-                value={usernameOfProfileToEdit}
+                value={usernameToEdit}
                 readOnly={true}
                 className="useNameInput"
               />
@@ -98,7 +98,7 @@ const ManageAccountsPage = () => {
               key={username}
               profileName={username}
               profileImage={profileImg}
-              handleOpenMyCustomModal={handleOpen}
+              handleOpenMyCustomModal={openModal}
             />
           ))}
           <Profile profileName="Add" isAddAccount />

@@ -1,9 +1,10 @@
+import { MEDIA_TYPES } from "../../constants/constants";
 import CategoryWiseList from "../HomePage/CategoryWiseList";
 import PropTypes from "prop-types";
 
 const SeasonsList = ({ seriesId, seasons }) => {
   const categoryTitle = "ALL SEASONS";
-  const mediaType = "tv";
+  const mediaType = MEDIA_TYPES.TV;
   const isSeasonList = true;
 
   return (

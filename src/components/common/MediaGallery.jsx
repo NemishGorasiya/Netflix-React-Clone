@@ -8,6 +8,7 @@ import {
   handleFallBackImage,
 } from "../../utils/utilityFunctions";
 import "./MediaGallery.scss";
+import { MEDIA_TYPES } from "../../constants/constants";
 
 const MediaGallery = ({
   list,
@@ -32,7 +33,7 @@ const MediaGallery = ({
       <div className="mediaPosterWrapper">
         <Link
           to={`${
-            mediaType === "episodes"
+            mediaType === MEDIA_TYPES.EPISODES
               ? `/tv/moreInfo?id=${show_id}&season=${season_number}&episode=${episode_number}`
               : `/${mediaType}/moreInfo?id=${id}`
           }`}
@@ -50,14 +51,13 @@ const MediaGallery = ({
         </Link>
         <div
           className="removeBtn"
-          onClick={(event) => {
+          onClick={() => {
             removeFromList({
-              event,
               mediaId: id,
               show_id,
-              mediaType,
               episode_number,
               season_number,
+              mediaType,
             });
           }}
         >
@@ -87,9 +87,9 @@ const MediaGallery = ({
           fetchMoreData={fetchMoreData}
           renderItem={renderItem}
           isLoading={isLoading}
-          listType={listType}
-          removeFromList={removeFromList}
-          mediaType={mediaType}
+          // listType={listType}
+          // removeFromList={removeFromList}
+          // mediaType={mediaType}
         />
       )}
     </div>

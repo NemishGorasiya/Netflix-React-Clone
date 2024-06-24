@@ -21,11 +21,11 @@ const RatingSection = ({
   const { loggedInUser } = useContext(AuthContext);
   const { sessionID } = loggedInUser;
 
-  const [open, setOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [rating, setRating] = useState(8);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handleRatingChange = ({ target: { value } }) => {
     setRating(value);
@@ -44,7 +44,7 @@ const RatingSection = ({
       });
       if (res.success) {
         toast.success("Rating submitted successfully");
-        handleClose();
+        closeModal();
       } else {
         toast.error(res.status_message);
       }
@@ -60,10 +60,10 @@ const RatingSection = ({
           rating={vote_average ? vote_average.toFixed(2) : "0.0"}
           ratingCount={vote_count}
         />
-        <Button className="rateNowBtn" text={"Rate Now"} onClick={handleOpen} />
+        <Button className="rateNowBtn" text={"Rate Now"} onClick={openModal} />
       </div>
-      {open && (
-        <CustomModal handleCloseMyCustomModal={handleClose}>
+      {isModalOpen && (
+        <CustomModal closeModal={closeModal}>
           <form className="submitReviewForm" onSubmit={submitReview}>
             <div className="inputWrapper">
               <label htmlFor="mediaName">Media Name</label>

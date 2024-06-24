@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext } from "react";
 import PropTypes from "prop-types";
 import useLocalStorage from "../hooks/useLocalStorage";
 
@@ -13,11 +13,12 @@ export const AuthContextProvider = ({ children }) => {
 
   const { sessionID } = loggedInUser || {};
 
-  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionID);
+  // const [isLoggedIn, setIsLoggedIn] = useState(!!sessionID);
 
-  useEffect(() => {
-    setIsLoggedIn(!!sessionID);
-  }, [loggedInUser, sessionID]);
+  // useEffect(() => {
+  //   setIsLoggedIn(!!sessionID);
+  // }, [loggedInUser, sessionID]);
+  const isLoggedIn = !!sessionID;
 
   return (
     <AuthContext.Provider

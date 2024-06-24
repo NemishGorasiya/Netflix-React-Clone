@@ -1,3 +1,5 @@
+export const MEDIA_TYPES = { MOVIE: "movie", TV: "tv", EPISODES: "episodes" };
+
 export const moreReasonsToJoin = [
   {
     title: "Enjoy on your TV",
@@ -151,6 +153,25 @@ export const AuthenticationPageFooterLinks = [
 
 export const movieTypes = ["now_playing", "upcoming", "popular", "top_rated"];
 
+export const movieCategories = [
+  {
+    label: "Now playing",
+    value: "now_playing",
+  },
+  {
+    label: "Upcoming",
+    value: "upcoming",
+  },
+  {
+    label: "Popular",
+    value: "popular",
+  },
+  {
+    label: "Top rated",
+    value: "top_rated",
+  },
+];
+
 export const tvShowsTypes = [
   "airing_today",
   "on_the_air",
@@ -158,11 +179,34 @@ export const tvShowsTypes = [
   "top_rated",
 ];
 
-export const watchListMediaTypes = ["movie", "tv"];
+export const tvShowsCategories = [
+  {
+    label: "Airing today",
+    value: "airing_today",
+  },
+  {
+    label: "On the air",
+    value: "on_the_air",
+  },
+  {
+    label: "Popular",
+    value: "popular",
+  },
+  {
+    label: "Top rated",
+    value: "top_rated",
+  },
+];
 
-export const favoriteListMediaTypes = ["movie", "tv"];
+export const watchListMediaTypes = [MEDIA_TYPES.MOVIE, MEDIA_TYPES.TV];
 
-export const ratedListMediaTypes = ["movie", "tv", "episodes"];
+export const favoriteListMediaTypes = [MEDIA_TYPES.MOVIE, MEDIA_TYPES.TV];
+
+export const ratedListMediaTypes = [
+  MEDIA_TYPES.MOVIE,
+  MEDIA_TYPES.TV,
+  MEDIA_TYPES.EPISODES,
+];
 
 export const navbarLinks = [
   {

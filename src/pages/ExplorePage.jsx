@@ -14,21 +14,11 @@ import {
 } from "../utils/utilityFunctions.js";
 import "./ExplorePage.scss";
 import CustomInput from "../components/common/CustomInput.jsx";
-
-const renderItem = ({ id, poster_path, mediaType }) => (
-  <Link key={id} to={`/${mediaType}/moreInfo?id=${id}`}>
-    <div className="movieCard">
-      <img
-        className="posterImage"
-        src={poster_path ? getImagePath(poster_path) : posterFallBackImage}
-        alt={`${mediaType} poster`}
-        onError={(event) => {
-          handleFallBackImage(event, posterFallBackImage);
-        }}
-      />
-    </div>
-  </Link>
-);
+import {
+  MEDIA_TYPES,
+  movieCategories,
+  tvShowsCategories,
+} from "../constants/constants.js";
 
 const ExplorePage = () => {
   const [movies, setMovies] = useState({
@@ -43,13 +33,30 @@ const ExplorePage = () => {
     isLoading,
     hasMore: hasMoreData,
   } = movies;
-  const [selectedMediaType, setSelectedMediaType] = useState("movie");
+  const [selectedMediaType, setSelectedMediaType] = useState(MEDIA_TYPES.MOVIE);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchParamMediaType = searchParams.get("mediaType") || "movie";
+  const searchParamMediaType =
+    searchParams.get("mediaType") || MEDIA_TYPES.MOVIE;
+
+  const renderItem = ({ id, poster_path }) => (
+    <Link key={id} to={`/${searchParamMediaType}/moreInfo?id=${id}`}>
+      <div className="movieCard">
+        <img
+          className="posterImage"
+          src={poster_path ? getImagePath(poster_path) : posterFallBackImage}
+          alt={`${searchParamMediaType} poster`}
+          onError={(event) => {
+            handleFallBackImage(event, posterFallBackImage);
+          }}
+        />
+      </div>
+    </Link>
+  );
 
   const fetchData = useCallback(
-    async ({ pageNumber, abortController }) => {
+    async ({ pageNumber, signal }) => {
       try {
         setMovies((prevMovies) => ({ ...prevMovies, isLoading: true }));
         let res;
@@ -68,7 +75,7 @@ const ExplorePage = () => {
             mediaType: mediaTypeParam,
             mediaCategory: mediaCategoryParam,
             pageNumber,
-            abortController,
+            signal,
           });
         }
         if (res) {
@@ -106,7 +113,7 @@ const ExplorePage = () => {
       newSearchParams.set("search", value);
       newSearchParams.set("mediaType", selectedMediaType);
       setSearchParams(newSearchParams);
-    }),
+    }, 1000),
     [fetchData]
   );
 
@@ -114,11 +121,16 @@ const ExplorePage = () => {
     ({ target: { value } }) => {
       setSearchQuery(value);
       if (value === "") {
-        return;
+        handleDebounce.cancel();
+        const newSearchParams = new URLSearchParams();
+        newSearchParams.set("search", value);
+        newSearchParams.set("mediaType", selectedMediaType);
+        setSearchParams(newSearchParams);
+      } else {
+        handleDebounce(value);
       }
-      handleDebounce(value);
     },
-    [handleDebounce]
+    [handleDebounce, selectedMediaType, setSearchParams]
   );
 
   const handleSelectMediaTypeChange = ({ target: { value } }) => {
@@ -129,9 +141,17 @@ const ExplorePage = () => {
     });
   };
 
+  const handleCategorySelect = ({ target: { value } }) => {
+    setSelectedCategory(value);
+    setSearchParams((searchParams) => {
+      searchParams.set("category", value);
+      return searchParams;
+    });
+  };
+
   useEffect(() => {
     const abortController = new AbortController();
-    fetchData({ abortController });
+    fetchData({ signal: abortController.signal });
     setMovies({
       list: [],
       pageNumber: 1,
@@ -147,6 +167,68 @@ const ExplorePage = () => {
     <div className="explorePage">
       <div className="explorePageContentWrapper">
         <div className="stickyContent">
+          <div className="mediaTypeSelectContainer">
+            Search In
+            <div className="radioInputWrapper">
+              <input
+                type="radio"
+                value={MEDIA_TYPES.MOVIE}
+                name="mediaType"
+                id={MEDIA_TYPES.MOVIE}
+                checked={searchParamMediaType === MEDIA_TYPES.MOVIE}
+                onChange={handleSelectMediaTypeChange}
+                disabled={
+                  !(
+                    !searchParams.get("category") ||
+                    movieCategories.some(
+                      (category) =>
+                        category.value === searchParams.get("category")
+                    )
+                  )
+                }
+              />
+              <label htmlFor={MEDIA_TYPES.MOVIE}>Movies</label>
+            </div>
+            <div className="radioInputWrapper">
+              <input
+                type="radio"
+                value={MEDIA_TYPES.TV}
+                name="mediaType"
+                id={MEDIA_TYPES.TV}
+                checked={searchParamMediaType === MEDIA_TYPES.TV}
+                onChange={handleSelectMediaTypeChange}
+                disabled={
+                  !(
+                    !searchParams.get("category") ||
+                    tvShowsCategories.some(
+                      (category) =>
+                        category.value === searchParams.get("category")
+                    )
+                  )
+                }
+              />
+              <label htmlFor={MEDIA_TYPES.TV}>TVs</label>
+            </div>
+          </div>
+          <select
+            disabled={searchParams.get("search")}
+            onChange={handleCategorySelect}
+            className="selectCategory"
+          >
+            <option value="" />
+            {(searchParamMediaType === MEDIA_TYPES.MOVIE
+              ? movieCategories
+              : tvShowsCategories
+            ).map((category) => (
+              <option
+                key={category.value}
+                value={category.value}
+                selected={searchParams.get("category") === category.value}
+              >
+                {category.label}
+              </option>
+            ))}
+          </select>
           <CustomInput
             type="search"
             id="search"
@@ -154,31 +236,6 @@ const ExplorePage = () => {
             onChange={handleInputChange}
             value={searchQuery}
           />
-          <div className="mediaTypeSelectContainer">
-            Search In
-            <div className="radioInputWrapper">
-              <input
-                type="radio"
-                value="movie"
-                name="mediaType"
-                id="movie"
-                checked={searchParamMediaType === "movie"}
-                onChange={handleSelectMediaTypeChange}
-              />
-              <label htmlFor="movie">Movies</label>
-            </div>
-            <div className="radioInputWrapper">
-              <input
-                type="radio"
-                value="tv"
-                name="mediaType"
-                id="tv"
-                checked={searchParamMediaType === "tv"}
-                onChange={handleSelectMediaTypeChange}
-              />
-              <label htmlFor="tv">TVs</label>
-            </div>
-          </div>
         </div>
 
         <div className="moviesGalleryWrapper">
@@ -186,7 +243,7 @@ const ExplorePage = () => {
             items={movieList}
             fetchMoreData={fetchMoreData}
             renderItem={renderItem}
-            mediaType={searchParamMediaType}
+            // mediaType={searchParamMediaType}
             isLoading={isLoading}
           />
         </div>
