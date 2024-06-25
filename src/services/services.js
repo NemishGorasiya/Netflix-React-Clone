@@ -1,3 +1,5 @@
+import { MEDIA_TYPES } from "../constants/constants";
+
 const BASE_URL = "https://api.themoviedb.org/3/";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -36,10 +38,10 @@ export const fetchMediaData = async ({
   mediaType,
   mediaCategory,
   pageNumber = 1,
-  abortController,
+  signal,
 }) => {
   const url = `${mediaType}/${mediaCategory}?language=en-US&page=${pageNumber}`;
-  const options = { signal: abortController?.signal };
+  const options = { signal };
   return await httpReq({ url, options });
 };
 
@@ -48,12 +50,12 @@ export const fetchMoreInfoOfMedia = async ({
   mediaType,
   seasonNumber,
   episodeNumber,
-  abortController,
+  signal,
 }) => {
   const url = episodeNumber
     ? `${mediaType}/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}?append_to_response=credits&language=en-US`
     : `${mediaType}/${mediaId}?append_to_response=credits&language=en-US`;
-  const options = { signal: abortController?.signal };
+  const options = { signal };
   return await httpReq({ url, options });
 };
 
@@ -61,10 +63,10 @@ export const fetchEpisodes = async ({
   mediaId,
   mediaType,
   seasonNumber,
-  abortController,
+  signal,
 }) => {
   const url = `${mediaType}/${mediaId}/season/${seasonNumber}?language=en-US`;
-  const options = { signal: abortController?.signal };
+  const options = { signal };
   return await httpReq({ url, options });
 };
 
@@ -125,24 +127,24 @@ export const updateUserPreferencesList = async ({
 export const fetchUserPreferenceList = async ({
   sessionID,
   listType,
-  mediaType = "movie",
+  mediaType = MEDIA_TYPES.MOVIE,
   pageNumber = 1,
-  abortController,
+  signal,
 }) => {
   const modifiedMediaType =
-    mediaType === "movie"
+    mediaType === MEDIA_TYPES.MOVIE
       ? "movies"
-      : mediaType === "episodes"
+      : mediaType === MEDIA_TYPES.EPISODES
       ? "tv/episodes"
       : mediaType;
   const url = `account/account_id/${listType}/${modifiedMediaType}?language=en-US&page=${pageNumber}&session_id=${sessionID}&sort_by=created_at.desc`;
-  const options = { signal: abortController?.signal };
+  const options = { signal };
   return await httpReq({ url, options });
 };
 
 export const fetchDataBySearchQuery = async ({
   searchQuery,
-  mediaType = "movie",
+  mediaType = MEDIA_TYPES.MOVIE,
   pageNumber = 1,
 }) => {
   const url = `search/${mediaType}?query=${searchQuery}&include_adult=false&language=en-US&page=${pageNumber}`;
@@ -160,7 +162,7 @@ export const submitMediaRating = async ({
 }) => {
   const url = episodeNumber
     ? `${
-        mediaType === "episodes" ? "tv" : mediaType
+        mediaType === MEDIA_TYPES.EPISODES ? MEDIA_TYPES.TV : mediaType
       }/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating?session_id=${sessionID}`
     : `${mediaType}/${mediaId}/rating?session_id=${sessionID}`;
   const options = {

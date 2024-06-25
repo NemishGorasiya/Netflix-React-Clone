@@ -1,11 +1,26 @@
+import { MEDIA_TYPES } from "../constants/constants";
+
 export const debounce = (func, delay = 500) => {
   let timer;
-  return (...args) => {
+  const debouncedFunction = (...args) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       func(...args);
     }, delay);
   };
+
+  debouncedFunction.cancel = () => {
+    clearTimeout(timer);
+  };
+
+  return debouncedFunction;
+};
+
+export const getMediaType = (path) => {
+  if (path === "/home" || path === "/movies") {
+    return MEDIA_TYPES.MOVIE;
+  }
+  return MEDIA_TYPES.TV;
 };
 
 export const handleFallBackImage = (event, fallBackImage) => {

@@ -1,19 +1,34 @@
-.circularProgressOuter {
-  height: 100px;
-  width: 100px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
+@use "sass:math";
 
-  .circularProgressInner {
-    height: calc(100% - 20px);
-    width: calc(100% - 20px);
-    background: #000;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.circularProgressOuter {
+	height: 100px;
+	width: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	background: conic-gradient(#fff 0deg, grey 0deg);
+	animation: progressAnimation 2s ease-out forwards;
+	--degree: 360deg;
+
+	@keyframes progressAnimation {
+		@for $i from 0 through 10 {
+			#{($i * 10)}% {
+				background: conic-gradient(
+					#fff calc(var(--degree) * #{math.div($i, 10)}),
+					grey 0deg
+				);
+			}
+		}
+	}
+}
+
+.circularProgressInner {
+	height: calc(100% - 20px);
+	width: calc(100% - 20px);
+	background: #000;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

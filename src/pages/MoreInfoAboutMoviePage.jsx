@@ -15,6 +15,7 @@ import "./MoreInfoAboutMoviePage.scss";
 import fallbackPoster from "../assets/fallbackPoster.png";
 import RatingSection from "../components/MoreInfoPage/RatingSection";
 import Loader from "../components/common/Loader";
+import { MEDIA_TYPES } from "../constants/constants";
 
 const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const { loggedInUser } = useContext(AuthContext);
@@ -27,7 +28,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
 
   const { data, isLoading } = moreInfoOfMedia;
 
-  const [userPreferenceStatus, setUserPreferenceStatus] = useState({
+  const [userPreferences, setUserPreferences] = useState({
     watchlist: { isAdded: false, isLoading: false },
     favorite: { isAdded: false, isLoading: false },
   });
@@ -42,7 +43,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
       isAdded: isAddedToFavorite,
       isLoading: isUpdatingFavoriteLoading,
     },
-  } = userPreferenceStatus;
+  } = userPreferences;
 
   const [searchParams] = useSearchParams();
   const mediaId = searchParams.get("id");
@@ -50,14 +51,14 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   const episodeNumber = searchParams.get("episode");
 
   const fetchMovieData = useCallback(
-    async ({ abortController } = {}) => {
+    async ({ signal } = {}) => {
       try {
         const response = await fetchMoreInfoOfMedia({
           mediaId,
           mediaType,
           seasonNumber,
           episodeNumber,
-          abortController,
+          signal,
         });
         setMoreInfoOfMedia({
           data: response,
@@ -74,9 +75,9 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
   // UserPreferencesList like watchList and favoriteList
   const addToUserPreferencesList = async ({ listType }) => {
     try {
-      const isAdding = !userPreferenceStatus[listType].isAdded;
+      const isAdding = !userPreferences[listType].isAdded;
 
-      setUserPreferenceStatus((prevStatus) => ({
+      setUserPreferences((prevStatus) => ({
         ...prevStatus,
         [listType]: {
           ...prevStatus[listType],
@@ -98,7 +99,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
             isAdding ? "Added into" : "Removed from"
           } your ${listType} successfully.`
         );
-        setUserPreferenceStatus((prevStatus) => ({
+        setUserPreferences((prevStatus) => ({
           ...prevStatus,
           [listType]: {
             ...prevStatus[listType],
@@ -111,7 +112,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setUserPreferenceStatus((prevStatus) => ({
+      setUserPreferences((prevStatus) => ({
         ...prevStatus,
         [listType]: {
           ...prevStatus[listType],
@@ -123,7 +124,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    fetchMovieData({ abortController: abortController });
+    fetchMovieData({ signal: abortController.signal });
     return () => {
       abortController.abort();
     };
@@ -252,7 +253,7 @@ const MoreInfoAboutMoviePage = ({ mediaType }) => {
             mediaId={mediaId}
           />
         </div>
-        {mediaType === "tv" && !!seasons && (
+        {mediaType === MEDIA_TYPES.TV && !!seasons && (
           <TvSeasonsWrapper mediaId={mediaId} seasons={seasons} />
         )}
         {credits?.cast?.length > 0 && <MovieCasts castsInfo={credits.cast} />}

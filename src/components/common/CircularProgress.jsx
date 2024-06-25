@@ -1,27 +1,14 @@
-import { useEffect, useState } from "react";
-import "./CircularProgress.scss";
 import PropTypes from "prop-types";
+import "./CircularProgress.scss";
 
 const CircularProgress = ({ rating }) => {
-  const [degree, setDegree] = useState(0);
-
-  useEffect(() => {
-    const setDegreeInterval = setInterval(() => {
-      if (degree >= rating * 36) {
-        clearInterval(setDegreeInterval);
-        return;
-      }
-      setDegree((prev) => prev + 18);
-    }, 50);
-
-    return () => clearInterval(setDegreeInterval);
-  }, [degree, rating]);
+  const degree = rating * 36;
 
   return (
     <div
       className="circularProgressOuter"
       style={{
-        background: `conic-gradient(#fff ${degree}deg, grey 0deg)`,
+        "--degree": `${degree}deg`,
       }}
     >
       <div className="circularProgressInner">

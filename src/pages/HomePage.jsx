@@ -1,22 +1,23 @@
+import { useLocation } from "react-router-dom";
 import CarouselSlider from "../components/HomePage/CarouselSlider";
 import MoviesCategories from "../components/HomePage/MoviesCategories";
 import Footer from "../components/WelcomePage/Footer.jsx";
-import { footerLinks } from "../constants/constants.js";
+import { MEDIA_TYPES, footerLinks } from "../constants/constants.js";
 import "./HomePage.scss";
+import { getMediaType } from "../utils/utilityFunctions.js";
 
 const HomePage = () => {
-	const path = window.location.pathname;
-
-	const isHomePage = path === "/home";
-	const mediaType = isHomePage ? "movie" : path === "/movies" ? "movie" : "tv";
+	const location = useLocation();
+	const path = location.pathname;
+	const mediaType = getMediaType(path);
 
 	return (
 		<div className="homePage">
 			<CarouselSlider mediaType={mediaType} />
-			{isHomePage ? (
+			{path === "/home" ? (
 				<>
-					<MoviesCategories mediaType="movie" />
-					<MoviesCategories mediaType="tv" />
+					<MoviesCategories mediaType={MEDIA_TYPES.MOVIE} />
+					<MoviesCategories mediaType={MEDIA_TYPES.TV} />
 				</>
 			) : (
 				<MoviesCategories mediaType={mediaType} />
