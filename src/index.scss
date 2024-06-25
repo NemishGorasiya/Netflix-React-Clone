@@ -1,0 +1,56 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 35px;
+  border-radius: 10px;
+  z-index: 99;
+  background: #fff;
+
+  .closeModalBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+  }
+}
+
+.modalBackdrop {
+  background: grey;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 98;
+  opacity: 0.7;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@font-face {
+  font-family: "Netflix Sans Regular";
+  src: local("NetflixSans-Regular"),
+    url("./fonts/NetflixSans_W_Rg.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Netflix Sans Medium";
+  src: local("NetflixSans-Medium"),
+    url("./fonts/NetflixSans_W_Md.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Netflix Sans Blk";
+  src: local("NetflixSans-Blk"),
+    url("./fonts/NetflixSans_W_Blk.woff2") format("woff2");
+}
+
+@media only screen and (max-width: 600px) {
+  .modal {
+    width: calc(100% - 40px);
+  }
+}

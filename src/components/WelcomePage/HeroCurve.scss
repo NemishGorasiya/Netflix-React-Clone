@@ -1,0 +1,46 @@
+.heroCurve {
+  position: relative;
+  margin: 40px 0;
+  z-index: 1;
+  background: #000;
+
+  .curve {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 45px;
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
+    border-bottom: none;
+    background: radial-gradient(
+        50% 500% at 50% -420%,
+        rgba(64, 97, 231, 0.7) 80%,
+        rgba(0, 0, 0, 0.1) 100%
+      ),
+      black;
+    background-clip: padding-box;
+  }
+  .curve::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin-top: -6px;
+    border-radius: inherit;
+    background: linear-gradient(
+      to right,
+      rgba(33, 13, 22, 1) 16%,
+      rgba(184, 40, 105, 1),
+      rgba(229, 9, 20, 1),
+      rgba(184, 40, 105, 1),
+      rgba(33, 13, 22, 1) 84%
+    );
+  }
+}

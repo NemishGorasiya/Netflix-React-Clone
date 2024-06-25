@@ -1,0 +1,265 @@
+.homePageNavBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  padding: 10px 15px;
+  width: 100%;
+  z-index: 99;
+  min-height: 85px;
+  position: fixed;
+
+  .overLay {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    z-index: 98;
+    top: 0;
+    left: 0;
+    background: rgba(80, 80, 80, 0.8);
+    display: none;
+  }
+
+  .navLeft {
+    display: flex;
+    align-items: center;
+
+    .logoContainer {
+      display: flex;
+      align-items: center;
+      img {
+        height: 63px;
+      }
+    }
+    ul.navLinks {
+      display: flex;
+      align-items: center;
+      list-style: none;
+
+      a {
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .navLink {
+        margin: 7px 10px;
+        font-size: 15px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: #fff;
+        text-transform: capitalize;
+
+        &:hover {
+          color: grey;
+        }
+        &:hover::after {
+          transform: scale(1);
+        }
+      }
+
+      .navLink::after {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: red;
+        top: 100%;
+        left: 0;
+        transform: scale(0);
+        transition: all 0.3s ease;
+      }
+      .activeLink {
+        color: red;
+      }
+    }
+  }
+
+  .navRight {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .inputWrapper {
+      position: relative;
+      display: inline-block;
+      margin-right: 25px;
+
+      input {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        background: none;
+        padding-left: 30px;
+        border: none;
+        color: #fff;
+        &:focus {
+          border-radius: 5px;
+          width: 150px;
+          border: 1px solid #fff;
+        }
+      }
+      i.searchIcon {
+        position: absolute;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        z-index: -1;
+      }
+    }
+    .inputWrapper.sideBarOpen {
+      display: none;
+    }
+    button {
+      height: 30px;
+      position: relative;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+      &:hover {
+        color: grey;
+      }
+    }
+    .hamburgerIcon {
+      display: none;
+      transition: all 0.3s ease;
+      &:hover {
+        color: grey;
+      }
+    }
+  }
+}
+.navbar-black {
+  background: #000;
+}
+.semiTransparent {
+  background: rgba(#000, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+@media only screen and (max-width: 1140px) {
+  .homePageNavBar {
+    .overLay.sideBarOpen {
+      display: block;
+    }
+    .navLeft {
+      ul.navLinks {
+        display: none;
+        width: 0;
+      }
+
+      ul.navLinks.sideBarOpen {
+        z-index: 99;
+        min-height: 100vh;
+        width: 30%;
+        min-width: 300px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        opacity: 1;
+        flex-direction: column;
+        padding-top: 85px;
+        background: #000;
+        text-align: center;
+        li {
+          color: #fff;
+          font-size: 17px;
+          margin-bottom: 10px;
+          z-index: 99;
+        }
+      }
+    }
+    .navRight {
+      .notificationBtn.sideBarOpen {
+        display: none;
+      }
+      .hamburgerIcon {
+        display: flex;
+        z-index: 99;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .homePageNavBar {
+    .navLeft {
+      .logoContainer {
+        img {
+          height: 40px;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 500px) {
+  .homePageNavBar {
+    min-height: 65px;
+    padding: 0 15px;
+
+    .navLeft {
+      ul.navLinks.sideBarOpen {
+        padding-top: 65px;
+      }
+    }
+
+    .navRight {
+      align-items: center;
+      .inputWrapper {
+        margin-right: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        input {
+          font-size: 17px;
+          &:focus {
+            width: 100px;
+          }
+        }
+        i.searchIcon {
+          font-size: 17px;
+        }
+      }
+      button {
+        font-size: 17px;
+        margin-right: 7px;
+      }
+      .notificationBtn {
+        margin-right: 10px;
+      }
+
+      .hamburgerIcon {
+        margin-right: 0;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 350px) {
+  .homePageNavBar {
+    min-height: 65px;
+    padding: 0 15px;
+    .navLeft {
+      .logoContainer {
+        img {
+          height: 30px;
+        }
+      }
+
+      ul.navLinks.sideBarOpen {
+        width: 100%;
+      }
+    }
+  }
+}

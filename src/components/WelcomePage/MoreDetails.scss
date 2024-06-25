@@ -1,0 +1,113 @@
+.moreDetails {
+	background: #000;
+	padding: 20px;
+
+	.heroPageSections {
+		color: #fff;
+		max-width: 1200px;
+		margin: auto;
+
+		.heroPageSection {
+			.sectionHeading {
+				margin: 15px 0;
+				font-size: 28px;
+				font-weight: 700;
+			}
+
+			.cardsContainer {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 15px;
+
+				.card {
+					background: linear-gradient(180deg, #6c1f41 0%, #210d0e 100%);
+					break-inside: avoid-column;
+					padding: 40px;
+					display: flex;
+					flex-direction: column;
+					width: 100%;
+					border-radius: 12px;
+
+					h2 {
+						margin-bottom: 10px;
+						font-size: 30px;
+						font-weight: 700;
+					}
+
+					p {
+						margin-bottom: 25px;
+						line-height: 22px;
+						font-size: 16px;
+						color: rgba(255, 255, 255, 0.7);
+					}
+
+					.bottomDiv,
+					.moreReasonImage {
+						margin-top: auto;
+						text-align: end;
+					}
+
+					.bottomDiv {
+						text-align: start;
+					}
+				}
+			}
+		}
+
+		.moreReasonsToJoinSection {
+			margin-top: 60px;
+
+			.cardsContainer {
+				.card {
+					background: linear-gradient(149deg, #192247 0%, #210e17 96.86%);
+					padding: 30px 15px 25px;
+
+					h2 {
+						font-size: 22px;
+					}
+
+					p {
+						font-size: 15px;
+					}
+				}
+			}
+		}
+
+		.plansSection {
+			.cardsContainer {
+				.card {
+					transition: transform 0.5s ease;
+					cursor: pointer;
+
+					&:hover {
+						transform: scale(1.03);
+						background: linear-gradient(180deg, #922556 0%, #210d0e 99.51%);
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1280px) {
+	.moreDetails {
+		.heroPageSections {
+			.heroPageSection {
+				.cardsContainer {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+		}
+	}
+}
+@media screen and (max-width: 960px) {
+	.moreDetails {
+		.heroPageSections {
+			.heroPageSection {
+				.cardsContainer {
+					grid-template-columns: repeat(1, 1fr);
+				}
+			}
+		}
+	}
+}

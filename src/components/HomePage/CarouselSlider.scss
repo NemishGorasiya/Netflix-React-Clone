@@ -1,0 +1,127 @@
+.displayMoviesContainer {
+	display: flex;
+	overflow: hidden;
+	scroll-behavior: smooth;
+
+	.carouselSlide {
+		padding: 85px 0 30px 80px;
+		text-align: left;
+		min-height: 650px;
+		height: 80vh;
+		position: relative;
+		background-position: right !important;
+		background-size: cover !important;
+		display: flex;
+		align-items: flex-start;
+		flex-direction: column;
+		justify-content: center;
+		text-align: start;
+		min-width: 100vw;
+		transition: transform 0.4s ease-in-out;
+
+		h1.movieTitle {
+			font-size: 40px;
+			margin-bottom: 10px;
+			text-transform: capitalize;
+		}
+		p.movieDescription {
+			max-width: 600px;
+			margin-bottom: 10px;
+			line-height: 23px;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		}
+
+		.functionButtonsWrapper {
+			display: flex;
+			align-items: center;
+			margin: 10px 0;
+			gap: 10px;
+		}
+
+		.filmCertification {
+			display: flex;
+			align-items: center;
+			justify-content: end;
+			height: 45px;
+			position: absolute;
+			right: 0;
+			left: 100%;
+			bottom: 20px;
+			.imgWrapper {
+				height: 100%;
+				margin-right: 15px;
+				img {
+					height: 100%;
+				}
+			}
+			.certification {
+				height: 100%;
+				position: relative;
+				padding-left: 30px;
+				padding-right: 30px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 100px;
+				background: rgba(0, 0, 0, 0.37);
+			}
+			.certification::before {
+				content: "";
+				height: 100%;
+				width: 15px;
+				left: 0;
+				background: #fff;
+				position: absolute;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 1120px) {
+	.displayMoviesContainer {
+		.carouselSlide {
+			padding: 85px 0 30px 40px;
+			p.movieDescription {
+				max-width: 400px;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 720px) {
+	.displayMoviesContainer {
+		.carouselSlide {
+			padding: 85px 0 30px 30px;
+			p.movieDescription {
+				max-width: 400px;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	.displayMoviesContainer {
+		.carouselSlide {
+			padding: 85px 0 30px 30px;
+			min-height: 400px;
+			height: 50vh;
+			h1.movieTitle {
+				font-size: 30px;
+				margin-bottom: 10px;
+			}
+			p.movieDescription {
+				max-width: 400px;
+				margin-bottom: 10px;
+				line-height: 17px;
+				font-size: 13px;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+		}
+	}
+}

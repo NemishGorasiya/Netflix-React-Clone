@@ -1,0 +1,57 @@
+.authenticationPage {
+	position: relative;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	background: linear-gradient(
+		360deg,
+		rgba(0, 0, 0, 0.3) 3%,
+		rgba(0, 0, 0, 0.3) 11%,
+		rgba(0, 0, 0, 0.4) 19%,
+		rgba(0, 0, 0, 0.7) 27%,
+		rgba(0, 0, 0, 0.7) 51%,
+		rgba(0, 0, 0, 0.65) 59%,
+		rgba(0, 0, 0, 0.6) 83%,
+		rgba(0, 0, 0, 0.8) 91%,
+		rgba(0, 0, 0, 0.9) 100%
+	);
+
+	.footerWrapper {
+		margin-top: 20px;
+		background: rgba(0, 0, 0, 0.7);
+		padding: 20px 35px;
+	}
+}
+
+.authenticationPage::after {
+	content: "";
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	background: url("../assets/hero_background.jpg");
+	z-index: -1;
+}
+
+@media only screen and (max-width: 600px) {
+	.authenticationPage {
+		background: #000;
+		padding: 25px;
+		.footerWrapper {
+			padding: 20px 0;
+		}
+
+		.footerWrapper::before {
+			content: "";
+			position: absolute;
+			height: 2px;
+			width: 100vw;
+			left: 0;
+			background: grey;
+		}
+	}
+	.authenticationPage::after {
+		display: none;
+	}
+}

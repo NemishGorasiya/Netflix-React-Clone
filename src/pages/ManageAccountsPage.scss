@@ -1,0 +1,70 @@
+.manageAccountsPage {
+  background: #000;
+  min-height: 100vh;
+
+  .manageAccountsPageContentWrapper {
+    padding: 85px 15px 15px 15px;
+    color: #fff;
+    text-align: center;
+    min-height: 100vh;
+
+    .manageAccountsHeading {
+      margin-top: 50px;
+    }
+
+    .profiles {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 250px);
+      gap: 15px;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+.editProfileForm {
+  .inputWrapper {
+    input {
+      width: 100%;
+      height: 40px;
+      padding: 5px;
+      font-size: 20px;
+      border-radius: 5px;
+      border: 1px solid #000;
+      margin: 5px 0 15px;
+    }
+
+    .profileImagePreview {
+      height: 150px;
+      width: 150px;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .editBtnWrapper {
+    text-align: center;
+
+    button {
+      padding: 8px 15px;
+      background: grey;
+      border: none;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .manageAccountsPage {
+    .manageAccountsPageContentWrapper {
+      .profiles {
+        grid-template-columns: repeat(auto-fit, 120px);
+      }
+    }
+  }
+}

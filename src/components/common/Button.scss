@@ -1,0 +1,42 @@
+.btn {
+  color: #000;
+  background: #fff;
+  height: 45px;
+
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 20px 30px;
+  border: none;
+  display: flex;
+  align-items: center;
+  i {
+    font-size: 25px;
+    margin-right: 10px;
+  }
+}
+
+.playBtn {
+  color: #000;
+  background: #fff;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+}
+
+.moreInfoBtn {
+  background: rgba(106, 104, 104, 0.75);
+  color: #fff;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(106, 104, 104, 0.9);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .btn {
+    padding: 10px 20px;
+  }
+}

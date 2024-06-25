@@ -1,0 +1,50 @@
+.signUpEmailWrapper {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  max-width: 560px;
+  margin: auto;
+
+  button {
+    height: 56px;
+    border-radius: 5px;
+    border: none;
+    background: rgb(229, 9, 20);
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    min-width: fit-content;
+    padding: 0 10px;
+    flex-wrap: nowrap;
+    transition: background 0.2s ease;
+    font-family: "Netflix Sans Medium";
+
+    &:hover {
+      background: rgb(193, 17, 25);
+    }
+
+    i {
+      margin-left: 10px;
+      font-size: 22px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .signUpEmailWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input {
+      height: 56px;
+    }
+    button {
+      margin-top: 25px;
+    }
+  }
+}
